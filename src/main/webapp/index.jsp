@@ -18,14 +18,14 @@
         <div class="row m-4 ">
             <div class="form-outline mb-4">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" id="username" name="username" class="form-control" placeholder="username">
+                <input type="text" id="username" class="form-control" placeholder="username">
             </div>
             <div class="form-outline mb-4">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="password">
+                <input type="password" id="password" class="form-control" placeholder="password">
             </div>
+            <button type="button" class="btn btn-primary">Login</button>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>
 </body>

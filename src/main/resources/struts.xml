@@ -7,9 +7,13 @@
 
     <constant name = "struts.devMode" value = "true" />
     <package name="default" namespace="/" extends="struts-default">
-            <action name="hello" method="execute" class="org.rivercrane.actions.HelloWorldAction">
-                <result name="success">views/html1.jsp</result>
-            </action>
+        <action name="hello" method="execute" class="org.rivercrane.actions.DefaultAction">
+            <result name="success">views/html1.jsp</result>
+        </action>
+        <action name="input" method="execute" class="org.rivercrane.actions.HelloWorldAction">
+            <result name="success">views/helloworld.jsp</result>
+            <result name="input">views/error.jsp</result>
+        </action>
     </package>
 
 </struts>
