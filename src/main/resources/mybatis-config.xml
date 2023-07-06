@@ -5,6 +5,7 @@
 
     <typeAliases>
         <typeAlias alias = "MstShop" type = "org.rivercrane.models.MstShop"/>
+        <typeAlias alias = "MstUsers" type = "org.rivercrane.models.MstUsers"/>
     </typeAliases>
     <!-- Configuring the database environment -->
     <environments default="development">
@@ -21,7 +22,8 @@
 
     <!-- Configuring the SQL statement mappings -->
     <mappers>
-        <mapper resource="./mapper/mapper.xml" />
+        <mapper resource="./mapper/MstShopMapper.xml" />
+        <mapper resource="./mapper/MstUsersMapper.xml" />
     </mappers>
 
 </configuration>
