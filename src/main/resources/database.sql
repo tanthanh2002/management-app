@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS mst_users
     last_login_ip                   VARCHAR(40)                     ,
     created_at                      TIMESTAMP                       ,
     updated_at                      TIMESTAMP
-    );
+);
 
 CREATE TABLE IF NOT EXISTS mst_product
 (
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS mst_product
     description                     TEXT                            ,
     created_at                      TIMESTAMP                       ,
     updated_at                      TIMESTAMP
-    );
+);
 
 CREATE TABLE IF NOT EXISTS mst_shop
 (
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS mst_shop
     shop_name                       VARCHAR(255)                    NOT NULL,
     created_at                      TIMESTAMP                       ,
     updated_at                      TIMESTAMP
-    );
+);
 
 CREATE TABLE IF NOT EXISTS mst_customer
 (
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS mst_customer
     is_active                       TINYINT                         ,
     created_at                      TIMESTAMP                       ,
     updated_at                      TIMESTAMP
-    );
+);
 
 CREATE TABLE IF NOT EXISTS mst_order
 (
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS mst_order
     updated_at                      TIMESTAMP                       ,
     CONSTRAINT mst_order_customer_id FOREIGN KEY (customer_id) REFERENCES mst_customer(custimer_id),
     CONSTRAINT mst_order_order_shop FOREIGN KEY (order_shop) REFERENCES mst_shop(shop_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS mst_order_detail
 (
@@ -86,9 +86,32 @@ CREATE TABLE IF NOT EXISTS mst_order_detail
     CONSTRAINT mst_order_detail_order_id  FOREIGN KEY (order_id) REFERENCES mst_order(order_id),
     CONSTRAINT mst_order_detail_shop_id   FOREIGN KEY (shop_id) REFERENCES mst_shop(shop_id),
     CONSTRAINT mst_order_detail_receiver_id FOREIGN KEY (receiver_id) REFERENCES mst_customer(custimer_id)
-    );
+);
 
 -- INSERT DEFAULT DATA
 INSERT INTO mst_shop(shop_id, shop_name) VALUES (3,'Rakuten');
 INSERT INTO mst_shop(shop_id, shop_name) VALUES (1,'Amazon');
 INSERT INTO mst_shop(shop_id, shop_name) VALUES (2,'Yahoo');
+
+
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role, last_login_at, last_login_ip, created_at, updated_at)
+VALUES(1,'Nguyen Van A','a.nguyen@gmail.com','$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG',null,null,1,0,'Admin',null,null,null,null);
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role, last_login_at, last_login_ip, created_at, updated_at)
+VALUES(2,'Nguyen Van B','b.nguyen@gmail.com','$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG',null,null,1,0,'Admin',null,null,null,null);
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role, last_login_at, last_login_ip, created_at, updated_at)
+VALUES(3,'Nguyen Van C','c.nguyen@gmail.com','$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG',null,null,1,0,'Editor',null,null,null,null);
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role, last_login_at, last_login_ip, created_at, updated_at)
+VALUES(4,'Nguyen Van D','d.nguyen@gmail.com','$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG',null,null,1,0,'Reviewer',null,null,null,null);
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role, last_login_at, last_login_ip, created_at, updated_at)
+VALUES(5,'Nguyen Van E','e.nguyen@gmail.com','$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG',null,null,1,0,'Reviewer',null,null,null,null);
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role, last_login_at, last_login_ip, created_at, updated_at)
+VALUES(6,'Nguyen Van F','f.nguyen@gmail.com','$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG',null,null,1,0,'Reviewer',null,null,null,null);
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role, last_login_at, last_login_ip, created_at, updated_at)
+VALUES(7,'Nguyen Van G','g.nguyen@gmail.com','$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG',null,null,1,0,'Editor',null,null,null,null);
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role, last_login_at, last_login_ip, created_at, updated_at)
+VALUES(8,'Nguyen Van H','h.nguyen@gmail.com','$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG',null,null,1,0,'Editor',null,null,null,null);
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role, last_login_at, last_login_ip, created_at, updated_at)
+VALUES(9,'Nguyen Van I','i.nguyen@gmail.com','$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG',null,null,1,0,'Editor',null,null,null,null);
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role, last_login_at, last_login_ip, created_at, updated_at)
+VALUES(10,'Nguyen Van J','j.nguyen@gmail.com','$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG',null,null,1,0,'Editor',null,null,null,null);
+

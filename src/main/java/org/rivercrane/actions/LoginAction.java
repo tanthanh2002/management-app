@@ -10,21 +10,21 @@ import java.util.Optional;
 
 public class LoginAction extends ActionSupport {
 
-
-
-
     @Override
     public String execute() throws Exception {
         Optional<MstUsers> users = Optional.ofNullable(mstUsersRepo.getUserByEmail(getEmail()));
 
         if(users.isPresent()){
             if(bCrypt.checkpw(getPassword(),users.get().getPassword())){
+                addActionMessage("Đăng nhập thành công!");
                 return  SUCCESS;
             }else {
+                addActionError("Mật khẩu chưa chính xác!");
                 return INPUT;
             }
         }else{
-            return ERROR;
+            addActionError("Email không tồn tại!");
+            return INPUT;
         }
 
     }
