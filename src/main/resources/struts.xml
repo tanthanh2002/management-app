@@ -11,9 +11,26 @@
             <result name="success">index.jsp</result>
         </action>
         <action name="login" method="execute" class="org.rivercrane.actions.LoginAction">
-            <result name="success">views/success.jsp</result>
-            <result name="input">views/Error.jsp</result>
-            <result name="error">views/notfound.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">users</param>
+            </result>
+            <result name="input">index.jsp</result>
+        </action>
+    </package>
+
+    <package name="mst_users" namespace="/" extends="struts-default">
+        <action name="users_*" method="{1}" class="org.rivercrane.actions.UserAction">
+            <result name="success">views/users.jsp</result>
+        </action>
+        
+        <action name="search" method="execute" class="org.rivercrane.actions.SearchUserAction">
+            <result name="success">views/users.jsp</result>
+        </action>
+    </package>
+
+    <package name="mst_customer" namespace="/" extends="struts-default">
+        <action name="customers" method="execute" class="org.rivercrane.actions.CustomerAction">
+            <result name="success">views/customers.jsp</result>
         </action>
     </package>
 

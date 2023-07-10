@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MstCustomer">
+    <resultMap id = "MstCustomer" type = "MstCustomer">
+        <result property = "customerId" column = "customer_id"/>
+        <result property = "customerName" column = "customer_name"/>
+        <result property = "email" column = "email"/>
+        <result property = "telNum" column = "tel_num"/>
+        <result property = "address" column = "address"/>
+        <result property = "isActive" column = "is_active"/>
+        <result property = "createdAt" column = "created_at"/>
+        <result property = "updatedAt" column = "updated_at"/>
+    </resultMap>
+
+    <select id = "findAll" resultMap = "MstCustomer">
+        select * from mst_customer;
+    </select>
+
+</mapper>

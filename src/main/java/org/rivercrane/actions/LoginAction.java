@@ -1,52 +1,38 @@
 package org.rivercrane.actions;
 
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import lombok.Data;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.SessionAware;
 import org.mindrot.jbcrypt.BCrypt;
 import org.rivercrane.models.MstUsers;
 import org.rivercrane.repository.MstUsersRepo;
+import org.rivercrane.services.MstUserService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 import java.util.Optional;
 
+
+@Data
 public class LoginAction extends ActionSupport {
 
     @Override
     public String execute() throws Exception {
-        Optional<MstUsers> users = Optional.ofNullable(mstUsersRepo.getUserByEmail(getEmail()));
-
-        if(users.isPresent()){
-            if(bCrypt.checkpw(getPassword(),users.get().getPassword())){
-                addActionMessage("Đăng nhập thành công!");
-                return  SUCCESS;
-            }else {
-                addActionError("Mật khẩu chưa chính xác!");
-                return INPUT;
-            }
+        if(userService.login(email,password)){
+            addActionMessage(userService.getMessage());
+            return SUCCESS;
         }else{
-            addActionError("Email không tồn tại!");
+            addActionError(userService.getMessage());
             return INPUT;
         }
-
     }
 
-    private BCrypt bCrypt = new BCrypt();
-    private MstUsersRepo mstUsersRepo = MstUsersRepo.getInstance();
+    private MstUserService userService = MstUserService.getInstance();
     private String email;
     private String password;
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

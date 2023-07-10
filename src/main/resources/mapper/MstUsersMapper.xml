@@ -20,7 +20,14 @@
     </resultMap>
 
     <select id = "findByEmail" resultMap = "MstUsers">
-        select * from mst_users where email = #{email};
+        select * from mst_users where email = #{email} and is_delete = 0;
     </select>
 
+    <select id = "findAll" resultMap = "MstUsers">
+        select * from mst_users where is_delete = 0;
+    </select>
+
+    <select id = "findByNameAndEmail" resultMap = "MstUsers" parameterType="MstUsers">
+        SELECT * FROM mst_users WHERE name LIKE  #{name} AND email LIKE  #{email} and is_delete = 0;
+    </select>
 </mapper>

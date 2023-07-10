@@ -1,8 +1,13 @@
 package org.rivercrane.models;
 
+import lombok.Builder;
+import lombok.Data;
+
 import java.sql.Time;
 import java.sql.Timestamp;
 
+@Data
+@Builder
 public class MstUsers {
     private Integer id;
     private String name;
