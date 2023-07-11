@@ -30,13 +30,13 @@
             <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/users">User</a>
+                        <a class="nav-link" href="/user_execute">User</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/customers">Customer</a>
+                        <a class="nav-link" href="/customer_execute">Customer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/products">Product</a>
+                        <a class="nav-link" href="/product_execute">Product</a>
                     </li>
                 </ul>
                 <div class="navbar-text d-flex">

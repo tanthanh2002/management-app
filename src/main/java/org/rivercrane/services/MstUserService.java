@@ -31,7 +31,6 @@ public class MstUserService {
     public Boolean login(String email, String password){
         System.out.println(email);
         Optional<MstUsers> user = Optional.ofNullable(repo.findUserByEmail(email));
-        System.out.println(user.get().getEmail());
         if(user.isPresent()){
             if(bCrypt.checkpw(password,user.get().getPassword())){
                 setMessage("Đăng nhập thành công!");
@@ -56,6 +55,30 @@ public class MstUserService {
                 .name(name)
                 .build();
         return repo.findByNameAndEmail(user);
+    }
+
+    public MstUsers getById(int id){
+        return repo.findById(id);
+    }
+
+    public List<String> getGroupRole(){
+        return  repo.getAllGroupRole();
+    }
+
+    public void deleteLogical(int id){
+        repo.deleteLogical(id);
+    }
+
+    public void changeIsActive(int id){
+        repo.changeIsActive(id);
+    }
+
+    public void update(MstUsers user){
+        repo.update(user);
+    }
+
+    public void insert(MstUsers user){
+        repo.insert(user);
     }
 
 }

@@ -58,12 +58,7 @@
 </div>
 <s:if test="hasActionErrors()">
     <script>
-        customAlert(<s:actionerror/>,'alert-danger');
-    </script>
-</s:if>
-<s:if test="hasActionMessages()">
-    <script>
-        customAlert(<s:actionmessage/>,'alert-danger');
+        alert(<s:actionerror/>)
     </script>
 </s:if>
 <script src="../js/index.js"></script>

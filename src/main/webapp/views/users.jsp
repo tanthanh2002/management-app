@@ -38,15 +38,15 @@ pageEncoding="UTF-8"%>
                 <label for="search-group" class="form-label">Nhóm</label>
                 <select class="form-control" id="search-group">
                     <option value="" disabled selected hidden>Chọn nhóm</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Editor">Editor</option>
-                    <option value="Reviewer">Reviewer</option>
+                    <s:iterator value = "groupRoles">
+                        <option value="<s:property/>"><s:property/></option>
+                    </s:iterator>
                 </select>
             </div>
             <div class="col-sm ml-1 mr-1">
                 <label for="search-status" class="form-label">Trạng thái</label>
                 <select class="form-control" id="search-status">
-                    <option value="" disabled selected hidden>Chọn trạng thái</option>
+                    <option value="-1" disabled selected hidden>Chọn trạng thái</option>
                     <option value="1">Đang hoạt động</option>
                     <option value="0">Tạm khoá</option>
                 </select>
@@ -55,13 +55,13 @@ pageEncoding="UTF-8"%>
 
         <div class="row">
             <div class="col-sm-3">
-                <a href="" type="submit" class="btn btn-primary"><i class="bi bi-person-add"></i><span class="px-4">Thêm mới</span></a>
+                <a href="#" type="button" onclick="showcreateUser()" class="btn btn-primary"><i class="bi bi-person-add"></i><span class="px-4">Thêm mới</span></a>
             </div>
             <div class="col-sm-3 offset-3">
-                <a href="" type="submit" id="btn-search" class="btn btn-primary"><i class="bi bi-search"></i><span class="px-4">Tìm kiếm</span></a>
+                <a href="" type="button" id="btn-search" class="btn btn-primary"><i class="bi bi-search"></i><span class="px-4">Tìm kiếm</span></a>
             </div>
             <div class="col-sm-3">
-                <a href="" type="submit" class="btn btn-success"><i class="bi bi-x-lg"></i><span class="px-4">Xoá tìm</span></a>
+                <a href="/user_execute.action" type="button" class="btn btn-success"><i class="bi bi-x-lg"></i><span class="px-4">Xoá tìm</span></a>
             </div>
         </div>
 
@@ -93,9 +93,9 @@ pageEncoding="UTF-8"%>
                                 <td class="text-danger">Tạm khoá</td>
                             </s:else>
                             <td>
-                                <a href="" type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
-                                <a href="/delete.action?id=<s:property value = "id"/>" type="button" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
-                                <a href="/lock.action?id=<s:property value = "id"/>" type="button" class="btn btn-secondary"><i class="bi bi-person-fill-lock"></i></a>
+                                <a href="#" onclick="showModelEdit(<s:property value = "id"/>,'<s:property value = "name"/>','<s:property value = "email"/>','<s:property value = "groupRole"/>')" type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                                <a href="/user_delete.action?id=<s:property value = "id"/>" type="button" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                                <a href="/user_changelock.action?id=<s:property value = "id"/>" type="button" class="btn btn-secondary"><i class="bi bi-person-fill-lock"></i></a>
                             </td>
                         </tr>
                     </s:iterator>
@@ -137,36 +137,41 @@ pageEncoding="UTF-8"%>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                  <form action="edit" class="needs-validation" novalidate autocomplete="off">
+                  <form action="user_update" class="needs-validation" novalidate autocomplete="off">
+                      <div class="mb-3">
+                          <label for="modal-userid" class="col-form-label">id</label>
+                          <input type="text" class="form-control" name="id" id="modal-userid" readonly>
+
+                      </div>
                       <div class="mb-3">
                           <label for="modal-username" class="col-form-label">Họ tên</label>
-                          <input type="text" class="form-control" id="modal-username" required>
+                          <input type="text" class="form-control" name="name" id="modal-username" required>
                           <div class="invalid-feedback">
                               Không được để trống!
                           </div>
                       </div>
                       <div class="mb-3">
                           <label class="col-form-label">Email</label>
-                          <input type="text" class="form-control" required>
+                          <input type="text" class="form-control" name="email" id="modal-email" required>
                           <div class="invalid-feedback">
                               Không được để trống!
                           </div>
                       </div>
                       <div class="mb-3">
                           <label for="modal-password" class="col-form-label">Mật khẩu</label>
-                          <input type="text" class="form-control" id="modal-password">
+                          <input type="password" class="form-control" id="modal-password">
                       </div>
                       <div class="mb-3">
                           <label for="modal-cpassword" class="col-form-label">Xác nhận mật khẩu</label>
-                          <input type="text" class="form-control" id="modal-cpassword">
+                          <input type="password" class="form-control" id="modal-cpassword">
                       </div>
                       <div class="mb-3">
                           <label for="modal-group" class="col-form-label">Nhóm</label>
-                          <select class="form-control" id="modal-group" required>
+                          <select class="form-control" name="groupRole" id="modal-group" required>
                               <option value="" disabled selected hidden>Chọn nhóm</option>
-                              <option value="Admin">Admin</option>
-                              <option value="Editor">Editor</option>
-                              <option value="Reviewer">Reviewer</option>
+                              <s:iterator value = "groupRoles">
+                                  <option value="<s:property/>"><s:property/></option>
+                              </s:iterator>
                           </select>
                           <div class="invalid-feedback">
                               Hãy chọn nhóm.
@@ -196,26 +201,32 @@ pageEncoding="UTF-8"%>
         myModal.show();
     }
 
-    function deleteUser(id) {
-        // Gửi yêu cầu xoá đến server bằng AJAX
-        $.ajax({
-            url: 'deleteData.action?id=' + id + '&name=' + name + '&email=' + email,
-            type: 'GET',
-            success: function() {
-                // Cập nhật lại bảng trên trang web
-                location.reload();
-            }
-        });
-    }
-
 
     let btnSearch = document.getElementById('btn-search');
     btnSearch.onclick = function (){
         let name = document.getElementById('search-username').value;
         let email = document.getElementById('search-email').value;
-        var url = '/search.action?name=' + name + '&email=' + email;
+        let groupRole = document.getElementById('search-group').value;
+        let isActive = document.getElementById('search-status').value;
+        var url = '/user_search.action?name=' + name + '&email=' + email + '&groupRole=' + groupRole + '&isActive=' + isActive;
         btnSearch.href =url;
         btnSearch.click();
+    }
+
+    function showModelEdit(id,name,email,groupRole){
+        document.getElementById('modal-userid').value=id;
+        document.getElementById('modal-username').value=name;
+        document.getElementById('modal-email').value=email;
+        document.getElementById('modal-group').value=groupRole;
+        document.getElementById('modal-password').disabled=true;
+        document.getElementById('modal-cpassword').disabled=true;
+        showModel();
+    }
+
+    function showcreateUser(){
+        document.getElementById('modal-password').disabled=false;
+        document.getElementById('modal-cpassword').disabled=false;
+        showModel();
     }
 
   </script>

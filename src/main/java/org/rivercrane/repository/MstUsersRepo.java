@@ -24,6 +24,13 @@ public class MstUsersRepo {
         return user;
     }
 
+    public MstUsers findById(int id){
+        SqlSession  session = sessionFactory.openSession();
+        MstUsers user = session.selectOne("MstUsers.findById",id);
+        session.close();
+        return user;
+    }
+
     public List<MstUsers> findAll(){
         SqlSession session = sessionFactory.openSession();
         List<MstUsers> users = session.selectList("MstUsers.findAll");
@@ -38,4 +45,38 @@ public class MstUsersRepo {
         return users;
     }
 
+    public List<String> getAllGroupRole(){
+        SqlSession session = sessionFactory.openSession();
+        List<String> groupRoles = session.selectList("MstUsers.getDisctintGroupRole");
+        session.close();
+        return groupRoles;
+    }
+
+    public void deleteLogical(int id){
+        SqlSession session = sessionFactory.openSession();
+        session.update("MstUsers.updateIsDeletedById",id);
+        session.commit();
+        session.close();
+    }
+
+    public void changeIsActive(int id){
+        SqlSession session = sessionFactory.openSession();
+        session.update("MstUsers.updateIsActiveById",id);
+        session.commit();
+        session.close();
+    }
+
+    public void update(MstUsers user){
+        SqlSession session = sessionFactory.openSession();
+        session.update("MstUsers.updateUser",user);
+        session.commit();
+        session.close();
+    }
+
+    public void insert(MstUsers user){
+        SqlSession session = sessionFactory.openSession();
+        session.update("MstUsers.insert",user);
+        session.commit();
+        session.close();
+    }
 }
