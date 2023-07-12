@@ -32,5 +32,11 @@ public class MstCustomerRepo {
     }
 
 
+    public void insert(MstCustomer customer) {
+        SqlSession session = sessionFactory.openSession();
+        session.update("MstCustomer.insert",customer);
+        session.commit();
+        session.close();
+    }
 }
 

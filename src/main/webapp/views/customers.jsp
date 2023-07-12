@@ -59,7 +59,7 @@
             <a href="" type="submit" class="btn btn-primary"><i class="bi bi-person-add"></i><span class="px-2">Thêm mới</span></a>
         </div>
         <div class="col-sm-2 ">
-          <a href="" type="submit" class="btn btn-primary"><i class="bi bi-upload"></i><span class="px-2">Import</span></a>
+          <a href="/customer_importCustomer" id="btn-import" type="button" class="btn btn-primary"><i class="bi bi-upload"></i><span class="px-2">Import</span></a>
        </div>
         <div class="col-sm-2 ">
           <a href="#" id="btn-export" type="button" class="btn btn-primary"><i class="bi bi-download"></i><span class="px-2">Export</span></a>
@@ -227,13 +227,25 @@
     }
 
     document.getElementById('btn-export').onclick = function(){
-        axios.get('/login')
+        axios.get('/customer_export')
             .then(function (response) {
                 customAlert("Export dữ liệu khách hàng thành công!", 'alert-success');
                 console.log(response.status);
             })
             .catch(function (error) {
                 customAlert("Export dữ liệu khách hàng thất bại!", 'alert-danger');
+            });
+    }
+
+    document.getElementById('btn-import').onclick = function(){
+        axios.get('/customer_importCustomer')
+            .then(function (response) {
+                customAlert("Import dữ liệu khách hàng thành công!", 'alert-success');
+                window.location.href= '/customer_execute';
+                console.log(response.status);
+            })
+            .catch(function (error) {
+                customAlert("Import dữ liệu khách hàng thất bại!", 'alert-danger');
             });
     }
   </script>

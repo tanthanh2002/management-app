@@ -24,4 +24,7 @@ public class MstCustomerService {
         repo.update(customer);
     }
 
+    public void insert(MstCustomer customer) {
+        repo.insert(customer);
+    }
 }

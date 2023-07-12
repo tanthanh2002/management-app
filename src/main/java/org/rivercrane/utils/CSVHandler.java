@@ -3,11 +3,14 @@ package org.rivercrane.utils;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
+import com.opencsv.exceptions.CsvValidationException;
 import org.rivercrane.models.MstCustomer;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +35,23 @@ public class CSVHandler {
         return customers;
     }
 
+    public List<MstCustomer>  importCustomersFromCSV(String path) throws IOException, CsvException {
+        List<MstCustomer> customers = new ArrayList<>();
+        try (CSVReader reader = new CSVReader(new FileReader(path))) {
+            String[] lineInArray;
+            while ((lineInArray = reader.readNext()) != null) {
+                MstCustomer customer = MstCustomer.builder()
+                        .customerName(lineInArray[0])
+                        .email(lineInArray[1])
+                        .telNum(lineInArray[2])
+                        .address(lineInArray[3])
+                        .build();
+                customers.add(customer);
+            }
+        }
+        return customers;
+    }
+
     public void exportCustomersToCSV(List<MstCustomer> customers) throws IOException {
 
         List<String[]> csvData = customersToCsvData(customers);
@@ -46,18 +66,14 @@ public class CSVHandler {
     private static List<String[]> customersToCsvData(List<MstCustomer> customers) {
         List<String[]> data = new ArrayList<>();
 
-        String[] header = {"id", "name", "email", "tel number","address", "is active?", "created at", "updated at"};
+        String[] header = {"name", "email", "tel number","address"};
         data.add(header);
 
         for(MstCustomer i : customers){
-            String[] row = {i.getCustomerId().toString(),
-                            i.getCustomerName(),
+            String[] row = {i.getCustomerName(),
                             i.getEmail(),
                             i.getTelNum(),
-                            i.getAddress(),
-                            i.getIsActive() == null ? "null" :  i.getIsActive().toString(),
-                            i.getCreatedAt() == null ? "null" :  i.getCreatedAt().toString(),
-                            i.getUpdatedAt() == null ? "null" :  i.getUpdatedAt().toString()};
+                            i.getAddress()};
             data.add(row);
         }
 
