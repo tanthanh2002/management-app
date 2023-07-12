@@ -12,6 +12,7 @@ import org.rivercrane.repository.MstUsersRepo;
 import org.rivercrane.services.MstUserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.Optional;
@@ -24,9 +25,13 @@ public class LoginAction extends ActionSupport {
     public String execute() throws Exception {
         if(userService.login(email,password)){
             addActionMessage(userService.getMessage());
+            HttpServletResponse response = ServletActionContext.getResponse();
+            response.setStatus(200);
             return SUCCESS;
         }else{
             addActionError(userService.getMessage());
+            HttpServletResponse response = ServletActionContext.getResponse();
+            response.setStatus(400);
             return INPUT;
         }
     }

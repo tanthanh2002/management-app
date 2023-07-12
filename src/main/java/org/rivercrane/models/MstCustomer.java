@@ -1,9 +1,11 @@
 package org.rivercrane.models;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
 
+@Builder
 @Data
 public class MstCustomer {
     private Integer customerId;

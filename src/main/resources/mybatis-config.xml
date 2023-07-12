@@ -7,6 +7,7 @@
         <typeAlias alias = "MstShop" type = "org.rivercrane.models.MstShop"/>
         <typeAlias alias = "MstUsers" type = "org.rivercrane.models.MstUsers"/>
         <typeAlias alias = "MstCustomer" type = "org.rivercrane.models.MstCustomer"/>
+        <typeAlias alias = "MstProduct" type = "org.rivercrane.models.MstProduct"/>
     </typeAliases>
     <!-- Configuring the database environment -->
     <environments default="development">
@@ -26,6 +27,7 @@
         <mapper resource="./mapper/MstShopMapper.xml" />
         <mapper resource="./mapper/MstUsersMapper.xml" />
         <mapper resource="./mapper/MstCustomerMapper.xml" />
+        <mapper resource="./mapper/MstProductMapper.xml" />
     </mappers>
 
 </configuration>

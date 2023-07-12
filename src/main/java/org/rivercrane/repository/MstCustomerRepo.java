@@ -24,6 +24,13 @@ public class MstCustomerRepo {
         return customers;
     }
 
+    public void update(MstCustomer customer){
+        SqlSession session = sessionFactory.openSession();
+        session.update("MstCustomer.update",customer);
+        session.commit();
+        session.close();
+    }
+
 
 }
 

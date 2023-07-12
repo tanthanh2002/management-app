@@ -15,7 +15,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- Include Bootstrap Jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../js/index.js"></script>
     <link rel="stylesheet" href="../css/styles.css">
 
     </style>
@@ -27,14 +29,13 @@
         <div class="col-6 m-auto">
             <div class="card border-primary shadow p-5">
                 <h2 class="text-primary text-center m-3">Đăng nhập</h2>
-                <form action="login" method="post">
-
-                    <div class="form-outline mb-4">
-                        <input type="email" name="email" id="email" class="form-control" placeholder="email">
+                <form class="needs-validation" >
+                    <div class="form-outline mb-4 form-group">
+                        <input type="email" name="email" id="email" class="form-control  my-1" placeholder="email">
                     </div>
 
-                    <div class="form-outline mb-4">
-                        <input type="password" name="password" id="password" class="form-control" placeholder="password">
+                    <div class="form-outline mb-4 form-group ">
+                        <input type="password" name="password" id="password" class="form-control my-1" placeholder="password">
                     </div>
 
                     <div class="row d-flex justify-content-around">
@@ -46,24 +47,38 @@
                             <a href="#" class="text-primary text-decoration-none ">Forgot password?</a>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary col-12 mt-4">Login</button>
+                    <a type="button" id="btn-login" class="btn btn-primary col-12 mt-4">Login</a>
                 </form>
             </div>
-
+            <div class="alert alert-primary" id="customAlert" role="alert">
+                A simple primary alert—check it out!
+            </div>
         </div>
     </div>
 </div>
-<div class="alert alert-primary d-block" id="customAlert" role="alert">
-    A simple primary alert—check it out!
-</div>
-<s:if test="hasActionErrors()">
-    <script>
-        alert(<s:actionerror/>)
-    </script>
-</s:if>
-<script src="../js/index.js"></script>
-<script>
 
+
+
+
+<script>
+    document.getElementById('btn-login').onclick = function (){
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('password', password);
+
+        axios.post('/login',formData)
+            .then(function (response) {
+                customAlert("Đăng nhập thành công!", 'alert-success');
+                window.location.href = "/user_execute";
+                console.log(response.status);
+            })
+            .catch(function (error) {
+                customAlert("Đăng nhập thất bại!", 'alert-danger');
+            });
+    }
 </script>
 </body>
 </html>

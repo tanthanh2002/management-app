@@ -12,9 +12,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
   <!-- Include Bootstrap Icons CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <!-- Include Bootstrap Jquery -->
+  <!-- Include Bootstrap Jquery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="../css/styles.css">
+  <!-- Include Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="../css/styles.css">
   <title>Product management</title>
 </head>
 <body>
@@ -69,17 +72,25 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Sản phẩm A</td>
-                <td>Chức năng A</td>
-                <td>$100</td>
-                <td>Đang bán</td>
-                <td>
-                    <a href="" type="submit" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
-                    <a href="" type="submit" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
-                </td>
-              </tr>
+            <s:iterator value="products">
+                <tr>
+                    <th scope="row"><s:property value="productId"/></th>
+                    <td><s:property value="productName"/></td>
+                    <td><s:property value="productId"/></td>
+                    <td>$<s:property value="productPrice"/></td>
+                    <s:if test="isSales == 1">
+                        <td class="text-success">Đang bán</td>
+                    </s:if>
+                    <s:else>
+                        <td class="text-danger">Ngừng bán</td>
+                    </s:else>
+                    <td>
+                        <a href="" type="submit" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                        <a href="" type="submit" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                    </td>
+                </tr>
+            </s:iterator>
+
 
             </tbody>
           </table>
@@ -114,8 +125,6 @@
 
 
 
-  <!-- Include Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-  
+
 </body>
 </html>

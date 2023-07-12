@@ -109,12 +109,14 @@
             <version>2.5</version>
             <scope>provided</scope>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.mindrot/jbcrypt -->
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -123,7 +125,11 @@
             <scope>provided</scope>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.3</version>
+        </dependency>
 
     </dependencies>
 

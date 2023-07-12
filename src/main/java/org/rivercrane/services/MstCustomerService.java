@@ -20,4 +20,8 @@ public class MstCustomerService {
         return repo.findAll();
     }
 
+    public void update(MstCustomer customer){
+        repo.update(customer);
+    }
+
 }

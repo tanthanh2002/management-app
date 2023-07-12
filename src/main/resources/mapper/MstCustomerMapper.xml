@@ -18,4 +18,10 @@
         select * from mst_customer;
     </select>
 
+    <update id="update" parameterType="MstCustomer">
+        update mst_customer
+        set customer_name = #{customerName}, email= #{email}, address = #{address}, tel_num = #{telNum}
+        where customer_id = #{customerId};
+    </update>
+
 </mapper>

@@ -31,6 +31,10 @@
         select * from mst_users where is_delete = 0;
     </select>
 
+    <select id="findByNumPage" parameterType="int" resultMap = "MstUsers">
+        select * from mst_users Limit #{offset}, 10;
+    </select>
+
     <select id = "findByNameAndEmail" resultMap = "MstUsers" parameterType="MstUsers">
         SELECT * FROM mst_users WHERE name LIKE  #{name} AND email LIKE  #{email} and is_delete = 0;
     </select>
@@ -60,4 +64,6 @@
         INSERT INTO mst_users(name,email,group_role,password,created_at)
         VALUES (#{name},#{email},#{groupRole},#{password},#{createdAt});
     </insert>
+
+
 </mapper>

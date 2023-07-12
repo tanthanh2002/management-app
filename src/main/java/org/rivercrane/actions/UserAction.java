@@ -6,8 +6,10 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.rivercrane.models.MstUsers;
 import org.rivercrane.services.MstUserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Data
 public class UserAction extends ActionSupport {
@@ -76,5 +78,7 @@ public class UserAction extends ActionSupport {
     private String groupRole;
     private Integer isActive;
     private String password;
+    private Integer page;
+    private List<Integer> pages;
 
 }

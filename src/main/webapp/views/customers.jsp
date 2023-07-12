@@ -14,7 +14,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- Include Bootstrap Jquery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/index.js"></script>
   <link rel="stylesheet" href="../css/styles.css">
+
   <title>Customer management</title>
 </head>
 <body>
@@ -57,7 +62,7 @@
           <a href="" type="submit" class="btn btn-primary"><i class="bi bi-upload"></i><span class="px-2">Import</span></a>
        </div>
         <div class="col-sm-2 ">
-          <a href="" type="submit" class="btn btn-primary"><i class="bi bi-download"></i><span class="px-2">Export</span></a>
+          <a href="#" id="btn-export" type="button" class="btn btn-primary"><i class="bi bi-download"></i><span class="px-2">Export</span></a>
         </div>
         <div class="col-sm-2 ">
             <a href="" type="submit" class="btn btn-primary"><i class="bi bi-search"></i><span class="px-2">Tìm kiếm</span></a>
@@ -90,7 +95,8 @@
                       <td> <s:property value="address"/></td>
                       <td><s:property value="telNum"/></td>
                       <td>
-                          <a href="" type="submit" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                          <a href="#" type="button" onclick=editRow(this) class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                          <a href="#" type="button" onclick=saveRow(this) class="btn btn-primary"><i class="bi bi-save"></i></a>
                       </td>
                   </tr>
               </s:iterator>
@@ -137,9 +143,6 @@
           <div class="mb-3">
             <label for="modalcustomer-username" class="col-form-label">Họ tên</label>
             <input type="text" class="form-control" id="modalcustomer-username" required>
-            <div class="valid-feedback">
-              Looks good!
-            </div>
           </div>
           <div class="mb-3">
             <label for="modalcustomer-email" class="col-form-label">Email</label>
@@ -169,9 +172,70 @@
 
  <!-- <button id="testmodal" class="btn btn-primary">Modal</button> -->
   <!-- Include Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
 
+  <script>
+    function editRow(button){
+
+        // button.classList.remove("btn-success");
+        // button.classList.add("btn-primary");
+
+        var row = button.closest("tr");
+        var nameCell = row.cells[1];
+        var emailCell = row.cells[2];
+        var addressCell = row.cells[3];
+        var telCell = row.cells[4];
+
+        nameCell.contentEditable = true;
+        emailCell.contentEditable = true;
+        addressCell.contentEditable = true;
+        telCell.contentEditable = true;
+
+    }
+
+    function saveRow(button){
+        // button.classList.remove("btn-primary");
+        // button.classList.add("btn-success");
+
+        var row = button.closest("tr");
+        var idCell = row.cells[0];
+        var nameCell = row.cells[1];
+        var emailCell = row.cells[2];
+        var addressCell = row.cells[3];
+        var telCell = row.cells[4];
+
+
+        const formData = new FormData();
+        formData.append('customerId', parseInt(idCell.innerText));
+        formData.append('customerName', nameCell.textContent);
+        formData.append('customerEmail', emailCell.textContent);
+        formData.append('customerAddress', addressCell.textContent);
+        formData.append('customerTel', telCell.textContent);
+
+        axios.post('/customer_edit', formData)
+            .then(function (response) {
+               // console.log(response.data);
+                console.log(response.status);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+        nameCell.contentEditable = false;
+        emailCell.contentEditable = false;
+        addressCell.contentEditable = false;
+        telCell.contentEditable = false;
+    }
+
+    document.getElementById('btn-export').onclick = function(){
+        axios.get('/login')
+            .then(function (response) {
+                customAlert("Export dữ liệu khách hàng thành công!", 'alert-success');
+                console.log(response.status);
+            })
+            .catch(function (error) {
+                customAlert("Export dữ liệu khách hàng thất bại!", 'alert-danger');
+            });
+    }
   </script>
 </body>
 </html>
