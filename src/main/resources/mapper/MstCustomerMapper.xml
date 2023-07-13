@@ -18,12 +18,12 @@
         select * from mst_customer;
     </select>
 
-    <select id="findByNameAndEmail" resultMap="MstCustomer" parameterType="MstCustomer">
+    <select id="findByNameAndEmailAndAddress" resultMap="MstCustomer" parameterType="MstCustomer">
         SELECT *
-        FROM mst_users
-        WHERE name LIKE #{name}
+        FROM mst_customer
+        WHERE customer_name LIKE #{customerName}
           AND email LIKE #{email}
-          and is_delete = 0;
+          AND address LIKE #{address};
     </select>
 
     <update id="update" parameterType="MstCustomer">

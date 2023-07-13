@@ -42,12 +42,11 @@
             <input type="text" class="form-control" id="customer-email" placeholder="Nhập email">
         </div>
         <div class="col-sm ml-1 mr-1">
-            <label for="customer-group" class="form-label">Nhóm</label>
-            <select class="form-control" id="customer-group">
-                <option value="" disabled selected hidden>Chọn nhóm</option>
-                <option value="Admin">Admin</option>
-                <option value="Editor">Editor</option>
-                <option value="Reviewer">Reviewer</option>
+            <label class="form-label">Trạng thái</label>
+            <select class="form-control" id="customer-status">
+                <option value="-1" disabled selected hidden>Chọn nhóm</option>
+                <option value="1">Đang hoạt động</option>
+                <option value="0">Bị khoá</option>
             </select>
         </div>
         <div class="col-sm ml-1 mr-1">
@@ -70,11 +69,11 @@
                     class="px-2">Export</span></a>
         </div>
         <div class="col-sm-2 ">
-            <a href="" type="submit" class="btn btn-primary"><i class="bi bi-search"></i><span
+            <a href="" type="button" id="btn-seach-customer" class="btn btn-primary"><i class="bi bi-search"></i><span
                     class="px-2">Tìm kiếm</span></a>
         </div>
         <div class="col-sm-2">
-            <a href="" type="submit" class="btn btn-success"><i class="bi bi-x-lg"></i><span class="px-2">Xoá tìm</span></a>
+            <a href="/customer_execute" type="button" class="btn btn-success"><i class="bi bi-x-lg"></i><span class="px-2">Xoá tìm</span></a>
         </div>
     </div>
 
@@ -186,6 +185,8 @@
         // button.classList.add("btn-primary");
 
         var row = button.closest("tr");
+        row.classList.add('border-info');
+        row.classList.add('border-4');
         var nameCell = row.cells[1];
         var emailCell = row.cells[2];
         var addressCell = row.cells[3];
@@ -236,6 +237,8 @@
         emailCell.contentEditable = false;
         addressCell.contentEditable = false;
         telCell.contentEditable = false;
+        row.classList.remove('border-info');
+        row.classList.remove('border-4');
     }
 
     document.getElementById('btn-export').onclick = function () {
@@ -259,6 +262,17 @@
             .catch(function (error) {
                 customAlert("Import dữ liệu khách hàng thất bại!", 'alert-danger');
             });
+    }
+
+    let btnSearch = document.getElementById('btn-seach-customer');
+    btnSearch.onclick = function () {
+        let name = document.getElementById('customer-name').value;
+        let email = document.getElementById('customer-email').value;
+        let status = document.getElementById('customer-status').value;
+        let address = document.getElementById('customer-address').value;
+        var url = '/customer_search.action?customerName=' + name + '&customerEmail=' + email + '&isActive=' + status + '&customerAddress=' + address;
+        btnSearch.href = url;
+        btnSearch.click();
     }
 </script>
 </body>

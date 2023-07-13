@@ -24,9 +24,9 @@ public class MstCustomerRepo {
         return customers;
     }
 
-    public List<MstCustomer> findByNameAndEmail(MstCustomer customer){
+    public List<MstCustomer> findByNameAndEmailAndAddress(MstCustomer customer){
         SqlSession session = sessionFactory.openSession();
-        List<MstCustomer> customers = session.selectList("MstCustomer.findByNameAndEmail",customer);
+        List<MstCustomer> customers = session.selectList("MstCustomer.findByNameAndEmailAndAddress",customer);
         session.close();
         return customers;
     }
