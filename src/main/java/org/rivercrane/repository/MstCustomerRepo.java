@@ -24,6 +24,13 @@ public class MstCustomerRepo {
         return customers;
     }
 
+    public List<MstCustomer> findByNameAndEmail(MstCustomer customer){
+        SqlSession session = sessionFactory.openSession();
+        List<MstCustomer> customers = session.selectList("MstCustomer.findByNameAndEmail",customer);
+        session.close();
+        return customers;
+    }
+
     public void update(MstCustomer customer){
         SqlSession session = sessionFactory.openSession();
         session.update("MstCustomer.update",customer);

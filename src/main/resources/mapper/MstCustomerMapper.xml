@@ -18,6 +18,14 @@
         select * from mst_customer;
     </select>
 
+    <select id="findByNameAndEmail" resultMap="MstCustomer" parameterType="MstCustomer">
+        SELECT *
+        FROM mst_users
+        WHERE name LIKE #{name}
+          AND email LIKE #{email}
+          and is_delete = 0;
+    </select>
+
     <update id="update" parameterType="MstCustomer">
         update mst_customer
         set customer_name = #{customerName}, email= #{email}, address = #{address}, tel_num = #{telNum}

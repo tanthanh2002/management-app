@@ -46,9 +46,8 @@
     <select id="findByNameAndEmail" resultMap="MstUsers" parameterType="MstUsers">
         SELECT *
         FROM mst_users
-        WHERE name LIKE #{name}
-          AND email LIKE #{email}
-          and is_delete = 0;
+        WHERE customer_name LIKE #{customerName}
+          AND email LIKE #{email};
     </select>
 
     <select id="getDisctintGroupRole" resultType="string">
