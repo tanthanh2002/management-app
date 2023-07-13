@@ -58,7 +58,7 @@ public class CSVHandler {
 
         // default all fields are enclosed in double quotes
         // default separator is a comma
-        try (CSVWriter writer = new CSVWriter(new FileWriter("C:\\OneDrive-HCMUS\\OneDrive - VNU-HCMUS\\Desktop\\Internship Rivercrane\\app\\src\\main\\resources\\csv\\test.csv"))) {
+        try (CSVWriter writer = new CSVWriter(new FileWriter("./src/main/resources/csv/test1.csv"))) {
             writer.writeAll(csvData);
         }
     }
