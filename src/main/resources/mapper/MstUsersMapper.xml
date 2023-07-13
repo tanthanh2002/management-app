@@ -3,66 +3,82 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="MstUsers">
-    <resultMap id = "MstUsers" type = "MstUsers">
-        <result property = "id" column = "id"/>
-        <result property = "name" column = "name"/>
-        <result property = "email" column = "email"/>
-        <result property = "password" column = "password"/>
-        <result property = "rememberToken" column = "remember_token"/>
-        <result property = "verifyEmail" column = "verify_email"/>
-        <result property = "isActive" column = "is_active"/>
-        <result property = "isDelete" column = "is_delete"/>
-        <result property = "groupRole" column = "group_role"/>
-        <result property = "lastLoginAt" column = "last_login_at"/>
-        <result property = "lastLoginIp" column = "last_login_ip"/>
-        <result property = "createdAt" column = "created_at"/>
-        <result property = "updatedAt" column = "updated_at"/>
+    <resultMap id="MstUsers" type="MstUsers">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="rememberToken" column="remember_token"/>
+        <result property="verifyEmail" column="verify_email"/>
+        <result property="isActive" column="is_active"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="groupRole" column="group_role"/>
+        <result property="lastLoginAt" column="last_login_at"/>
+        <result property="lastLoginIp" column="last_login_ip"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
     </resultMap>
 
-    <select id = "findByEmail" resultMap = "MstUsers">
-        select * from mst_users where email = #{email} and is_delete = 0;
+    <select id="findByEmail" resultMap="MstUsers">
+        select *
+        from mst_users
+        where email = #{email}
+          and is_delete = 0;
     </select>
 
     <select id="findById" resultMap="MstUsers">
-        select * from mst_users where email = #{id};
+        select *
+        from mst_users
+        where email = #{id};
     </select>
 
-    <select id = "findAll" resultMap = "MstUsers">
-        select * from mst_users where is_delete = 0;
+    <select id="findAll" resultMap="MstUsers">
+        select *
+        from mst_users
+        where is_delete = 0;
     </select>
 
-    <select id="findByNumPage" parameterType="int" resultMap = "MstUsers">
-        select * from mst_users Limit #{offset}, 10;
+    <select id="findByNumPage" parameterType="int" resultMap="MstUsers">
+        select *
+        from mst_users Limit #{offset}, 10;
     </select>
 
-    <select id = "findByNameAndEmail" resultMap = "MstUsers" parameterType="MstUsers">
-        SELECT * FROM mst_users WHERE name LIKE  #{name} AND email LIKE  #{email} and is_delete = 0;
+    <select id="findByNameAndEmail" resultMap="MstUsers" parameterType="MstUsers">
+        SELECT *
+        FROM mst_users
+        WHERE name LIKE #{name}
+          AND email LIKE #{email}
+          and is_delete = 0;
     </select>
 
     <select id="getDisctintGroupRole" resultType="string">
-        SELECT DISTINCT group_role FROM mst_users;
+        SELECT DISTINCT group_role
+        FROM mst_users;
     </select>
-    
+
     <update id="updateIsDeletedById" parameterType="int">
-        UPDATE mst_users SET is_delete = 1 WHERE  id = #{id};
+        UPDATE mst_users
+        SET is_delete = 1
+        WHERE id = #{id};
     </update>
 
     <update id="updateIsActiveById" parameterType="int">
-        UPDATE mst_users SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END WHERE  id = #{id};
+        UPDATE mst_users
+        SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END
+        WHERE id = #{id};
     </update>
 
     <update id="updateUser" parameterType="MstUsers">
         UPDATE mst_users
-        SET
-            name = #{name},
-            email = #{email},
+        SET name       = #{name},
+            email      = #{email},
             group_role = #{groupRole}
         WHERE id = #{id};
     </update>
 
     <insert id="insert" parameterType="MstUsers">
-        INSERT INTO mst_users(name,email,group_role,password,created_at)
-        VALUES (#{name},#{email},#{groupRole},#{password},#{createdAt});
+        INSERT INTO mst_users(name, email, group_role, is_active, is_delete, password)
+        VALUES (#{name}, #{email}, #{groupRole}, 1, 0, #{password});
     </insert>
 
 

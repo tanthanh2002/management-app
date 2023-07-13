@@ -14,22 +14,22 @@ import java.util.stream.IntStream;
 @Data
 public class UserAction extends ActionSupport {
 
-    public String execute(){
+    public String execute() {
         setUsers(userService.getAll());
         setGroupRoles(userService.getGroupRole());
         return SUCCESS;
     }
 
-    public String search(){
-        name= name.isEmpty() ? "%" : "%" + name + "%";
-        email= email.isEmpty() ? "%" : "%" + email + "%";
-        List<MstUsers> searchedUsers = userService.getByNameAndEmail(name,email);
+    public String search() {
+        name = name.isEmpty() ? "%" : "%" + name + "%";
+        email = email.isEmpty() ? "%" : "%" + email + "%";
+        List<MstUsers> searchedUsers = userService.getByNameAndEmail(name, email);
 
-        if(!groupRole.isEmpty()){
+        if (!groupRole.isEmpty()) {
             searchedUsers = searchedUsers.stream().filter(user -> user.getGroupRole().equals(groupRole)).collect(Collectors.toList());
         }
 
-        if(!isActive.equals(-1)){
+        if (!isActive.equals(-1)) {
             searchedUsers = searchedUsers.stream().filter(user -> user.getIsActive().equals(isActive)).collect(Collectors.toList());
         }
 
@@ -38,30 +38,38 @@ public class UserAction extends ActionSupport {
         return SUCCESS;
     }
 
-    public String delete(){
+    public String delete() {
         userService.deleteLogical(getId());
         setGroupRoles(userService.getGroupRole());
         setUsers(userService.getAll());
         return SUCCESS;
     }
 
-    public String changeIsActive(){
+    public String changeIsActive() {
         userService.changeIsActive(id);
         setGroupRoles(userService.getGroupRole());
         setUsers(userService.getAll());
         return SUCCESS;
     }
 
-    public String update(){
+    public String update() {
         MstUsers user = MstUsers.builder()
                 .id(id)
                 .name(name)
                 .email(email)
+                .password(bCrypt.hashpw(password, BCrypt.gensalt()))
                 .groupRole(groupRole)
                 .build();
-        try{
-            userService.update(user);
-        }catch (Exception e){
+        System.out.println(user.toString());
+        try {
+            if (user.getId() == null) {
+                userService.insert(user);
+                System.out.println("insert");
+            } else {
+                userService.update(user);
+                System.out.println("update");
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return SUCCESS;

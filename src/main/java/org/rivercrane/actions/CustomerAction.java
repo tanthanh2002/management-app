@@ -17,13 +17,13 @@ import java.util.List;
 
 @Data
 public class CustomerAction extends ActionSupport {
-    public String execute(){
+    public String execute() {
         setCustomers(customerService.getAll());
         return SUCCESS;
     }
 
-    public String edit(){
-        System.out.println(customerId+customerName);
+    public String edit() {
+        System.out.println(customerId + customerName);
         MstCustomer customer = MstCustomer.builder()
                 .customerId(customerId)
                 .customerName(customerName)
@@ -33,14 +33,13 @@ public class CustomerAction extends ActionSupport {
                 .build();
         try {
             customerService.update(customer);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return SUCCESS;
     }
 
-    public String export(){
+    public String export() {
         List<MstCustomer> customers = customerService.getAll();
 
         try {
@@ -58,12 +57,12 @@ public class CustomerAction extends ActionSupport {
     public String importCustomer() throws IOException, CsvException {
         String path = "customer.csv";
         List<MstCustomer> customers = csvHandler.importCustomersFromCSV(path);
-        for(MstCustomer i : customers){
+        for (MstCustomer i : customers) {
             try {
                 customerService.insert(i);
-            }catch (Exception e){
+            } catch (Exception e) {
 //                e.printStackTrace();
-                System.out.println("Thêm không thành công: "+i.getCustomerName());
+                System.out.println("Thêm không thành công: " + i.getCustomerName());
             }
         }
         return SUCCESS;

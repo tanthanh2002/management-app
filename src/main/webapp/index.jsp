@@ -31,11 +31,11 @@
                 <h2 class="text-primary text-center m-3">Đăng nhập</h2>
                 <form class="needs-validation" >
                     <div class="form-outline mb-4 form-group">
-                        <input type="email" name="email" id="email" class="form-control  my-1" placeholder="email">
+                        <input type="email" name="email" id="email" class="form-control  my-1" placeholder="email" required>
                     </div>
 
                     <div class="form-outline mb-4 form-group ">
-                        <input type="password" name="password" id="password" class="form-control my-1" placeholder="password">
+                        <input type="password" name="password" id="password" class="form-control my-1" placeholder="password" required>
                     </div>
 
                     <div class="row d-flex justify-content-around">
