@@ -18,4 +18,15 @@
         select * from mst_product;
     </select>
 
+    <select id="findByNameAndIsSales" resultMap="MstProduct" parameterType="MstProduct">
+        SELECT *
+        FROM mst_product
+        WHERE product_name LIKE #{productName}
+          AND is_sales != #{isSales};
+    </select>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM mst_product
+        WHERE product_id = #{productId};
+    </delete>
 </mapper>

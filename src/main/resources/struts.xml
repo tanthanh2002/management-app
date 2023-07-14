@@ -65,7 +65,16 @@
 
     <package name="mst_product" namespace="/" extends="struts-default">
         <action name="product_*" method="{1}" class="org.rivercrane.actions.ProductAction">
-            <result name="success"></result>
+            <result name="success">views/products.jsp</result>
+        </action>
+        <action name="product_detail" method="showDetail" class="org.rivercrane.actions.ProductAction">
+            <result name="success">views/productdetail.jsp</result>
+        </action>
+        <action name="product_search" method="search" class="org.rivercrane.actions.ProductAction">
+            <result name="success">views/products.jsp</result>
+        </action>
+        <action name="product_delete" method="delete" class="org.rivercrane.actions.ProductAction">
+            <result name="success">views/products.jsp</result>
         </action>
     </package>
 

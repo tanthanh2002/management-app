@@ -18,4 +18,12 @@ public class MstProductService {
     public List<MstProduct> getAll() {
         return repo.findAll();
     }
+
+    public List<MstProduct> findByNameAndIsSales(MstProduct product){
+        return repo.findByNameAndIsSales(product);
+    }
+
+    public void delete(int productId){
+        repo.delete(productId);
+    }
 }

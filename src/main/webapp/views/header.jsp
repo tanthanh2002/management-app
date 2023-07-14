@@ -40,7 +40,7 @@
                     </li>
                 </ul>
                 <div class="navbar-text d-flex">
-                    <div class="col-5 me-4 fs-5" id="header-username">username</div>
+                    <div class="col-5 me-4 fs-5 text-while" id="header-username">username</div>
                     <a href="" class="col-5 ps-3 d-flex justify-content-center align-items-center"><i class="fs-5 bi bi-person m-auto"></i></a>
                 </div>
             </div>

@@ -35,8 +35,12 @@ public class CustomerAction extends ActionSupport {
                 .build();
         try {
             customerService.update(customer);
+            HttpServletResponse response = ServletActionContext.getResponse();
+            response.setStatus(200);
         } catch (Exception e) {
             e.printStackTrace();
+            HttpServletResponse response = ServletActionContext.getResponse();
+            response.setStatus(400);
         }
         return SUCCESS;
     }

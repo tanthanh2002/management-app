@@ -23,17 +23,25 @@ public class LoginAction extends ActionSupport {
 
     @Override
     public String execute() throws Exception {
-        if(userService.login(email,password)){
-            addActionMessage(userService.getMessage());
-            HttpServletResponse response = ServletActionContext.getResponse();
-            response.setStatus(200);
-            return SUCCESS;
-        }else{
-            addActionError(userService.getMessage());
+        try{
+            if(userService.login(email,password)){
+                addActionMessage(userService.getMessage());
+                HttpServletResponse response = ServletActionContext.getResponse();
+                response.setStatus(200);
+                return SUCCESS;
+            }else{
+                addActionError(userService.getMessage());
+                HttpServletResponse response = ServletActionContext.getResponse();
+                response.setStatus(400);
+                return INPUT;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
             HttpServletResponse response = ServletActionContext.getResponse();
             response.setStatus(400);
             return INPUT;
         }
+
     }
 
     private MstUserService userService = MstUserService.getInstance();
