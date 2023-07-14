@@ -15,7 +15,10 @@ import java.util.stream.IntStream;
 public class UserAction extends ActionSupport {
 
     public String execute() {
-        setUsers(userService.getAll());
+        page = page == null ? 0 : page;
+        pages = userService.getTotalPage();
+        setPages(userService.getTotalPage());
+        setUsers(userService.getByPage(page));
         setGroupRoles(userService.getGroupRole());
         return SUCCESS;
     }

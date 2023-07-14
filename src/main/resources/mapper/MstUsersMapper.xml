@@ -43,6 +43,10 @@
         from mst_users Limit #{offset}, 10;
     </select>
 
+    <select id="getTotalPage" resultType="int">
+        select count(*) from mst_users;
+    </select>
+
     <select id="findByNameAndEmail" resultMap="MstUsers" parameterType="MstUsers">
         SELECT *
         FROM mst_users

@@ -79,4 +79,19 @@ public class MstUsersRepo {
         session.commit();
         session.close();
     }
+
+    public int getTotalPage() {
+        SqlSession session = sessionFactory.openSession();
+        Integer totalPage = session.selectOne("MstUsers.getTotalPage");
+        totalPage = (int) Math.floor(totalPage / 10);
+        session.close();
+        return totalPage;
+    }
+
+    public List<MstUsers> getByPage(Integer page) {
+        SqlSession session = sessionFactory.openSession();
+        List<MstUsers> users = session.selectList("MstUsers.findByNumPage",page*10);
+        session.close();
+        return users;
+    }
 }

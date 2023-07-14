@@ -19,6 +19,10 @@ public class MstProductService {
         return repo.findAll();
     }
 
+    public MstProduct getById(Integer id){
+        return repo.findById(id);
+    }
+
     public List<MstProduct> findByNameAndIsSales(MstProduct product){
         return repo.findByNameAndIsSales(product);
     }

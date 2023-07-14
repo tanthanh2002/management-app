@@ -35,10 +35,19 @@
               <div class="col-6">
                   <div class="row my-4">
                       <div class="col-6 text-center">
+                          Mã sản phẩm
+                      </div>
+                      <div class="col-6">
+                          <input type="text" class="form-control" id="product-id" value="<s:property value="product.productId"/>" placeholder="Mã sản phẩm" disabled>
+                          <span class="form-message p-1"></span>
+                      </div>
+                  </div>
+                  <div class="row my-4">
+                      <div class="col-6 text-center">
                           Tên sản phẩm
                       </div>
                       <div class="col-6">
-                          <input type="text" class="form-control" id="product-name" placeholder="Tên sản phẩm" required>
+                          <input type="text" class="form-control" id="product-name" value="<s:property value="product.productName"/>" placeholder="Tên sản phẩm" required>
                           <span class="form-message p-1"></span>
                       </div>
                   </div>
@@ -47,7 +56,7 @@
                           Giá bán
                       </div>
                       <div class="col-6">
-                          <input type="number" class="form-control" id="product-price" placeholder="Giá bán" required>
+                          <input type="number" class="form-control" value="<s:property value="product.productPrice"/>" id="product-price" placeholder="Giá bán" required>
                           <span class="form-message p-1"></span>
                       </div>
                   </div>
@@ -56,7 +65,7 @@
                           Mô tả
                       </div>
                       <div class="col-6">
-                          <input type="text-area" class="form-control" id="description" placeholder="Mô tả" required>
+                          <input type="text-area" class="form-control" value="<s:property value="product.description"/>" id="description" placeholder="Mô tả" required>
                           <span class="form-message p-1"></span>
                       </div>
                   </div>

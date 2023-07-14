@@ -18,6 +18,11 @@
         select * from mst_product;
     </select>
 
+    <select id = "findById" resultMap = "MstProduct">
+        select * from mst_product where product_id = #{productId};
+    </select>
+
+
     <select id="findByNameAndIsSales" resultMap="MstProduct" parameterType="MstProduct">
         SELECT *
         FROM mst_product

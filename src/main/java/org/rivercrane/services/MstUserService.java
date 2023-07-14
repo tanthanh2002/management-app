@@ -4,6 +4,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.rivercrane.models.MstUsers;
 import org.rivercrane.repository.MstUsersRepo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,4 +82,17 @@ public class MstUserService {
         repo.insert(user);
     }
 
+    public List<Integer> getTotalPage() {
+        List<Integer> pages = new ArrayList<>();
+
+        for(int i = 0 ; i <= repo.getTotalPage() ; i++){
+            pages.add(i);
+        }
+
+        return pages;
+    }
+
+    public List<MstUsers> getByPage(Integer page) {
+        return repo.getByPage(page);
+    }
 }

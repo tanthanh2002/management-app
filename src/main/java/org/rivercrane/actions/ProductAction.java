@@ -19,6 +19,8 @@ public class ProductAction extends ActionSupport {
     }
 
     public String showDetail(){
+        System.out.println(productId);
+        setProduct(productService.getById(productId));
         return SUCCESS;
     }
 
