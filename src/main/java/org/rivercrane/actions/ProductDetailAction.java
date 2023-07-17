@@ -14,19 +14,13 @@ import java.io.IOException;
 @Data
 public class ProductDetailAction extends ActionSupport {
 
-    public String execute() {
+    public String execute() throws IOException {
         String path = "./src/main/webapp/images/";
-        System.out.println(productId);
-        System.out.println(productName);
-        System.out.println(productPrice);
-        System.out.println(description);
         String fileName = RandomStringUtils.randomAlphabetic(10) + ".png";
         File fileToCreate = new File(path, fileName);
 
-        try {
+        if(image != null){
             FileUtils.copyFile(image, fileToCreate);
-        } catch (IOException e) {
-
         }
 
         MstProduct product = MstProduct.builder()
@@ -40,10 +34,12 @@ public class ProductDetailAction extends ActionSupport {
         if (productId == null) {
             //insert
             System.out.println("insert");
+            System.out.println(product.toString());
             productService.insert(product);
         } else {
             //update
             System.out.println("update");
+            System.out.println(product.toString());
             productService.update(product);
         }
         return SUCCESS;
