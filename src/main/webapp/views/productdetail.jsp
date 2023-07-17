@@ -20,10 +20,11 @@
     <script src="../js/validator.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/index.js"></script>
+    <script src="../js/common.js"></script>
     <link rel="stylesheet" href="../css/styles.css">
   <title>Customer management</title>
 </head>
-<body>
+<body onload="isLogin()">
   
   <!-- Your HTML code here -->
   <s:include value = "header.jsp"/>

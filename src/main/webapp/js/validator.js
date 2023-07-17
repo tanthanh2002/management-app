@@ -57,3 +57,4 @@ Validator.isEmail = function(selector){
         }
     }
 }
+

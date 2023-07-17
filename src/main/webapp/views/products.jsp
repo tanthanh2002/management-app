@@ -20,10 +20,11 @@
             integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../js/index.js"></script>
+    <script src="../js/common.js"></script>
     <link rel="stylesheet" href="../css/styles.css">
     <title>Product management</title>
 </head>
-<body>
+<body onload="isLogin()">
 
 <!-- Your HTML code here -->
 <s:include value="header.jsp"/>

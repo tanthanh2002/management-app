@@ -15,6 +15,7 @@
     <!-- Include Bootstrap Jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/common.js"></script>
     <title>header</title>
 </head>
 <body>
@@ -39,9 +40,10 @@
                         <a class="nav-link" href="/product_execute">Product</a>
                     </li>
                 </ul>
-                <div class="navbar-text d-flex">
-                    <div class="col-5 me-4 fs-5 text-while" id="header-username">username</div>
-                    <a href="" class="col-5 ps-3 d-flex justify-content-center align-items-center"><i class="fs-5 bi bi-person m-auto"></i></a>
+                <div class="navbar-text d-flex justify-content-around">
+                    <div class="col me-4 fs-5 text-while" id="header-username">username</div>
+                    <a href="" onclick="logOut()" class="col ps-3 d-flex justify-content-center align-items-center"><i class="fs-5 bi bi-box-arrow-right"></i></a>
+                    <a href="" class="col ps-3 d-flex justify-content-center align-items-center"><i class="fs-5 bi bi-person m-auto"></i></a>
                 </div>
             </div>
             <div class="alert alert-primary" id="customAlert" role="alert">
@@ -55,6 +57,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 
+    document.getElementById('header-username').innerText = getCookie("curUser");
 </script>
 </body>
 </html>

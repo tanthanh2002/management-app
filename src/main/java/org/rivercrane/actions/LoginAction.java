@@ -23,6 +23,7 @@ public class LoginAction extends ActionSupport {
 
     @Override
     public String execute() throws Exception {
+
         try{
             if(userService.login(email,password)){
                 addActionMessage(userService.getMessage());

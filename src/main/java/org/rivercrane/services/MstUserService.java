@@ -30,7 +30,6 @@ public class MstUserService {
     }
 
     public Boolean login(String email, String password){
-        System.out.println(email);
         Optional<MstUsers> user = Optional.ofNullable(repo.findUserByEmail(email));
         if(user.isPresent()){
             if(bCrypt.checkpw(password,user.get().getPassword())){

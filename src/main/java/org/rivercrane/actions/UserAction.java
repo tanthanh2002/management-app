@@ -63,7 +63,6 @@ public class UserAction extends ActionSupport {
                 .password(bCrypt.hashpw(password, BCrypt.gensalt()))
                 .groupRole(groupRole)
                 .build();
-        System.out.println(user.toString());
         try {
             if (user.getId() == null) {
                 userService.insert(user);
