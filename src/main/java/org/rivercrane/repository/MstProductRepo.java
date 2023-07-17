@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.rivercrane.models.MstCustomer;
 import org.rivercrane.models.MstProduct;
+import org.rivercrane.models.MstUsers;
 import org.rivercrane.utils.CustomSqlSessionFactory;
 
 import java.util.List;
@@ -45,5 +46,20 @@ public class MstProductRepo {
         session.delete("MstProduct.delete", customerId);
         session.commit();
         session.close();
+    }
+
+    public int getTotalPage() {
+        SqlSession session = sessionFactory.openSession();
+        Integer totalPage = session.selectOne("MstProduct.getTotalPage");
+        totalPage = (int) Math.floor(totalPage / 10);
+        session.close();
+        return totalPage;
+    }
+
+    public List<MstProduct> getByPage(Integer page) {
+        SqlSession session = sessionFactory.openSession();
+        List<MstProduct> products = session.selectList("MstProduct.findByNumPage",page*10);
+        session.close();
+        return products;
     }
 }

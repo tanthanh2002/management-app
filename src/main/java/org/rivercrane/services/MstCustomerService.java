@@ -4,6 +4,7 @@ import org.rivercrane.models.MstCustomer;
 import org.rivercrane.models.MstUsers;
 import org.rivercrane.repository.MstCustomerRepo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MstCustomerService {
@@ -36,5 +37,19 @@ public class MstCustomerService {
 
     public void insert(MstCustomer customer) {
         repo.insert(customer);
+    }
+
+    public List<Integer> getTotalPage() {
+        List<Integer> pages = new ArrayList<>();
+
+        for(int i = 0 ; i <= repo.getTotalPage() ; i++){
+            pages.add(i);
+        }
+
+        return pages;
+    }
+
+    public List<MstCustomer> getByPage(Integer page) {
+        return repo.getByPage(page);
     }
 }

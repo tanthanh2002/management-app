@@ -14,7 +14,10 @@ import java.util.stream.Collectors;
 @Data
 public class ProductAction extends ActionSupport {
     public String execute(){
-        setProducts(productService.getAll());
+        page = page == null ? 0 : page;
+        pages = productService.getTotalPage();
+        setPages(productService.getTotalPage());
+        setProducts(productService.getByPage(page));
         return SUCCESS;
     }
 
@@ -59,5 +62,7 @@ public class ProductAction extends ActionSupport {
     private Integer isSales;
     private Integer priceFrom;
     private Integer priceTo;
+    private Integer page;
+    private List<Integer> pages;
 
 }

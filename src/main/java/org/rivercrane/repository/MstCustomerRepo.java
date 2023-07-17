@@ -45,5 +45,20 @@ public class MstCustomerRepo {
         session.commit();
         session.close();
     }
+
+    public int getTotalPage() {
+        SqlSession session = sessionFactory.openSession();
+        Integer totalPage = session.selectOne("MstCustomer.getTotalPage");
+        totalPage = (int) Math.floor(totalPage / 10);
+        session.close();
+        return totalPage;
+    }
+
+    public List<MstCustomer> getByPage(Integer page) {
+        SqlSession session = sessionFactory.openSession();
+        List<MstCustomer> customers = session.selectList("MstCustomer.findByNumPage",page*10);
+        session.close();
+        return customers;
+    }
 }
 

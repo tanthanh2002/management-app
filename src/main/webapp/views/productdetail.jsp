@@ -31,7 +31,7 @@
 
   <div class="container-fluid" id="product-detail">
       <div class="fs-1 fw-bold border-bottom border-primary border-3 mb-3 ">PRODUCT DETAIL</div>
-      <form action="" id="product-detail-form">
+      <form action="product_save" method="post" id="product-detail-form">
           <div class="row">
               <div class="col-6">
                   <div class="row my-4">
@@ -39,7 +39,7 @@
                           Mã sản phẩm
                       </div>
                       <div class="col-6">
-                          <input type="text" class="form-control" id="product-id" value="<s:property value="product.productId"/>" placeholder="Mã sản phẩm" disabled>
+                          <input type="text" class="form-control" name="productId" id="product-id" value="<s:property value="product.productId"/>" placeholder="Mã sản phẩm" disabled>
                           <span class="form-message p-1"></span>
                       </div>
                   </div>
@@ -48,7 +48,7 @@
                           Tên sản phẩm
                       </div>
                       <div class="col-6">
-                          <input type="text" class="form-control" id="product-name" value="<s:property value="product.productName"/>" placeholder="Tên sản phẩm" required>
+                          <input type="text" class="form-control" name="productName" id="product-name" value="<s:property value="product.productName"/>" placeholder="Tên sản phẩm" required>
                           <span class="form-message p-1"></span>
                       </div>
                   </div>
@@ -57,7 +57,7 @@
                           Giá bán
                       </div>
                       <div class="col-6">
-                          <input type="number" class="form-control" value="<s:property value="product.productPrice"/>" id="product-price" placeholder="Giá bán" required>
+                          <input type="number" class="form-control" name="productPrice" value="<s:property value="product.productPrice"/>" id="product-price" placeholder="Giá bán" required>
                           <span class="form-message p-1"></span>
                       </div>
                   </div>
@@ -66,19 +66,19 @@
                           Mô tả
                       </div>
                       <div class="col-6">
-                          <input type="text-area" class="form-control" value="<s:property value="product.description"/>" id="description" placeholder="Mô tả" required>
+                          <input type="text-area" class="form-control" name="description" value="<s:property value="product.description"/>" id="description" placeholder="Mô tả" required>
                           <span class="form-message p-1"></span>
                       </div>
                   </div>
               </div>
               <div class="col">
                   <div class="row mb-5 d-flex justify-content-center">
-                      <img style="max-height: 400px; max-width: 500px; object-fit: cover" src="../images/default.jpg" alt="">
+                      <img style="max-height: 400px; max-width: 500px; object-fit: cover" id="image" src="../images/default.jpg" alt="">
                   </div>
                   <div class="row mb-3">
                       <div class="btn-group" role="group" aria-label="Basic example">
-                          <div class="col-6 mr-2"><input type="file" class="form-control" id="customFile" /></div>
-                          <div class="col-6 mx-2"><button type="button" class="btn btn-danger col-10">Xoá file</button></div>
+                          <div class="col-6 mr-2"><input type="file" name="image" onchange="chooseFile(this)" accept="image/jpeg, image/png" class="form-control" id="customFile" /></div>
+                          <div class="col-6 mx-2"><button type="button" onclick="clearFileInput()" class="btn btn-danger col-10">Xoá file</button></div>
 <%--                          <div class="col-3"><input type="text" name="file-name" class="form-control col-11" placeholder="tên tệp" required></div>--%>
                       </div>
                   </div>
@@ -86,7 +86,7 @@
                   <div class="row mt-5">
                       <div class="btn-group" role="group" aria-label="Basic example">
                           <div class="col-3 offset-3"><button type="button" class="btn btn-secondary col-10">Huỷ</button></div>
-                          <div class="col-3"><button type="button" class="btn btn-primary col-10">Lưu</button></div>
+                          <div class="col-3"><button type="button" onclick="save()" class="btn btn-primary col-10">Lưu</button></div>
                       </div>
                   </div>
               </div>
@@ -100,6 +100,22 @@
   <!-- Include Bootstrap JS -->
 
   <script>
+      function chooseFile(fileInput){
+        if(fileInput.files && fileInput.files[0]){
+            var reader = new FileReader();
+
+            reader.onload = function (e){
+                $('#image').attr('src',e.target.result);
+            }
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+      }
+
+      function clearFileInput() {
+          document.getElementById("customFile").value = "";
+          document.getElementById("image").src = "../images/default.jpg";
+      }
+
       Validator({
           form: '#product-detail-form',
           rules: [
@@ -108,6 +124,31 @@
               Validator.isRequired('#description')
           ]
       })
+
+      function save(){
+
+          let productId = document.getElementById('product-id').value;
+          let productName = document.getElementById('product-id').value;
+          let productPrice = document.getElementById('product-id').value;
+          let description = document.getElementById('product-id').value;
+          let image  = document.getElementById('customFile');
+
+          const formData = new FormData();
+          formData.append('productId', productId);
+          formData.append('productName', productName);
+          formData.append('productPrice', productPrice);
+          formData.append('description', description);
+          formData.append('image', image.files[0]);
+
+          axios.post('/product_save', formData)
+              .then(function (response) {
+                  // console.log(response.data);
+                  console.log(response.status);
+              })
+              .catch(function (error) {
+                  console.log(error);
+              });
+      }
   </script>
 </body>
 </html>

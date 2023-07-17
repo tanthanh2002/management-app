@@ -26,6 +26,15 @@
           AND address LIKE #{address};
     </select>
 
+    <select id="findByNumPage" parameterType="int" resultMap="MstCustomer">
+        select *
+        from mst_customer Limit #{offset}, 10;
+    </select>
+
+    <select id="getTotalPage" resultType="int">
+        select count(*) from mst_customer;
+    </select>
+
     <update id="update" parameterType="MstCustomer">
         update mst_customer
         set customer_name = #{customerName}, email= #{email}, address = #{address}, tel_num = #{telNum}
@@ -36,5 +45,6 @@
         INSERT INTO mst_customer(customer_name, email, tel_num, address)
         VALUES(#{customerName},#{email},#{telNum},#{address});
     </insert>
+
 
 </mapper>

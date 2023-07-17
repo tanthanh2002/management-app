@@ -22,6 +22,14 @@
         select * from mst_product where product_id = #{productId};
     </select>
 
+    <select id="findByNumPage" parameterType="int" resultMap="MstProduct">
+        select *
+        from mst_product Limit #{offset}, 10;
+    </select>
+
+    <select id="getTotalPage" resultType="int">
+        select count(*) from mst_product;
+    </select>
 
     <select id="findByNameAndIsSales" resultMap="MstProduct" parameterType="MstProduct">
         SELECT *

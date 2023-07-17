@@ -78,7 +78,30 @@
         </div>
     </div>
 
-
+    <div class="row my-5">
+        <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+            <ul class="pagination">
+                <li class="page-item">
+                    <s:a class="page-link" href="/customer_execute?page=%{page - 1 >= 0 ? page - 1 : 0}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </s:a>
+                </li>
+                <s:iterator value="pages">
+                    <s:if test="%{top == page}">
+                        <li class="page-item active"><a class="page-link" href="/customer_execute?page=<s:property/>"><s:property/></a></li>
+                    </s:if>
+                    <s:else>
+                        <li class="page-item"><a class="page-link" href="/customer_execute?page=<s:property/>"><s:property/></a></li>
+                    </s:else>
+                </s:iterator>
+                <li class="page-item">
+                    <s:a class="page-link" href="/customer_execute?page=%{page + 1}"  aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </s:a>
+                </li>
+            </ul>
+        </nav>
+    </div>
     <div class="row my-5 px-5">
         <table class="table table-hover">
             <thead>
@@ -114,23 +137,22 @@
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">
             <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                    <s:a class="page-link" href="/customer_execute?page=%{page - 1 >= 0 ? page - 1 : 0}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
-                    </a>
+                    </s:a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item active"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item"><a class="page-link" href="#">7</a></li>
-                <li class="page-item"><a class="page-link" href="#">8</a></li>
-                <li class="page-item"><a class="page-link" href="#">9</a></li>
+                <s:iterator value="pages">
+                    <s:if test="%{top == page}">
+                        <li class="page-item active"><a class="page-link" href="/customer_execute?page=<s:property/>"><s:property/></a></li>
+                    </s:if>
+                    <s:else>
+                        <li class="page-item"><a class="page-link" href="/customer_execute?page=<s:property/>"><s:property/></a></li>
+                    </s:else>
+                </s:iterator>
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                    <s:a class="page-link" href="/customer_execute?page=%{page + 1}"  aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
-                    </a>
+                    </s:a>
                 </li>
             </ul>
         </nav>

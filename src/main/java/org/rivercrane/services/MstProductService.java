@@ -1,8 +1,10 @@
 package org.rivercrane.services;
 
 import org.rivercrane.models.MstProduct;
+import org.rivercrane.models.MstUsers;
 import org.rivercrane.repository.MstProductRepo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MstProductService {
@@ -29,5 +31,19 @@ public class MstProductService {
 
     public void delete(int productId){
         repo.delete(productId);
+    }
+
+    public List<Integer> getTotalPage() {
+        List<Integer> pages = new ArrayList<>();
+
+        for(int i = 0 ; i <= repo.getTotalPage() ; i++){
+            pages.add(i);
+        }
+
+        return pages;
+    }
+
+    public List<MstProduct> getByPage(Integer page) {
+        return repo.getByPage(page);
     }
 }

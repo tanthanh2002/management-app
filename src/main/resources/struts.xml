@@ -76,6 +76,9 @@
         <action name="product_delete" method="delete" class="org.rivercrane.actions.ProductAction">
             <result name="success">views/products.jsp</result>
         </action>
+        <action name="product_save" method="execute" class="org.rivercrane.actions.ProductDetailAction">
+            <result name="success">views/productdetail.jsp</result>
+        </action>
     </package>
 
 </struts>
