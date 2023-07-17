@@ -62,4 +62,18 @@ public class MstProductRepo {
         session.close();
         return products;
     }
+
+    public void update(MstProduct product) {
+        SqlSession session = sessionFactory.openSession();
+        session.update("MstProduct.update",product);
+        session.commit();
+        session.close();
+    }
+
+    public void insert(MstProduct product) {
+        SqlSession session = sessionFactory.openSession();
+        session.update("MstProduct.insert",product);
+        session.commit();
+        session.close();
+    }
 }

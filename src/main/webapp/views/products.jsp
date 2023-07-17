@@ -55,7 +55,7 @@
 
     <div class="row">
         <div class="col-sm-3">
-            <a href="" type="submit" class="btn btn-primary"><i class="bi bi-person-add"></i><span
+            <a href="/product_detail" type="button" class="btn btn-primary"><i class="bi bi-person-add"></i><span
                     class="px-4">Thêm mới</span></a>
         </div>
         <div class="col-sm-3 offset-3">

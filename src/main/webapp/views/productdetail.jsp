@@ -128,9 +128,9 @@
       function save(){
 
           let productId = document.getElementById('product-id').value;
-          let productName = document.getElementById('product-id').value;
-          let productPrice = document.getElementById('product-id').value;
-          let description = document.getElementById('product-id').value;
+          let productName = document.getElementById('product-name').value;
+          let productPrice = document.getElementById('product-price').value;
+          let description = document.getElementById('description').value;
           let image  = document.getElementById('customFile');
 
           const formData = new FormData();
@@ -144,9 +144,11 @@
               .then(function (response) {
                   // console.log(response.data);
                   console.log(response.status);
+                  alert("Cập nhật thành công!");
               })
               .catch(function (error) {
                   console.log(error);
+                  alert("Cập nhật thất bại thành công!");
               });
       }
   </script>

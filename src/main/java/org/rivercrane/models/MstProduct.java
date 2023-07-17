@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 @Builder
 @Data
 public class MstProduct {
-    private String productId;
+    private Integer productId;
     private String productName;
     private String productImage;
     private Double productPrice;

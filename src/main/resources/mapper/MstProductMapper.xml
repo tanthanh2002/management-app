@@ -42,4 +42,19 @@
         DELETE FROM mst_product
         WHERE product_id = #{productId};
     </delete>
+
+    <update id="update" parameterType="MstProduct">
+        UPDATE mst_product
+        SET
+            product_name = #{productName},
+            product_price = #{productPrice},
+            product_image = #{productImage},
+            description = #{description}
+        WHERE product_id = #{productId};
+    </update>
+
+    <insert id="insert" parameterType="MstProduct">
+        INSERT INTO mst_product( product_name, product_image, description)
+        VALUES (#{productName},#{productImage},#{description});
+    </insert>
 </mapper>

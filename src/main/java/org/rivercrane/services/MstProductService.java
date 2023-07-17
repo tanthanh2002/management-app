@@ -46,4 +46,12 @@ public class MstProductService {
     public List<MstProduct> getByPage(Integer page) {
         return repo.getByPage(page);
     }
+
+    public void update(MstProduct product) {
+        repo.update(product);
+    }
+
+    public void insert(MstProduct product) {
+        repo.insert(product);
+    }
 }
