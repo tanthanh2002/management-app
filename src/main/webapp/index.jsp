@@ -25,7 +25,7 @@
 
     </style>
 </head>
-<body >
+<body>
 
 <div style="margin-top: 250px" class="container">
     <div class="row">
@@ -69,32 +69,31 @@
         let password = document.getElementById('password').value;
         let isRemember = document.getElementById('isRemember');
 
-        const formData = new FormData();
+        if(email == "" || password ==""){
+            alert("vui lòng nhập đủ thông tin!");
+            return;
+        }
+
+        var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if(!regex.test(email)){
+            alert("email chưa đúng định dạng!");
+            return;
+        }
+
+        let formData = new FormData();
         formData.append('email', email);
         formData.append('password', password);
 
 
-        const curUser = getCookie("curUser");
-
-        if(curUser){
-            window.location.href = "/user_execute";
-            return;
-        }else{
-            axios.post('/login', formData)
-                .then(function (response) {
-                    customAlert("Đăng nhập thành công!", 'alert-success');
-                    if (isRemember.checked) {
-                        setCookie("curUser",email,1);
-                    }
-                    window.location.href = "/user_execute";
-                    console.log(response.status);
-                })
-                .catch(function (error) {
-                    customAlert("Đăng nhập thất bại!", 'alert-danger');
-                });
-        }
-
-
+        axios.post('/login', formData)
+            .then(function (response) {
+                customAlert("Đăng nhập thành công!", 'alert-success');
+                window.location.href = "/user_execute";
+                console.log(response.status);
+            })
+            .catch(function (error) {
+                customAlert("Đăng nhập thất bại!", 'alert-danger');
+            });
     }
 
 </script>

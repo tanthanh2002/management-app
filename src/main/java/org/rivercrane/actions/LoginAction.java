@@ -24,11 +24,13 @@ public class LoginAction extends ActionSupport {
     @Override
     public String execute() throws Exception {
 
+        System.out.println(MstUsers.builder().email(email).password(password).build().toString());
         try{
             if(userService.login(email,password)){
                 addActionMessage(userService.getMessage());
                 HttpServletResponse response = ServletActionContext.getResponse();
                 response.setStatus(200);
+                System.out.println("login successfully");
                 return SUCCESS;
             }else{
                 addActionError(userService.getMessage());
