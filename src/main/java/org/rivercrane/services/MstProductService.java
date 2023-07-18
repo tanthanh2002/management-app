@@ -37,14 +37,14 @@ public class MstProductService {
         List<Integer> pages = new ArrayList<>();
 
         for(int i = 0 ; i <= repo.getTotalPage() ; i++){
-            pages.add(i);
+            pages.add(i+1);
         }
 
         return pages;
     }
 
     public List<MstProduct> getByPage(Integer page) {
-        return repo.getByPage(page);
+        return repo.getByPage(page-1);
     }
 
     public void update(MstProduct product) {

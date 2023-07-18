@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="../css/styles.css">
     <title>User management</title>
 </head>
-<body onload="isLogin()">
+<body>
 
 <!-- Your HTML code here -->
 <s:include value="header.jsp"/>

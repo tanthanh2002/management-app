@@ -85,13 +85,13 @@ public class MstUserService {
         List<Integer> pages = new ArrayList<>();
 
         for(int i = 0 ; i <= repo.getTotalPage() ; i++){
-            pages.add(i);
+            pages.add(i+1);
         }
 
         return pages;
     }
 
     public List<MstUsers> getByPage(Integer page) {
-        return repo.getByPage(page);
+        return repo.getByPage(page-1);
     }
 }

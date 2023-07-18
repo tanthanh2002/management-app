@@ -25,7 +25,7 @@
 
     <title>Customer management</title>
 </head>
-<body onload="isLogin()">
+<body>
 
 <!-- Your HTML code here -->
 

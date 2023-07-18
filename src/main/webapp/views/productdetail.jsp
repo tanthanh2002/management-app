@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="../css/styles.css">
   <title>Customer management</title>
 </head>
-<body onload="isLogin()">
+<body>
   
   <!-- Your HTML code here -->
   <s:include value = "header.jsp"/>
@@ -144,6 +144,7 @@
               .then(function (response) {
                   // console.log(response.data);
                   console.log(response.status);
+                  window.location.href = '/product_execute';
                   alert("Cập nhật thành công!");
               })
               .catch(function (error) {

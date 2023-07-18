@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 public class UserAction extends ActionSupport {
 
     public String execute() {
-        page = page == null ? 0 : page;
+        page = page == null ? 1 : page;
         pages = userService.getTotalPage();
         setPages(userService.getTotalPage());
         setUsers(userService.getByPage(page));

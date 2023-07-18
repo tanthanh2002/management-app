@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Data
 public class CustomerAction extends ActionSupport {
     public String execute() {
-        page = page == null ? 0 : page;
+        page = page == null ? 1 : page;
         pages = customerService.getTotalPage();
         setPages(customerService.getTotalPage());
         setCustomers(customerService.getByPage(page));
