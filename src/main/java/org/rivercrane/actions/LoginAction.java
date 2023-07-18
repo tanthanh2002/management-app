@@ -27,10 +27,11 @@ public class LoginAction extends ActionSupport {
         System.out.println(MstUsers.builder().email(email).password(password).build().toString());
         try{
             if(userService.login(email,password)){
-                addActionMessage(userService.getMessage());
                 HttpServletResponse response = ServletActionContext.getResponse();
                 response.setStatus(200);
                 System.out.println("login successfully");
+                Map session = ActionContext.getContext().getSession();
+                session.put("loggedUser",email);
                 return SUCCESS;
             }else{
                 addActionError(userService.getMessage());
@@ -45,6 +46,12 @@ public class LoginAction extends ActionSupport {
             return INPUT;
         }
 
+    }
+
+    public String logout(){
+        Map session = ActionContext.getContext().getSession();
+        session.clear();
+        return SUCCESS;
     }
 
     private MstUserService userService = MstUserService.getInstance();
