@@ -210,7 +210,7 @@
     }
 
     function showImg(button){
-        this.querySelector("image").style.display = "inline-block";
+        alert("image");
     }
 </script>
 </body>

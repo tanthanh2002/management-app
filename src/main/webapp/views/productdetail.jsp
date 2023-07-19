@@ -63,6 +63,18 @@
                   </div>
                   <div class="row my-4">
                       <div class="col-6 text-center">
+                          Trạng thái
+                      </div>
+                      <div class="col-6">
+                          <select class="form-control" id="isSales">
+                              <option value="-1" disabled selected hidden>Chọn trạng thái</option>
+                              <option value="1">Còn bán</option>
+                              <option value="0">Ngừng bán</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="row my-4">
+                      <div class="col-6 text-center">
                           Mô tả
                       </div>
                       <div class="col-6">
@@ -132,6 +144,7 @@
           let productPrice = document.getElementById('product-price').value;
           let description = document.getElementById('description').value;
           let image  = document.getElementById('customFile');
+          let isSales = document.getElementById('isSales').value;
 
           const formData = new FormData();
           formData.append('productId', productId);
@@ -139,6 +152,7 @@
           formData.append('productPrice', productPrice);
           formData.append('description', description);
           formData.append('image', image.files[0]);
+          formData.append('isSales',isSales);
 
           axios.post('/product_save', formData)
               .then(function (response) {

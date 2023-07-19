@@ -28,6 +28,7 @@ public class ProductDetailAction extends ActionSupport {
                 .productName(productName)
                 .productPrice(productPrice)
                 .description(description)
+                .isSales(isSales)
                 .productImage(path + fileName)
                 .build();
 
@@ -51,5 +52,6 @@ public class ProductDetailAction extends ActionSupport {
     private String productName;
     private Double productPrice;
     private String description;
+    private Integer isSales;
 
 }
