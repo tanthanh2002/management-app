@@ -271,6 +271,15 @@
         showModel();
     }
 
+    document.getElementById("save-user").addEventListener("click", function(event) {
+        let password = document.getElementById('modal-password').value;
+        let confirmPassword = document.getElementById('modal-cpassword').value;
+
+        if (password !== confirmPassword) {
+            event.preventDefault(); // Chặn việc submit nếu input rỗng
+            alert("mật khẩu xác nhận chưa trùng khớp");
+        }
+    });
 
 </script>
 </body>

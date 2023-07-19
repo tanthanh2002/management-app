@@ -123,9 +123,9 @@
                     <td><s:property value="address"/></td>
                     <td><s:property value="telNum"/></td>
                     <td>
-                        <a type="button" onclick=editRow(this) class="btn btn-success"><i
+                        <a type="button" onclick=editRow(this) class="btn btn-success btn-edit"><i
                                 class="bi bi-pencil-square"></i></a>
-                        <a type="button" onclick=saveRow(this) class="btn btn-primary"><i class="bi bi-save"></i></a>
+                        <a type="button" onclick=saveRow(this) style="display: none;" class="btn btn-primary btn-save"><i class="bi bi-save"></i></a>
                     </td>
                 </tr>
             </s:iterator>
@@ -220,6 +220,9 @@
         addressCell.contentEditable = true;
         telCell.contentEditable = true;
 
+        row.querySelector(".btn-save").style.display = 'inline-block';
+        row.querySelector(".btn-edit").style.display = 'none';
+
     }
 
     function saveRow(button) {
@@ -262,6 +265,8 @@
         telCell.contentEditable = false;
         row.classList.remove('border-info');
         row.classList.remove('border-4');
+        row.querySelector(".btn-save").style.display = 'none';
+        row.querySelector(".btn-edit").style.display = 'inline-block';
     }
 
     document.getElementById('btn-export').onclick = function () {

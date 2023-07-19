@@ -50,29 +50,29 @@ public class MstProductRepo {
 
     public int getTotalPage() {
         SqlSession session = sessionFactory.openSession();
-        Integer totalPage = session.selectOne("MstProduct.getTotalPage");
-        totalPage = (int) Math.floor(totalPage / 10);
+        Integer size = session.selectOne("MstProduct.getTotalPage");
+        Integer totalPage = (int) Math.ceil(size * 1.0 / 10);
         session.close();
         return totalPage;
     }
 
     public List<MstProduct> getByPage(Integer page) {
         SqlSession session = sessionFactory.openSession();
-        List<MstProduct> products = session.selectList("MstProduct.findByNumPage",page*10);
+        List<MstProduct> products = session.selectList("MstProduct.findByNumPage", page * 10);
         session.close();
         return products;
     }
 
     public void update(MstProduct product) {
         SqlSession session = sessionFactory.openSession();
-        session.update("MstProduct.update",product);
+        session.update("MstProduct.update", product);
         session.commit();
         session.close();
     }
 
     public void insert(MstProduct product) {
         SqlSession session = sessionFactory.openSession();
-        session.update("MstProduct.insert",product);
+        session.update("MstProduct.insert", product);
         session.commit();
         session.close();
     }

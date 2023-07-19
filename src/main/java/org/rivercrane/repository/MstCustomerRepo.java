@@ -11,29 +11,31 @@ import java.util.List;
 public class MstCustomerRepo {
     private SqlSessionFactory sessionFactory = CustomSqlSessionFactory.getSessionFactory();
     private static MstCustomerRepo instance = new MstCustomerRepo();
-    private MstCustomerRepo(){}
 
-    public static MstCustomerRepo getInstance(){
+    private MstCustomerRepo() {
+    }
+
+    public static MstCustomerRepo getInstance() {
         return instance;
     }
 
-    public List<MstCustomer> findAll(){
-        SqlSession  session = sessionFactory.openSession();
+    public List<MstCustomer> findAll() {
+        SqlSession session = sessionFactory.openSession();
         List<MstCustomer> customers = session.selectList("MstCustomer.findAll");
         session.close();
         return customers;
     }
 
-    public List<MstCustomer> findByNameAndEmailAndAddress(MstCustomer customer){
+    public List<MstCustomer> findByNameAndEmailAndAddress(MstCustomer customer) {
         SqlSession session = sessionFactory.openSession();
-        List<MstCustomer> customers = session.selectList("MstCustomer.findByNameAndEmailAndAddress",customer);
+        List<MstCustomer> customers = session.selectList("MstCustomer.findByNameAndEmailAndAddress", customer);
         session.close();
         return customers;
     }
 
-    public void update(MstCustomer customer){
+    public void update(MstCustomer customer) {
         SqlSession session = sessionFactory.openSession();
-        session.update("MstCustomer.update",customer);
+        session.update("MstCustomer.update", customer);
         session.commit();
         session.close();
     }
@@ -41,22 +43,22 @@ public class MstCustomerRepo {
 
     public void insert(MstCustomer customer) {
         SqlSession session = sessionFactory.openSession();
-        session.update("MstCustomer.insert",customer);
+        session.update("MstCustomer.insert", customer);
         session.commit();
         session.close();
     }
 
     public int getTotalPage() {
         SqlSession session = sessionFactory.openSession();
-        Integer totalPage = session.selectOne("MstCustomer.getTotalPage");
-        totalPage = (int) Math.floor(totalPage / 10);
+        Integer size = session.selectOne("MstCustomer.getTotalPage");
+        Integer totalPage = (int) Math.ceil(size * 1.0 / 10);
         session.close();
         return totalPage;
     }
 
     public List<MstCustomer> getByPage(Integer page) {
         SqlSession session = sessionFactory.openSession();
-        List<MstCustomer> customers = session.selectList("MstCustomer.findByNumPage",page*10);
+        List<MstCustomer> customers = session.selectList("MstCustomer.findByNumPage", page * 10);
         session.close();
         return customers;
     }

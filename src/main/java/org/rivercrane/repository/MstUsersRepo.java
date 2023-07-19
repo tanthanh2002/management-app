@@ -82,8 +82,8 @@ public class MstUsersRepo {
 
     public int getTotalPage() {
         SqlSession session = sessionFactory.openSession();
-        Integer totalPage = session.selectOne("MstUsers.getTotalPage");
-        totalPage = (int) Math.floor(totalPage / 10);
+        Integer size = session.selectOne("MstUsers.getTotalPage");
+        Integer totalPage = (int) Math.ceil(size *1.0 / 10);
         session.close();
         return totalPage;
     }

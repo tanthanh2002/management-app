@@ -42,7 +42,7 @@ public class MstCustomerService {
     public List<Integer> getTotalPage() {
         List<Integer> pages = new ArrayList<>();
 
-        for(int i = 0 ; i <= repo.getTotalPage() ; i++){
+        for(int i = 0 ; i < repo.getTotalPage() ; i++){
             pages.add(i+1);
         }
 

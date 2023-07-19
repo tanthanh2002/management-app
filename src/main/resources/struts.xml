@@ -9,12 +9,10 @@
     <constant name = "struts.devMode" value = "true" />
     <package name="default" namespace="/" extends="struts-default">
         <interceptors>
-            <interceptor name="test1" class="org.rivercrane.interceptor.TestInterceptor"></interceptor>
-            <interceptor name="test2" class="org.rivercrane.interceptor.TestInterceptor2"></interceptor>
             <interceptor name="loginInterceptor" class="org.rivercrane.interceptor.LoginInterceptor"></interceptor>
-            <interceptor-stack name="stack12">
-                <interceptor-ref name="test1"></interceptor-ref>
-                <interceptor-ref name="test2"></interceptor-ref>
+            <interceptor-stack name="loginInterceptorStack">
+                <interceptor-ref name="params"/>
+                <interceptor-ref name="loginInterceptor"/>
             </interceptor-stack>
         </interceptors>
 
@@ -40,7 +38,7 @@
 
     <package name="mst_users" namespace="/" extends="default">
         <action name="user_*" method="{1}" class="org.rivercrane.actions.UserAction">
-            <interceptor-ref name="loginInterceptor"></interceptor-ref>
+            <interceptor-ref name="loginInterceptorStack"></interceptor-ref>
             <result name="success">views/users.jsp</result>
         </action>
         <action name="user_search" method="search" class="org.rivercrane.actions.UserAction">
@@ -63,9 +61,9 @@
         </action>
     </package>
 
-    <package name="mst_customer" namespace="/" extends="struts-default">
+    <package name="mst_customer" namespace="/" extends="default">
         <action name="customer_*" method="{1}" class="org.rivercrane.actions.CustomerAction">
-            <interceptor-ref name="loginInterceptor"></interceptor-ref>
+            <interceptor-ref name="loginInterceptorStack"></interceptor-ref>
             <result name="success">views/customers.jsp</result>
         </action>
         <action name="customer_edit" method="edit" class="org.rivercrane.actions.CustomerAction">
@@ -84,9 +82,9 @@
         </action>
     </package>
 
-    <package name="mst_product" namespace="/" extends="struts-default">
+    <package name="mst_product" namespace="/" extends="default">
         <action name="product_*" method="{1}" class="org.rivercrane.actions.ProductAction">
-            <interceptor-ref name="loginInterceptor"></interceptor-ref>
+            <interceptor-ref name="loginInterceptorStack"></interceptor-ref>
             <result name="success">views/products.jsp</result>
         </action>
         <action name="product_detail" method="showDetail" class="org.rivercrane.actions.ProductAction">

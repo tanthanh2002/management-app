@@ -17,7 +17,6 @@ public class UserAction extends ActionSupport {
     public String execute() {
         page = page == null ? 1 : page;
         pages = userService.getTotalPage();
-        setPages(userService.getTotalPage());
         setUsers(userService.getByPage(page));
         setGroupRoles(userService.getGroupRole());
         return SUCCESS;

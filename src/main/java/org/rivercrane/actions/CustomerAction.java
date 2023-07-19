@@ -7,6 +7,7 @@ import org.apache.struts2.ServletActionContext;
 import org.rivercrane.models.MstCustomer;
 import org.rivercrane.services.MstCustomerService;
 import org.rivercrane.utils.CSVHandler;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -23,7 +24,6 @@ public class CustomerAction extends ActionSupport {
     }
 
     public String edit() {
-        System.out.println(customerId + customerName);
         MstCustomer customer = MstCustomer.builder()
                 .customerId(customerId)
                 .customerName(customerName)
@@ -82,7 +82,7 @@ public class CustomerAction extends ActionSupport {
     }
 
     public String importCustomer() throws IOException, CsvException {
-        String path = "customer.csv";
+        String path = "./src/main/resources/csv/" + "customer.csv";
         List<MstCustomer> customers = csvHandler.importCustomersFromCSV(path);
         for (MstCustomer i : customers) {
             try {
