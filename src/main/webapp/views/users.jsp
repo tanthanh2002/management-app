@@ -275,11 +275,21 @@
         let password = document.getElementById('modal-password').value;
         let confirmPassword = document.getElementById('modal-cpassword').value;
 
+        let regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/;
+
+        if(!regex.test(password)){
+            event.preventDefault();
+            alert("Mật khẩu phải lớn hơn 6 ký tự, gồm chữ và số");
+        }
+
         if (password !== confirmPassword) {
             event.preventDefault(); // Chặn việc submit nếu input rỗng
             alert("mật khẩu xác nhận chưa trùng khớp");
         }
     });
+
+
+
 
 </script>
 </body>

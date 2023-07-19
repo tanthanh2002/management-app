@@ -1,11 +1,14 @@
 package org.rivercrane.actions;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import lombok.Data;
+import org.apache.struts2.ServletActionContext;
 import org.mindrot.jbcrypt.BCrypt;
 import org.rivercrane.models.MstUsers;
 import org.rivercrane.services.MstUserService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,7 +73,12 @@ public class UserAction extends ActionSupport {
                 userService.update(user);
                 System.out.println("update");
             }
+            HttpServletResponse response = ServletActionContext.getResponse();
+            response.setStatus(200);
         } catch (Exception e) {
+            HttpServletResponse response = ServletActionContext.getResponse();
+            response.setStatus(400);
+            ActionContext.getContext().getSession().put("errorMessage", "Email đã tồn tại!");
             e.printStackTrace();
         }
         return SUCCESS;

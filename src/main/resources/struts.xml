@@ -25,7 +25,7 @@
         </action>
         <action name="login" method="execute" class="org.rivercrane.actions.LoginAction">
             <result name="success" type="redirectAction">
-                <param name="actionName">user_execute</param>
+                <param name="actionName">product_execute</param>
             </result>
             <result name="input">index.jsp</result>
         </action>

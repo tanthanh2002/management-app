@@ -107,7 +107,9 @@
             <tbody>
             <s:iterator value="products">
                 <tr>
-                    <th scope="row"><s:property value="productId"/></th>
+                    <th scope="row" onmouseover="showImg(this)">
+                        <s:property value="productId"/>
+                    </th>
                     <td><s:property value="productName"/></td>
                     <td><s:property value="description"/></td>
                     <td>$<s:property value="productPrice"/></td>
@@ -205,6 +207,10 @@
                     alert("Xoá sản phẩm thất bại!", 'alert-danger');
                 });
         }
+    }
+
+    function showImg(button){
+        this.querySelector("image").style.display = "inline-block";
     }
 </script>
 </body>
