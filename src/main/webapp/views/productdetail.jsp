@@ -146,8 +146,17 @@
           let image  = document.getElementById('customFile');
           let isSales = document.getElementById('isSales').value;
 
+          if(!isSales){
+              isSales = 1;
+          }
+
           if(parseFloat(productPrice) < 0){
               alert("Giá tiền phải lớn hơn 0");
+              return;
+          }
+
+          if(productName == '' || description ==''){
+              alert("vui lòng điền đủ thông tin");
               return;
           }
 
@@ -159,17 +168,25 @@
           formData.append('image', image.files[0]);
           formData.append('isSales',isSales);
 
-          axios.post('/product_save', formData)
-              .then(function (response) {
-                  // console.log(response.data);
-                  console.log(response.status);
-                  window.location.href = '/product_execute';
-                  alert("Cập nhật thành công!");
-              })
-              .catch(function (error) {
-                  console.log(error);
-                  alert("Cập nhật thất bại thành công!");
-              });
+          let confirmSave = confirm("Xác nhận thay đổi?");
+
+          if(confirmSave){
+              axios.post('/product_save', formData)
+                  .then(function (response) {
+                      // console.log(response.data);
+                      console.log(response.status);
+                      window.location.href = '/product_execute';
+                      alert("thành công!");
+                  })
+                  .catch(function (error) {
+                      console.log(error);
+                      alert("thất bại!");
+                  });
+          }else {
+
+          }
+
+
       }
   </script>
 </body>

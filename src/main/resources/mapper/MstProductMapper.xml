@@ -55,7 +55,7 @@
     </update>
 
     <insert id="insert" parameterType="MstProduct">
-        INSERT INTO mst_product( product_name, product_image, description)
-        VALUES (#{productName},#{productImage},#{description});
+        INSERT INTO mst_product( product_name, product_image, description,is_sales)
+        VALUES (#{productName},#{productImage},#{description},#{isSales});
     </insert>
 </mapper>
