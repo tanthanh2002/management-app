@@ -25,7 +25,7 @@
         </action>
         <action name="login" method="execute" class="org.rivercrane.actions.LoginAction">
             <result name="success" type="redirectAction">
-                <param name="actionName">product_execute</param>
+                <param name="actionName">customer_execute</param>
             </result>
             <result name="input">index.jsp</result>
         </action>
@@ -80,10 +80,15 @@
         <action name="customer_search" method="search" class="org.rivercrane.actions.CustomerAction">
             <result name="success">views/customers.jsp</result>
         </action>
+        <action name="customer_insert" method="insert" class="org.rivercrane.actions.CustomerAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">customer_execute</param>
+            </result>
+        </action>
     </package>
 
     <package name="mst_product" namespace="/" extends="default">
-        <action name="product_*" method="{1}" class="org.rivercrane.actions.ProductAction">
+        <action name="product_execute" method="execute" class="org.rivercrane.actions.ProductAction">
             <interceptor-ref name="loginInterceptorStack"></interceptor-ref>
             <result name="success">views/products.jsp</result>
         </action>

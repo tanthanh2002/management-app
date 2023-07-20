@@ -43,6 +43,26 @@ public class CustomerAction extends ActionSupport {
         return SUCCESS;
     }
 
+    public String insert(){
+
+        try {
+            MstCustomer customer = MstCustomer.builder()
+                    .customerName(customerName)
+                    .email(customerEmail)
+                    .address(customerAddress)
+                    .telNum(customerTel)
+                    .build();
+            customerService.insert(customer);
+            HttpServletResponse response = ServletActionContext.getResponse();
+            response.setStatus(200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            HttpServletResponse response = ServletActionContext.getResponse();
+            response.setStatus(400);
+        }
+        return SUCCESS;
+    }
+
     public String export() {
         List<MstCustomer> customers = customerService.getAll();
 

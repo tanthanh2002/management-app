@@ -58,7 +58,7 @@
 
     <div class="row">
         <div class="col-sm-2">
-            <a href="" type="submit" class="btn btn-primary"><i class="bi bi-person-add"></i><span
+            <a onclick="showModel()" type="button" class="btn btn-primary"><i class="bi bi-person-add"></i><span
                     class="px-2">Thêm mới</span></a>
         </div>
         <div class="col-sm-2 ">
@@ -74,7 +74,8 @@
                     class="px-2">Tìm kiếm</span></a>
         </div>
         <div class="col-sm-2">
-            <a href="/customer_execute" type="button" class="btn btn-success"><i class="bi bi-x-lg"></i><span class="px-2">Xoá tìm</span></a>
+            <a href="/customer_execute" type="button" class="btn btn-success"><i class="bi bi-x-lg"></i><span
+                    class="px-2">Xoá tìm</span></a>
         </div>
     </div>
 
@@ -82,20 +83,24 @@
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">
             <ul class="pagination">
                 <li class="page-item">
-                    <s:a class="page-link" href="/customer_execute?page=%{page - 1 >= 0 ? page - 1 : 0}" aria-label="Previous">
+                    <s:a class="page-link" href="/customer_execute?page=%{page - 1 >= 0 ? page - 1 : 0}"
+                         aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </s:a>
                 </li>
                 <s:iterator value="pages">
                     <s:if test="%{top == page}">
-                        <li class="page-item active"><a class="page-link" href="/customer_execute?page=<s:property/>"><s:property/></a></li>
+                        <li class="page-item active"><a class="page-link"
+                                                        href="/customer_execute?page=<s:property/>"><s:property/></a>
+                        </li>
                     </s:if>
                     <s:else>
-                        <li class="page-item"><a class="page-link" href="/customer_execute?page=<s:property/>"><s:property/></a></li>
+                        <li class="page-item"><a class="page-link"
+                                                 href="/customer_execute?page=<s:property/>"><s:property/></a></li>
                     </s:else>
                 </s:iterator>
                 <li class="page-item">
-                    <s:a class="page-link" href="/customer_execute?page=%{page + 1}"  aria-label="Next">
+                    <s:a class="page-link" href="/customer_execute?page=%{page + 1}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </s:a>
                 </li>
@@ -125,7 +130,8 @@
                     <td>
                         <a type="button" onclick=editRow(this) class="btn btn-success btn-edit"><i
                                 class="bi bi-pencil-square"></i></a>
-                        <a type="button" onclick=saveRow(this) style="display: none;" class="btn btn-primary btn-save"><i class="bi bi-save"></i></a>
+                        <a type="button" onclick=saveRow(this) style="display: none;"
+                           class="btn btn-primary btn-save"><i class="bi bi-save"></i></a>
                     </td>
                 </tr>
             </s:iterator>
@@ -137,20 +143,24 @@
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">
             <ul class="pagination">
                 <li class="page-item">
-                    <s:a class="page-link" href="/customer_execute?page=%{page - 1 >= 0 ? page - 1 : 0}" aria-label="Previous">
+                    <s:a class="page-link" href="/customer_execute?page=%{page - 1 >= 0 ? page - 1 : 0}"
+                         aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </s:a>
                 </li>
                 <s:iterator value="pages">
                     <s:if test="%{top == page}">
-                        <li class="page-item active"><a class="page-link" href="/customer_execute?page=<s:property/>"><s:property/></a></li>
+                        <li class="page-item active"><a class="page-link"
+                                                        href="/customer_execute?page=<s:property/>"><s:property/></a>
+                        </li>
                     </s:if>
                     <s:else>
-                        <li class="page-item"><a class="page-link" href="/customer_execute?page=<s:property/>"><s:property/></a></li>
+                        <li class="page-item"><a class="page-link"
+                                                 href="/customer_execute?page=<s:property/>"><s:property/></a></li>
                     </s:else>
                 </s:iterator>
                 <li class="page-item">
-                    <s:a class="page-link" href="/customer_execute?page=%{page + 1}"  aria-label="Next">
+                    <s:a class="page-link" href="/customer_execute?page=%{page + 1}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </s:a>
                 </li>
@@ -174,7 +184,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="modalcustomer-email" class="col-form-label">Email</label>
-                        <input type="text" class="form-control" id="modalcustomer-email" required>
+                        <input type="email" class="form-control" id="modalcustomer-email" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -185,13 +195,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="modalcustomer-address" class="col-form-label">Địa chỉ</label>
-                        <input type="text" class="form-control" id="modalcustomer-address">
+                        <input type="text" class="form-control" name="" id="modalcustomer-address">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Lưu</button>
+                <button type="submit" id="save-customer" class="btn btn-primary">Lưu</button>
             </div>
         </div>
     </div>
@@ -202,6 +212,63 @@
 <!-- Include Bootstrap JS -->
 
 <script>
+
+    function showModel() {
+        var myModal = new bootstrap.Modal(document.getElementById('modalcustomer'), {
+            keyboard: false
+        })
+        myModal.show();
+    }
+
+    document.getElementById('save-customer').addEventListener('click', function (event) {
+
+        let customerName = document.getElementById('modalcustomer-username');
+        let customerEmail = document.getElementById('modalcustomer-email');
+        let customerTel = document.getElementById('modalcustomer-tel');
+        let customerAddress = document.getElementById('modalcustomer-address');
+
+        const formData = new FormData();
+        formData.append('customerName', customerName.value);
+        formData.append('customerEmail', customerEmail.value);
+        formData.append('customerAddress', customerTel.value);
+        formData.append('customerTel', customerAddress.value);
+
+        var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if (customerName.value == '' || customerAddress == '' || customerTel == '') {
+            event.preventDefault();
+            alert("Dữ liệu không hợp lệ. Không được để trống!");
+            return;
+        }
+
+        if (!regex.test(customerEmail.value)) {
+            event.preventDefault();
+            alert("Email không đúng định dạng!");
+            return;
+        }
+
+        let confirmInsert = confirm("Bạn có muốn thêm khách hàng không?");
+
+        if (confirmInsert) {
+            axios.post('/customer_insert', formData)
+                .then(function (response) {
+                    // console.log(response.data);
+                    alert("thêm khách hàng thành công!");
+                    console.log(response.status);
+                    setTimeout(location.reload(), 100);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("thêm khách hàng thất bại! email đã được sữ dụng");
+                    setTimeout(location.reload(), 100);
+                });
+        } else {
+            setTimeout(location.reload(), 100);
+        }
+
+
+    })
+
     function editRow(button) {
 
         // button.classList.remove("btn-success");
@@ -237,26 +304,44 @@
         var telCell = row.cells[4];
 
 
-        if (idCell.textContent && nameCell.textContent && emailCell.textContent && addressCell.textContent && telCell.textContent) {
-            const formData = new FormData();
-            formData.append('customerId', parseInt(idCell.innerText));
-            formData.append('customerName', nameCell.textContent);
-            formData.append('customerEmail', emailCell.textContent);
-            formData.append('customerAddress', addressCell.textContent);
-            formData.append('customerTel', telCell.textContent);
+        let confirmSave = confirm("Bạn có chắc chắn chỉnh sửa thông tin khách hàng không?");
 
-            axios.post('/customer_edit', formData)
-                .then(function (response) {
-                    // console.log(response.data);
-                    console.log(response.status);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            customAlert('Sửa thông tin khách hàng thành công!','alert-success');
+        if (confirmSave) {
+            if (idCell.textContent && nameCell.textContent && emailCell.textContent && addressCell.textContent && telCell.textContent) {
+                const formData = new FormData();
+                formData.append('customerId', parseInt(idCell.innerText));
+                formData.append('customerName', nameCell.textContent);
+                formData.append('customerEmail', emailCell.textContent);
+                formData.append('customerAddress', addressCell.textContent);
+                formData.append('customerTel', telCell.textContent);
+
+                var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+                if(regex.test(emailCell.textContent)){
+                    axios.post('/customer_edit', formData)
+                        .then(function (response) {
+                            // console.log(response.data);
+                            console.log(response.status);
+                            customAlert('Sửa thông tin khách hàng thành công!', 'alert-success');
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            customAlert('Sửa thông tin khách hàng thất bại!', 'alert-danger');
+                        });
+                }else {
+                    alert('Sửa thông tin khách hàng thất bại! Email không hợp lệ.');
+                    setTimeout(location.reload(), 100);
+                }
+
+
+
+            } else {
+                alert('Sửa thông tin khách hàng thất bại! Thông tin không hợp lệ.');
+                setTimeout(location.reload(), 2000);
+            }
+            ;
         } else {
-            alert('Sửa thông tin khách hàng thất bại! Thông tin không hợp lệ.');
-            setTimeout(location.reload(),2000);
+            setTimeout(location.reload(), 100);
         }
 
         nameCell.contentEditable = false;

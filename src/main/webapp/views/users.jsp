@@ -129,9 +129,9 @@
                                    value="email"/>','<s:property value="groupRole"/>')" type="button"
                            class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
                         <a href="/user_delete.action?id=<s:property value = "id"/>" type="button"
-                           class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                           class="btn btn-danger"><i class="bi bi-trash3 btn-delete"></i></a>
                         <a href="/user_changelock.action?id=<s:property value = "id"/>" type="button"
-                           class="btn btn-secondary"><i class="bi bi-person-fill-lock"></i></a>
+                           class="btn btn-secondary"><i class="bi bi-person-fill-lock btn-lock"></i></a>
                     </td>
                 </tr>
             </s:iterator>
@@ -293,6 +293,37 @@
 
     });
 
+
+    // Lấy đối tượng nút xóa user
+    var deleteButtons = document.querySelectorAll(".btn-delete");
+
+    deleteButtons.forEach(function (button){
+        button.addEventListener("click", function(event) {
+            var confirmDelete = confirm("Bạn có chắc chắn muốn xóa user này không?");
+
+            // Kiểm tra xem người dùng đã chọn "OK" hay "Cancel"
+            if (confirmDelete) {
+
+            } else {
+                event.preventDefault();
+            }
+        });
+    })
+
+    var lockButtons = document.querySelectorAll(".btn-lock");
+
+    lockButtons.forEach(function (button){
+        button.addEventListener("click", function(event) {
+            var confirmDelete = confirm("Bạn có chắc chắn muốn khoá/mở khoá user này không?");
+
+            // Kiểm tra xem người dùng đã chọn "OK" hay "Cancel"
+            if (confirmDelete) {
+
+            } else {
+                event.preventDefault();
+            }
+        });
+    })
 
 
 
