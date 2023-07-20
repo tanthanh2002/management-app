@@ -21,11 +21,16 @@
         </global-results>
 
         <action name="index" method="execute" class="org.rivercrane.actions.DefaultAction">
+            <interceptor-ref name="loginInterceptorStack"></interceptor-ref>
             <result name="success">index.jsp</result>
+            <result name="verified" type="redirectAction">
+                <param name="actionName">product_execute</param>
+            </result>
         </action>
         <action name="login" method="execute" class="org.rivercrane.actions.LoginAction">
+            <interceptor-ref name="loginInterceptorStack"></interceptor-ref>
             <result name="success" type="redirectAction">
-                <param name="actionName">customer_execute</param>
+                <param name="actionName">product_execute</param>
             </result>
             <result name="input">index.jsp</result>
         </action>

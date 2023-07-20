@@ -24,7 +24,6 @@ public class LoginAction extends ActionSupport {
     @Override
     public String execute() throws Exception {
 
-        System.out.println(MstUsers.builder().email(email).password(password).build().toString());
         try{
             if(userService.login(email,password)){
                 HttpServletResponse response = ServletActionContext.getResponse();

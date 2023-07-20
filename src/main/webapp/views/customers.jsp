@@ -332,9 +332,6 @@
                     alert('Sửa thông tin khách hàng thất bại! Email không hợp lệ.');
                     setTimeout(location.reload(), 100);
                 }
-
-
-
             } else {
                 alert('Sửa thông tin khách hàng thất bại! Thông tin không hợp lệ.');
                 setTimeout(location.reload(), 2000);

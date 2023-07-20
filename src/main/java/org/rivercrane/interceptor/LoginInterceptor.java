@@ -23,8 +23,17 @@ public class LoginInterceptor implements Interceptor {
         String loggedUser = (String) session.get("loggedUser");
 
         if(loggedUser == null){
+            if(actionInvocation.getInvocationContext().getName().equals("login")){
+                return actionInvocation.invoke();
+            }
             return "index";
         }else {
+            if(actionInvocation.getInvocationContext().getName().equals("login")){
+                return "success";
+            }
+            if(actionInvocation.getInvocationContext().getName().equals("index")){
+                return "verified";
+            }
             return  actionInvocation.invoke();
         }
     }

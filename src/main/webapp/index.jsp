@@ -88,7 +88,7 @@
         axios.post('/login', formData)
             .then(function (response) {
                 customAlert("Đăng nhập thành công!", 'alert-success');
-                window.location.href = "/user_execute";
+                window.location.href = "/product_execute";
                 console.log(response.status);
             })
             .catch(function (error) {
