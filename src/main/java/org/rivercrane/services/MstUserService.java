@@ -4,6 +4,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.rivercrane.models.MstUsers;
 import org.rivercrane.repository.MstUsersRepo;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -93,5 +95,14 @@ public class MstUserService {
 
     public List<MstUsers> getByPage(Integer page) {
         return repo.getByPage(page-1);
+    }
+
+    public void updateIpByEmail(String email, String ip) {
+        MstUsers user = MstUsers.builder()
+                .email(email)
+                .lastLoginIp(ip)
+                .lastLoginAt(Timestamp.valueOf(LocalDateTime.now()))
+                .build();
+        repo.updateIpByEmail(user);
     }
 }

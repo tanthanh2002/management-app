@@ -80,6 +80,13 @@ public class MstUsersRepo {
         session.close();
     }
 
+    public void updateIpByEmail(MstUsers user){
+        SqlSession session = sessionFactory.openSession();
+        session.update("MstUsers.updateIpByEmail",user);
+        session.commit();
+        session.close();
+    }
+
     public int getTotalPage() {
         SqlSession session = sessionFactory.openSession();
         Integer size = session.selectOne("MstUsers.getTotalPage");

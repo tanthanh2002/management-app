@@ -34,11 +34,17 @@ public class ProductDetailAction extends ActionSupport {
 
         if (productId == null) {
             //insert
+            if(isSales.equals(-1)){
+                product.setIsSales(1);
+            }
             System.out.println("insert");
             System.out.println(product.toString());
             productService.insert(product);
         } else {
             //update
+            if(isSales.equals(-1)){
+               product.setIsSales(productService.getById(productId).getIsSales());
+            }
             System.out.println("update");
             System.out.println(product.toString());
             productService.update(product);

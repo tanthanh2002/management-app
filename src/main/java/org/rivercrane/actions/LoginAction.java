@@ -28,10 +28,17 @@ public class LoginAction extends ActionSupport {
         try{
             if(userService.login(email,password)){
                 HttpServletResponse response = ServletActionContext.getResponse();
+                HttpServletRequest request = ServletActionContext.getRequest();
+
+                String ip =  request.getRemoteAddr();
                 response.setStatus(200);
+
+                userService.updateIpByEmail(email,ip);
+
                 System.out.println("login successfully");
                 Map session = ActionContext.getContext().getSession();
                 session.put("loggedUser",email);
+
                 return SUCCESS;
             }else{
                 addActionError(userService.getMessage());

@@ -67,7 +67,7 @@
                       </div>
                       <div class="col-6">
                           <select class="form-control" id="isSales">
-                              <option value="-1" disabled selected hidden>Chọn trạng thái</option>
+                              <option value="<s:property value="product.isSales"/>" disabled selected hidden>Chọn trạng thái</option>
                               <option value="1">Còn bán</option>
                               <option value="0">Ngừng bán</option>
                           </select>
@@ -145,6 +145,11 @@
           let description = document.getElementById('description').value;
           let image  = document.getElementById('customFile');
           let isSales = document.getElementById('isSales').value;
+
+          if(parseFloat(productPrice) < 0){
+              alert("Giá tiền phải lớn hơn 0");
+              return;
+          }
 
           const formData = new FormData();
           formData.append('productId', productId);

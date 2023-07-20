@@ -80,6 +80,15 @@
         WHERE id = #{id};
     </update>
 
+    <update id="updateIpByEmail" parameterType="MstUsers">
+        UPDATE mst_users
+        SET
+            last_login_ip = #{lastLoginIp},
+            last_login_at = #{lastLoginAt}
+        WHERE
+            email = #{email};
+    </update>
+
     <insert id="insert" parameterType="MstUsers">
         INSERT INTO mst_users(name, email, group_role, is_active, is_delete, password)
         VALUES (#{name}, #{email}, #{groupRole}, 1, 0, #{password});
