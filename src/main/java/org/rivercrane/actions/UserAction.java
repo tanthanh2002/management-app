@@ -37,9 +37,19 @@ public class UserAction extends ActionSupport {
         if (!isActive.equals(-1)) {
             searchedUsers = searchedUsers.stream().filter(user -> user.getIsActive().equals(isActive)).collect(Collectors.toList());
         }
+        page = page == null ? 1 : page;
+
+        pages = new ArrayList<>();
+        Integer totalPage = (int) Math.ceil(searchedUsers.size() * 1.0 / 10);
+        for (int i = 0; i < totalPage; i++) {
+            pages.add(i + 1);
+        }
 
         setGroupRoles(userService.getGroupRole());
-        setUsers(searchedUsers);
+
+        Integer begin = (page - 1) * 10;
+        Integer end = (page - 1) * 10 + 10 > searchedUsers.size()  ? searchedUsers.size() : (page - 1) * 10 + 10;
+        setUsers(searchedUsers.subList(begin, end));
         return SUCCESS;
     }
 

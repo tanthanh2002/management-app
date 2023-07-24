@@ -35,3 +35,20 @@ function logOut(){
     setCookie("curUser","",0);
     window.location.href = "/login";
 }
+
+function pagination(page) {
+    var currentPath = window.location.href;
+    var newPath = "";
+    if (currentPath.includes("page=")) {
+        currentPath = currentPath.substring(0, currentPath.indexOf("page=") - 1);
+    }
+    newPath = currentPath;
+    if(newPath.includes('?')){
+        newPath = newPath + ("&page=" + page);
+    }else {
+        newPath = newPath + ("?page=" + page);
+    }
+
+    window.location.href = newPath;
+    console.log(newPath);
+}

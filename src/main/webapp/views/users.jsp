@@ -86,11 +86,11 @@
                 <s:iterator value="pages">
                     <s:if test="%{top == page}">
                         <li class="page-item active"><a class="page-link"
-                                                        href="/user_execute?page=<s:property/>"><s:property/></a></li>
+                                                        onclick="pagination(<s:property/>)"><s:property/></a></li>
                     </s:if>
                     <s:else>
                         <li class="page-item"><a class="page-link"
-                                                 href="/user_execute?page=<s:property/>"><s:property/></a></li>
+                                                 onclick="pagination(<s:property/>)"><s:property/></a></li>
                     </s:else>
                 </s:iterator>
                 <li class="page-item">
@@ -206,9 +206,10 @@
                         <label for="modal-group" class="col-form-label">Nhóm</label>
                         <select class="form-control" name="groupRole" id="modal-group" required>
                             <option value="" disabled selected hidden>Chọn nhóm</option>
-                            <s:iterator value="groupRoles">
-                                <option value="<s:property/>"><s:property/></option>
-                            </s:iterator>
+                            <option value="Manager">Manager</option>
+                            <option value="Editor">Editor</option>
+                            <option value="Reviewer">Reviewer</option>
+                            <option value="Admin">Admin</option>
                         </select>
                         <div class="invalid-feedback">
                             Hãy chọn nhóm.
@@ -333,9 +334,20 @@
 
 
     function pagination(page) {
-        var currentPath = window.location.pathname;
-        var newPath = currentPath.includes('?') ? "&page=" + page : "?page=" + page;
+        var currentPath = window.location.href;
+        var newPath = "";
+        if (currentPath.includes("page=")) {
+            currentPath = currentPath.substring(0, currentPath.indexOf("page=") - 1);
+        }
+        newPath = currentPath;
+        if(newPath.includes('?')){
+            newPath = newPath + ("&page=" + page);
+        }else {
+            newPath = newPath + ("?page=" + page);
+        }
+
         window.location.href = newPath;
+        console.log(newPath);
     }
 </script>
 </body>

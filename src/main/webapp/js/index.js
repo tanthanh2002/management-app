@@ -80,3 +80,4 @@ function getCookie(cname) {
     }
     return "";
 }
+
