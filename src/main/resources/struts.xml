@@ -8,6 +8,7 @@
 
     <constant name = "struts.devMode" value = "true" />
     <package name="default" namespace="/" extends="struts-default">
+
         <interceptors>
             <interceptor name="loginInterceptor" class="org.rivercrane.interceptor.LoginInterceptor"></interceptor>
             <interceptor-stack name="loginInterceptorStack">
@@ -19,6 +20,12 @@
         <global-results>
             <result name="index">index.jsp</result>
         </global-results>
+
+        <action name="" method="execute" class="org.rivercrane.actions.DefaultAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">index</param>
+            </result>
+        </action>
 
         <action name="index" method="execute" class="org.rivercrane.actions.DefaultAction">
             <interceptor-ref name="loginInterceptorStack"></interceptor-ref>

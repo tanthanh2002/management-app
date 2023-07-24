@@ -19,7 +19,7 @@ public class ProductDetailAction extends ActionSupport {
         String fileName = RandomStringUtils.randomAlphabetic(10) + ".png";
         File fileToCreate = new File(path, fileName);
 
-        if(image != null){
+        if (image != null) {
             FileUtils.copyFile(image, fileToCreate);
         }
 
@@ -31,20 +31,15 @@ public class ProductDetailAction extends ActionSupport {
                 .isSales(isSales)
                 .productImage(path + fileName)
                 .build();
-        System.out.println(product.toString());
+
         if (productId == null) {
-            //insert
-            System.out.println("insert");
-            if(isSales.equals(-1)){
+            if (isSales.equals(-1)) {
                 product.setIsSales(1);
             }
-
             productService.insert(product);
         } else {
-            //update
-            System.out.println("update");
-            if(isSales.equals(-1)){
-               product.setIsSales(productService.getById(productId).getIsSales());
+            if (isSales.equals(-1)) {
+                product.setIsSales(productService.getById(productId).getIsSales());
             }
             productService.update(product);
         }
