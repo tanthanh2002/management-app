@@ -116,17 +116,24 @@
                 <th scope="col" class="col">Email</th>
                 <th scope="col" class="col">Địa chỉ</th>
                 <th scope="col" class="col">Điện thoại</th>
+                <th scope="col" class="col">Tình trạng</th>
                 <th scope="col" class="col"></th>
             </tr>
             </thead>
             <tbody>
-            <s:iterator value="customers">
+            <s:iterator value="customers" status="rowStatus">
                 <tr>
-                    <th scope="row"><s:property value="customerId"/></th>
+                    <th scope="row"><s:property value="%{#rowStatus.count + (page-1)*10}" /></th>
                     <td><s:property value="customerName"/></td>
                     <td><s:property value="email"/></td>
                     <td><s:property value="address"/></td>
                     <td><s:property value="telNum"/></td>
+                    <s:if test="isActive == 1">
+                        <td class="text-success" readonly>Đang hoạt động</td>
+                    </s:if>
+                    <s:else>
+                        <td class="text-danger" readonly>Bị khoá</td>
+                    </s:else>
                     <td>
                         <a type="button" onclick=editRow(this) class="btn btn-success btn-edit"><i
                                 class="bi bi-pencil-square"></i></a>
@@ -197,6 +204,14 @@
                         <label for="modalcustomer-address" class="col-form-label">Địa chỉ</label>
                         <input type="text" class="form-control" name="" id="modalcustomer-address">
                     </div>
+                    <div class="mb-3">
+                        <label for="modalcustomer-isActive" class="col-form-label">Trạng thái</label>
+                        <select class="form-control" id="modalcustomer-isActive">
+                            <option value="-1" disabled selected hidden>Chọn nhóm</option>
+                            <option value="1">Đang hoạt động</option>
+                            <option value="0">Bị khoá</option>
+                        </select>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -226,12 +241,8 @@
         let customerEmail = document.getElementById('modalcustomer-email');
         let customerTel = document.getElementById('modalcustomer-tel');
         let customerAddress = document.getElementById('modalcustomer-address');
+        let customerStatus = document.getElementById('modalcustomer-isActive');
 
-        const formData = new FormData();
-        formData.append('customerName', customerName.value);
-        formData.append('customerEmail', customerEmail.value);
-        formData.append('customerAddress', customerTel.value);
-        formData.append('customerTel', customerAddress.value);
 
         var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -246,6 +257,13 @@
             alert("Email không đúng định dạng!");
             return;
         }
+
+        const formData = new FormData();
+        formData.append('customerName', customerName.value);
+        formData.append('customerEmail', customerEmail.value);
+        formData.append('customerAddress', customerTel.value);
+        formData.append('customerTel', customerAddress.value);
+        formData.append('isActive', customerStatus.value == -1 ? 1 : customerStatus.value);
 
         let confirmInsert = confirm("Bạn có muốn thêm khách hàng không?");
 

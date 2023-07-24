@@ -105,10 +105,10 @@
             </tr>
             </thead>
             <tbody>
-            <s:iterator value="products">
+            <s:iterator value="products" status="rowStatus">
                 <tr>
-                    <th scope="row" onmouseover="showImg(this)">
-                        <s:property value="productId"/>
+                    <th scope="row">
+                        <s:property value="%{#rowStatus.count + (page-1)*10}" />
                     </th>
                     <td><s:property value="productName"/></td>
                     <td><s:property value="description"/></td>

@@ -78,16 +78,19 @@
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">
             <ul class="pagination">
                 <li class="page-item">
-                    <s:a class="page-link" href="/user_execute?page=%{page - 1 >= 0 ? page - 1 : 0}" aria-label="Previous">
+                    <s:a class="page-link" href="/user_execute?page=%{page - 1 >= 0 ? page - 1 : 0}"
+                         aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </s:a>
                 </li>
                 <s:iterator value="pages">
                     <s:if test="%{top == page}">
-                        <li class="page-item active"><a class="page-link" href="/user_execute?page=<s:property/>"><s:property/></a></li>
+                        <li class="page-item active"><a class="page-link"
+                                                        href="/user_execute?page=<s:property/>"><s:property/></a></li>
                     </s:if>
                     <s:else>
-                        <li class="page-item"><a class="page-link" href="/user_execute?page=<s:property/>"><s:property/></a></li>
+                        <li class="page-item"><a class="page-link"
+                                                 href="/user_execute?page=<s:property/>"><s:property/></a></li>
                     </s:else>
                 </s:iterator>
                 <li class="page-item">
@@ -111,9 +114,9 @@
             </tr>
             </thead>
             <tbody>
-            <s:iterator value="users">
+            <s:iterator value="users" status="rowStatus">
                 <tr>
-                    <th scope="row"><s:property value="id"/></th>
+                    <th scope="row"><s:property value="%{#rowStatus.count + (page-1)*10}"/></th>
                     <td><s:property value="name"/></td>
                     <td><s:property value="email"/></td>
                     <td><s:property value="groupRole"/></td>
@@ -142,20 +145,23 @@
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">
             <ul class="pagination">
                 <li class="page-item">
-                    <s:a class="page-link" href="/user_execute?page=%{page - 1 >= 0 ? page - 1 : 0}" aria-label="Previous">
+                    <s:a class="page-link" href="/user_execute?page=%{page - 1 >= 0 ? page - 1 : 0}"
+                         aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </s:a>
                 </li>
                 <s:iterator value="pages">
                     <s:if test="%{top == page}">
-                        <li class="page-item active"><a class="page-link" href="/user_execute?page=<s:property/>"><s:property/></a></li>
+                        <li class="page-item active"><a class="page-link"
+                                                        onclick="pagination(<s:property/>)"><s:property/></a></li>
                     </s:if>
                     <s:else>
-                        <li class="page-item"><a class="page-link" href="/user_execute?page=<s:property/>"><s:property/></a></li>
+                        <li class="page-item"><a class="page-link" onclick="pagination(<s:property/>)"><s:property/></a>
+                        </li>
                     </s:else>
                 </s:iterator>
                 <li class="page-item">
-                    <s:a class="page-link" href="/user_execute?page=%{page + 1}"  aria-label="Next">
+                    <s:a class="page-link" href="/user_execute?page=%{page + 1}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </s:a>
                 </li>
@@ -271,16 +277,16 @@
         showModel();
     }
 
-    document.getElementById("save-user").addEventListener("click", function(event) {
+    document.getElementById("save-user").addEventListener("click", function (event) {
         let btnPassword = document.getElementById('modal-password');
         let password = btnPassword.value;
         let confirmPassword = document.getElementById('modal-cpassword').value;
 
         let regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/;
 
-        if(!btnPassword.disabled){
+        if (!btnPassword.disabled) {
             console.log(btnPassword.disabled);
-            if(!regex.test(password)){
+            if (!regex.test(password)) {
                 event.preventDefault();
                 alert("Mật khẩu phải lớn hơn 6 ký tự, gồm chữ và số");
             }
@@ -297,8 +303,8 @@
     // Lấy đối tượng nút xóa user
     var deleteButtons = document.querySelectorAll(".btn-delete");
 
-    deleteButtons.forEach(function (button){
-        button.addEventListener("click", function(event) {
+    deleteButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
             var confirmDelete = confirm("Bạn có chắc chắn muốn xóa user này không?");
 
             // Kiểm tra xem người dùng đã chọn "OK" hay "Cancel"
@@ -312,8 +318,8 @@
 
     var lockButtons = document.querySelectorAll(".btn-lock");
 
-    lockButtons.forEach(function (button){
-        button.addEventListener("click", function(event) {
+    lockButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
             var confirmDelete = confirm("Bạn có chắc chắn muốn khoá/mở khoá user này không?");
 
             // Kiểm tra xem người dùng đã chọn "OK" hay "Cancel"
@@ -326,7 +332,11 @@
     })
 
 
-
+    function pagination(page) {
+        var currentPath = window.location.pathname;
+        var newPath = currentPath.includes('?') ? "&page=" + page : "?page=" + page;
+        window.location.href = newPath;
+    }
 </script>
 </body>
 </html>

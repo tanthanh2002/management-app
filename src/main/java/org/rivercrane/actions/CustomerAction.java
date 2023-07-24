@@ -43,7 +43,7 @@ public class CustomerAction extends ActionSupport {
         return SUCCESS;
     }
 
-    public String insert(){
+    public String insert() {
 
         try {
             MstCustomer customer = MstCustomer.builder()
@@ -51,6 +51,7 @@ public class CustomerAction extends ActionSupport {
                     .email(customerEmail)
                     .address(customerAddress)
                     .telNum(customerTel)
+                    .isActive(isActive)
                     .build();
             customerService.insert(customer);
             HttpServletResponse response = ServletActionContext.getResponse();
