@@ -8,6 +8,7 @@ import org.rivercrane.models.MstProduct;
 import org.rivercrane.services.MstCustomerService;
 import org.rivercrane.services.MstProductService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,18 @@ public class ProductAction extends ActionSupport {
             products=products.stream().filter(p -> p.getProductPrice() <= priceTo).collect(Collectors.toList());
         }
 
-        setProducts(products);
+        page = page == null ? 1 : page;
+
+        pages = new ArrayList<>();
+        Integer totalPage = (int) Math.ceil(products.size() * 1.0 / 10);
+        for (int i = 0; i < totalPage; i++) {
+            pages.add(i + 1);
+        }
+
+        Integer begin = (page - 1) * 10;
+        Integer end = (page - 1) * 10 + 10 > products.size()  ? products.size() : (page - 1) * 10 + 10;
+        setProducts(products.subList(begin, end));
+
         return SUCCESS;
     }
 

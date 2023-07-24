@@ -10,6 +10,7 @@ import org.rivercrane.utils.CSVHandler;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,12 +94,22 @@ public class CustomerAction extends ActionSupport {
                 .build();
 
         List<MstCustomer> customers = customerService.findByNameAndEmailAndAddress(customerName, customerEmail, customerAddress);
-        System.out.println(customer.toString());
 
         if (!isActive.equals(-1)) {
             customers = customers.stream().filter(i -> i.getIsActive().equals(isActive)).collect(Collectors.toList());
         }
-        setCustomers(customers);
+
+        page = page == null ? 1 : page;
+
+        pages = new ArrayList<>();
+        Integer totalPage = (int) Math.ceil(customers.size() * 1.0 / 10);
+        for (int i = 0; i < totalPage; i++) {
+            pages.add(i + 1);
+        }
+
+        Integer begin = (page - 1) * 10;
+        Integer end = (page - 1) * 10 + 10 > customers.size()  ? customers.size() : (page - 1) * 10 + 10;
+        setCustomers(customers.subList(begin, end));
         return SUCCESS;
     }
 

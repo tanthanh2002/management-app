@@ -78,14 +78,14 @@
                 </li>
                 <s:iterator value="pages">
                     <s:if test="%{top == page}">
-                        <li class="page-item active"><a class="page-link" href="/product_execute?page=<s:property/>"><s:property/></a></li>
+                        <li class="page-item active"><a class="page-link" onclick="pagination(<s:property/>)"><s:property/></a></li>
                     </s:if>
                     <s:else>
-                        <li class="page-item"><a class="page-link" href="/product_execute?page=<s:property/>"><s:property/></a></li>
+                        <li class="page-item"><a class="page-link" onclick="pagination(<s:property/>)"><s:property/></a></li>
                     </s:else>
                 </s:iterator>
                 <li class="page-item">
-                    <s:a class="page-link" href="/product_execute?page=%{page + 1}"  aria-label="Next">
+                    <s:a class="page-link" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </s:a>
                 </li>
@@ -141,10 +141,10 @@
                 </li>
                 <s:iterator value="pages">
                     <s:if test="%{top == page}">
-                        <li class="page-item active"><a class="page-link" href="/product_execute?page=<s:property/>"><s:property/></a></li>
+                        <li class="page-item active"><a class="page-link" onclick="pagination(<s:property/>)"><s:property/></a></li>
                     </s:if>
                     <s:else>
-                        <li class="page-item"><a class="page-link" href="/product_execute?page=<s:property/>"><s:property/></a></li>
+                        <li class="page-item"><a class="page-link" onclick="pagination(<s:property/>)"><s:property/></a></li>
                     </s:else>
                 </s:iterator>
                 <li class="page-item">
@@ -211,6 +211,23 @@
 
     function showImg(button){
         alert("image");
+    }
+
+    function pagination(page) {
+        var currentPath = window.location.href;
+        var newPath = "";
+        if (currentPath.includes("page=")) {
+            currentPath = currentPath.substring(0, currentPath.indexOf("page=") - 1);
+        }
+        newPath = currentPath;
+        if(newPath.includes('?')){
+            newPath = newPath + ("&page=" + page);
+        }else {
+            newPath = newPath + ("?page=" + page);
+        }
+
+        window.location.href = newPath;
+        console.log(newPath);
     }
 </script>
 </body>

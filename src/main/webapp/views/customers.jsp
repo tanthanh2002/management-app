@@ -91,12 +91,12 @@
                 <s:iterator value="pages">
                     <s:if test="%{top == page}">
                         <li class="page-item active"><a class="page-link"
-                                                        href="/customer_execute?page=<s:property/>"><s:property/></a>
+                                                        onclick="pagination(<s:property/>)"><s:property/></a>
                         </li>
                     </s:if>
                     <s:else>
                         <li class="page-item"><a class="page-link"
-                                                 href="/customer_execute?page=<s:property/>"><s:property/></a></li>
+                                                 onclick="pagination(<s:property/>)"><s:property/></a></li>
                     </s:else>
                 </s:iterator>
                 <li class="page-item">
@@ -158,12 +158,12 @@
                 <s:iterator value="pages">
                     <s:if test="%{top == page}">
                         <li class="page-item active"><a class="page-link"
-                                                        href="/customer_execute?page=<s:property/>"><s:property/></a>
+                                                        onclick="pagination(<s:property/>)"><s:property/></a>
                         </li>
                     </s:if>
                     <s:else>
                         <li class="page-item"><a class="page-link"
-                                                 href="/customer_execute?page=<s:property/>"><s:property/></a></li>
+                                                 onclick="pagination(<s:property/>)"><s:property/></a></li>
                     </s:else>
                 </s:iterator>
                 <li class="page-item">
@@ -207,7 +207,7 @@
                     <div class="mb-3">
                         <label for="modalcustomer-isActive" class="col-form-label">Trạng thái</label>
                         <select class="form-control" id="modalcustomer-isActive">
-                            <option value="-1" disabled selected hidden>Chọn nhóm</option>
+                            <option value="-1" disabled selected hidden>Chọn trạng thái</option>
                             <option value="1">Đang hoạt động</option>
                             <option value="0">Bị khoá</option>
                         </select>
@@ -401,6 +401,23 @@
         var url = '/customer_search.action?customerName=' + name + '&customerEmail=' + email + '&isActive=' + status + '&customerAddress=' + address;
         btnSearch.href = url;
         btnSearch.click();
+    }
+
+    function pagination(page) {
+        var currentPath = window.location.href;
+        var newPath = "";
+        if (currentPath.includes("page=")) {
+            currentPath = currentPath.substring(0, currentPath.indexOf("page=") - 1);
+        }
+        newPath = currentPath;
+        if(newPath.includes('?')){
+            newPath = newPath + ("&page=" + page);
+        }else {
+            newPath = newPath + ("?page=" + page);
+        }
+
+        window.location.href = newPath;
+        console.log(newPath);
     }
 </script>
 </body>

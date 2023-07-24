@@ -28,19 +28,19 @@ public class UserAction extends ActionSupport {
     public String search() {
         name = name.isEmpty() ? "%" : "%" + name + "%";
         email = email.isEmpty() ? "%" : "%" + email + "%";
-        List<MstUsers> searchedUsers = userService.getByNameAndEmail(name, email);
+        List<MstUsers> users = userService.getByNameAndEmail(name, email);
 
         if (!groupRole.isEmpty()) {
-            searchedUsers = searchedUsers.stream().filter(user -> user.getGroupRole().equals(groupRole)).collect(Collectors.toList());
+            users = users.stream().filter(user -> user.getGroupRole().equals(groupRole)).collect(Collectors.toList());
         }
 
         if (!isActive.equals(-1)) {
-            searchedUsers = searchedUsers.stream().filter(user -> user.getIsActive().equals(isActive)).collect(Collectors.toList());
+            users = users.stream().filter(user -> user.getIsActive().equals(isActive)).collect(Collectors.toList());
         }
         page = page == null ? 1 : page;
 
         pages = new ArrayList<>();
-        Integer totalPage = (int) Math.ceil(searchedUsers.size() * 1.0 / 10);
+        Integer totalPage = (int) Math.ceil(users.size() * 1.0 / 10);
         for (int i = 0; i < totalPage; i++) {
             pages.add(i + 1);
         }
@@ -48,8 +48,8 @@ public class UserAction extends ActionSupport {
         setGroupRoles(userService.getGroupRole());
 
         Integer begin = (page - 1) * 10;
-        Integer end = (page - 1) * 10 + 10 > searchedUsers.size()  ? searchedUsers.size() : (page - 1) * 10 + 10;
-        setUsers(searchedUsers.subList(begin, end));
+        Integer end = (page - 1) * 10 + 10 > users.size()  ? users.size() : (page - 1) * 10 + 10;
+        setUsers(users.subList(begin, end));
         return SUCCESS;
     }
 
