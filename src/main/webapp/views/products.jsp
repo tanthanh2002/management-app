@@ -92,6 +92,9 @@
             </ul>
         </nav>
     </div>
+    <div class="row text-end px-5" readonly>
+        <div class="col-12">1~10 trong tổng số <p class="d-inline-block fw-bold">100</p></div>
+    </div>
     <div class="row my-5 px-5">
         <table class="table table-hover">
             <thead>

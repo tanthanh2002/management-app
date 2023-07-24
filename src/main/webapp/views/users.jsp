@@ -101,6 +101,9 @@
             </ul>
         </nav>
     </div>
+    <div class="row text-end px-5" readonly>
+        <div class="col-12">1~10 trong tổng số <p class="d-inline-block fw-bold">100</p></div>
+    </div>
     <div class="row my-5 px-5">
         <table class="table table-hover">
             <thead>
@@ -282,6 +285,15 @@
         let btnPassword = document.getElementById('modal-password');
         let password = btnPassword.value;
         let confirmPassword = document.getElementById('modal-cpassword').value;
+        let username = document.getElementById('modal-username').value;
+        let email = document.getElementById('modal-email').value;
+
+        if (username.trim() === '' || email.trim() === '')
+        {
+            event.preventDefault();
+            alert('Vui lòng không để trống thông tin!');
+            return;
+        }
 
         let regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/;
 
@@ -290,11 +302,13 @@
             if (!regex.test(password)) {
                 event.preventDefault();
                 alert("Mật khẩu phải lớn hơn 6 ký tự, gồm chữ và số");
+                return;
             }
 
             if (password !== confirmPassword) {
                 event.preventDefault(); // Chặn việc submit nếu input rỗng
                 alert("mật khẩu xác nhận chưa trùng khớp");
+                return;
             }
         }
 
@@ -340,9 +354,9 @@
             currentPath = currentPath.substring(0, currentPath.indexOf("page=") - 1);
         }
         newPath = currentPath;
-        if(newPath.includes('?')){
+        if (newPath.includes('?')) {
             newPath = newPath + ("&page=" + page);
-        }else {
+        } else {
             newPath = newPath + ("?page=" + page);
         }
 
