@@ -132,10 +132,11 @@ public class CustomerAction extends ActionSupport {
     }
 
     public String importCustomer() throws IOException, CsvException {
-        String path = "./src/main/resources/csv/" + "customer.csv";
+        String path = "./src/main/resources/csv/" + "import_customer.csv";
         List<MstCustomer> customers = csvHandler.importCustomersFromCSV(path);
         for (MstCustomer i : customers) {
             try {
+                i.setIsActive(1);
                 customerService.insert(i);
             } catch (Exception e) {
 //                e.printStackTrace();

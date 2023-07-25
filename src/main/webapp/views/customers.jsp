@@ -66,7 +66,7 @@
                     class="bi bi-upload"></i><span class="px-2">Import</span></a>
         </div>
         <div class="col-sm-2 ">
-            <a href="#" id="btn-export" type="button" class="btn btn-primary"><i class="bi bi-download"></i><span
+            <a id="btn-export" type="button" class="btn btn-primary"><i class="bi bi-download"></i><span
                     class="px-2">Export</span></a>
         </div>
         <div class="col-sm-2 ">
