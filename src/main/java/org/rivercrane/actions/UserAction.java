@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
 
 @Data
 public class UserAction extends ActionSupport {
@@ -98,6 +98,7 @@ public class UserAction extends ActionSupport {
                 .password(bCrypt.hashpw(password, BCrypt.gensalt()))
                 .groupRole(groupRole)
                 .build();
+        System.out.println(user.toString());
         try {
             if (user.getId() == null) {
                 userService.insert(user);
@@ -109,10 +110,9 @@ public class UserAction extends ActionSupport {
             HttpServletResponse response = ServletActionContext.getResponse();
             response.setStatus(200);
         } catch (Exception e) {
+            System.out.println("lỗi");
             HttpServletResponse response = ServletActionContext.getResponse();
             response.setStatus(400);
-            ActionContext.getContext().getSession().put("errorMessage", "Email đã tồn tại!");
-            e.printStackTrace();
         }
         return SUCCESS;
 

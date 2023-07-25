@@ -6,7 +6,7 @@
 <struts>
 
 
-    <constant name = "struts.devMode" value = "true" />
+    <constant name="struts.devMode" value="true"/>
     <package name="default" namespace="/" extends="struts-default">
 
         <interceptors>
@@ -67,9 +67,7 @@
             </result>
         </action>
         <action name="user_update" method="update" class="org.rivercrane.actions.UserAction">
-            <result name="success" type="redirectAction">
-                <param name="actionName">user_execute</param>
-            </result>
+            <result name="success">views/users.jsp</result>
         </action>
     </package>
 

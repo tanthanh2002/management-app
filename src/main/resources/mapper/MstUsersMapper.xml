@@ -23,7 +23,7 @@
         select *
         from mst_users
         where email = #{email}
-          and is_delete = 0;
+          and is_delete = 0 and is_active = 1;
     </select>
 
     <select id="findById" resultMap="MstUsers">

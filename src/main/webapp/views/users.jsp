@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- Include Bootstrap Jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+            integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Include Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/index.js"></script>
@@ -135,9 +137,9 @@
                                    value="email"/>','<s:property value="groupRole"/>')" type="button"
                            class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
                         <a href="/user_delete.action?id=<s:property value = "id"/>" type="button"
-                           class="btn btn-danger"><i class="bi bi-trash3 btn-delete"></i></a>
+                           class="btn btn-danger btn-delete"><i class="bi bi-trash3"></i></a>
                         <a href="/user_changelock.action?id=<s:property value = "id"/>" type="button"
-                           class="btn btn-secondary"><i class="bi bi-person-fill-lock btn-lock"></i></a>
+                           class="btn btn-secondary btn-lock"><i class="bi bi-person-fill-lock "></i></a>
                     </td>
                 </tr>
             </s:iterator>
@@ -282,15 +284,17 @@
     }
 
     document.getElementById("save-user").addEventListener("click", function (event) {
+        event.preventDefault();
+
+        let id = document.getElementById('modal-userid').value;
         let btnPassword = document.getElementById('modal-password');
         let password = btnPassword.value;
         let confirmPassword = document.getElementById('modal-cpassword').value;
         let username = document.getElementById('modal-username').value;
         let email = document.getElementById('modal-email').value;
-
+        let groupRole = document.getElementById('modal-group')
         if (username.trim() === '' || email.trim() === '')
         {
-            event.preventDefault();
             alert('Vui lòng không để trống thông tin!');
             return;
         }
@@ -300,18 +304,37 @@
         if (!btnPassword.disabled) {
             console.log(btnPassword.disabled);
             if (!regex.test(password)) {
-                event.preventDefault();
                 alert("Mật khẩu phải lớn hơn 6 ký tự, gồm chữ và số");
                 return;
             }
 
             if (password !== confirmPassword) {
-                event.preventDefault(); // Chặn việc submit nếu input rỗng
                 alert("mật khẩu xác nhận chưa trùng khớp");
                 return;
             }
         }
 
+        const formData = new FormData();
+        if(id != ''){
+            formData.append('id', parseInt(id));
+        }
+        formData.append('name', username);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('groupRole', groupRole.value);
+
+        axios.post('/user_update', formData)
+            .then(function (response) {
+                // console.log(response.data);
+                console.log(response.status);
+                alert('Thành công!');
+                setTimeout(location.reload(), 100);
+            })
+            .catch(function (error) {
+                console.log(error.status);
+                alert('Không thành công! email đã tồn tại!');
+                setTimeout(location.reload(), 100);
+            });
     });
 
 
@@ -324,9 +347,10 @@
 
             // Kiểm tra xem người dùng đã chọn "OK" hay "Cancel"
             if (confirmDelete) {
-
+                console.log("xoá user");
             } else {
                 event.preventDefault();
+                return;
             }
         });
     })
