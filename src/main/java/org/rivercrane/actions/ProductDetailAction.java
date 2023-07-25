@@ -31,7 +31,7 @@ public class ProductDetailAction extends ActionSupport {
                 .isSales(isSales)
                 .productImage(path + fileName)
                 .build();
-
+        System.out.println(product.toString());
         if (productId == null) {
             if (isSales.equals(-1)) {
                 product.setIsSales(1);

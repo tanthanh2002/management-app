@@ -3,36 +3,41 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="MstProduct">
-    <resultMap id = "MstProduct" type = "MstProduct">
-        <result property = "productId" column = "product_id"/>
-        <result property = "productName" column = "product_name"/>
-        <result property = "productImage" column = "product_image"/>
-        <result property = "productPrice" column = "product_price"/>
-        <result property = "isSales" column = "is_sales"/>
-        <result property = "description" column = "description"/>
-        <result property = "createdAt" column = "created_at"/>
-        <result property = "updatedAt" column = "updated_at"/>
+    <resultMap id="MstProduct" type="MstProduct">
+        <result property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="productImage" column="product_image"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="isSales" column="is_sales"/>
+        <result property="description" column="description"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
     </resultMap>
 
-    <select id = "findAll" resultMap = "MstProduct">
-        select * from mst_product;
+    <select id="findAll" resultMap="MstProduct">
+        select *
+        from mst_product;
     </select>
 
-    <select id = "findById" resultMap = "MstProduct">
-        select * from mst_product where product_id = #{productId};
+    <select id="findById" resultMap="MstProduct">
+        select *
+        from mst_product
+        where product_id = #{productId};
     </select>
 
     <select id="findByNumPage" parameterType="int" resultMap="MstProduct">
         select *
-        from mst_product Limit #{offset}, 10;
+        from mst_product order by (product_id) desc Limit #{offset}, 10;
     </select>
 
     <select id="getTotalPage" resultType="int">
-        select count(*) from mst_product;
+        select count(*)
+        from mst_product;
     </select>
 
     <select id="getTotalRecord" resultType="int">
-        select count(product_id) from mst_product;
+        select count(product_id)
+        from mst_product;
     </select>
 
     <select id="findByNameAndIsSales" resultMap="MstProduct" parameterType="MstProduct">
@@ -43,23 +48,23 @@
     </select>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM mst_product
+        DELETE
+        FROM mst_product
         WHERE product_id = #{productId};
     </delete>
 
     <update id="update" parameterType="MstProduct">
         UPDATE mst_product
-        SET
-            product_name = #{productName},
+        SET product_name  = #{productName},
             product_price = #{productPrice},
             product_image = #{productImage},
-            description = #{description},
-            is_sales = #{isSales}
+            description   = #{description},
+            is_sales      = #{isSales}
         WHERE product_id = #{productId};
     </update>
 
     <insert id="insert" parameterType="MstProduct">
-        INSERT INTO mst_product( product_name, product_image, description,is_sales)
-        VALUES (#{productName},#{productImage},#{description},#{isSales});
+        INSERT INTO mst_product(product_name, product_price, product_image, description, is_sales)
+        VALUES (#{productName}, #{productPrice}, #{productImage}, #{description}, #{isSales});
     </insert>
 </mapper>

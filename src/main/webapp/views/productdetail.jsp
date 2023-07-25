@@ -150,13 +150,14 @@
               isSales = 1;
           }
 
-          if(parseFloat(productPrice) < 0){
-              alert("Giá tiền phải lớn hơn 0");
+          if(productName.trim() === '' || description.trim() ===''){
+              alert("vui lòng điền đủ thông tin");
               return;
           }
 
-          if(productName == '' || description ==''){
-              alert("vui lòng điền đủ thông tin");
+
+          if(parseFloat(productPrice) < 0){
+              alert("Giá tiền phải lớn hơn 0");
               return;
           }
 
