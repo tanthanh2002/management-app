@@ -89,7 +89,7 @@ public class MstUsersRepo {
 
     public int getTotalPage() {
         SqlSession session = sessionFactory.openSession();
-        Integer size = session.selectOne("MstUsers.getTotalPage");
+        Integer size = session.selectOne("MstUsers.getTotalRecord");
         Integer totalPage = (int) Math.ceil(size *1.0 / 10);
         session.close();
         return totalPage;
@@ -100,5 +100,11 @@ public class MstUsersRepo {
         List<MstUsers> users = session.selectList("MstUsers.findByNumPage",page*10);
         session.close();
         return users;
+    }
+
+    public Integer getTotalRecord() {
+        SqlSession session = sessionFactory.openSession();
+        Integer size = session.selectOne("MstUsers.getTotalRecord");
+        return size;
     }
 }

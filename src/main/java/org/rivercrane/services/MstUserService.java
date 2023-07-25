@@ -51,6 +51,10 @@ public class MstUserService {
         return repo.findAll();
     }
 
+    public Integer getTotalRecord(){
+        return repo.getTotalRecord();
+    }
+
     public List<MstUsers> getByNameAndEmail(String name, String email){
         MstUsers user = MstUsers.builder()
                 .email(email)

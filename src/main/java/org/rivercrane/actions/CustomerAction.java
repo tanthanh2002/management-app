@@ -1,6 +1,7 @@
 package org.rivercrane.actions;
 
 import com.opencsv.exceptions.CsvException;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import lombok.Data;
 import org.apache.struts2.ServletActionContext;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Data
@@ -21,6 +23,14 @@ public class CustomerAction extends ActionSupport {
         pages = customerService.getTotalPage();
         setPages(customerService.getTotalPage());
         setCustomers(customerService.getByPage(page));
+
+        Integer start = (page - 1) * 10 + 1;
+        Integer finish = (page - 1) * 10 + customerService.getByPage(page).size();
+
+        Map context = ActionContext.getContext().getContextMap();
+        context.put("totalRecord", customerService.getTotalRecord());
+        context.put("start", start);
+        context.put("finish", finish);
         return SUCCESS;
     }
 
@@ -110,6 +120,14 @@ public class CustomerAction extends ActionSupport {
         Integer begin = (page - 1) * 10;
         Integer end = (page - 1) * 10 + 10 > customers.size()  ? customers.size() : (page - 1) * 10 + 10;
         setCustomers(customers.subList(begin, end));
+
+        Integer start = (page - 1) * 10 + 1;
+        Integer finish = (page - 1) * 10 + customers.subList(begin, end).size();
+
+        Map context = ActionContext.getContext().getContextMap();
+        context.put("totalRecord", customers.size());
+        context.put("start", start);
+        context.put("finish", finish);
         return SUCCESS;
     }
 

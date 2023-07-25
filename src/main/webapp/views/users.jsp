@@ -102,7 +102,7 @@
         </nav>
     </div>
     <div class="row text-end px-5" readonly>
-        <div class="col-12">1~10 trong tổng số <p class="d-inline-block fw-bold">100</p></div>
+        <div class="col-12"><s:property value="start"/> ~ <s:property value="finish"/> trong tổng số <p class="d-inline-block fw-bold"><s:property value="totalRecord"/></p></div>
     </div>
     <div class="row my-5 px-5">
         <table class="table table-hover">

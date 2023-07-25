@@ -31,8 +31,8 @@
         from mst_customer Limit #{offset}, 10;
     </select>
 
-    <select id="getTotalPage" resultType="int">
-        select count(*) from mst_customer;
+    <select id="getTotalRecord" resultType="int">
+        select count(customer_id) from mst_customer;
     </select>
 
     <update id="update" parameterType="MstCustomer">

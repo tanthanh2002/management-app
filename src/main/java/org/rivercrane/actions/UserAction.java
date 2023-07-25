@@ -11,6 +11,7 @@ import org.rivercrane.services.MstUserService;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -20,7 +21,17 @@ public class UserAction extends ActionSupport {
     public String execute() {
         page = page == null ? 1 : page;
         pages = userService.getTotalPage();
-        setUsers(userService.getByPage(page));
+        List<MstUsers> users = userService.getByPage(page);
+
+        Integer start = (page - 1) * 10 + 1;
+        Integer finish = (page - 1) * 10 + users.size();
+
+        Map context = ActionContext.getContext().getContextMap();
+        context.put("totalRecord", userService.getTotalRecord());
+        context.put("start", start);
+        context.put("finish", finish);
+
+        setUsers(users);
         setGroupRoles(userService.getGroupRole());
         return SUCCESS;
     }
@@ -28,6 +39,9 @@ public class UserAction extends ActionSupport {
     public String search() {
         name = name.isEmpty() ? "%" : "%" + name + "%";
         email = email.isEmpty() ? "%" : "%" + email + "%";
+        page = page == null ? 1 : page;
+        pages = new ArrayList<>();
+
         List<MstUsers> users = userService.getByNameAndEmail(name, email);
 
         if (!groupRole.isEmpty()) {
@@ -37,19 +51,28 @@ public class UserAction extends ActionSupport {
         if (!isActive.equals(-1)) {
             users = users.stream().filter(user -> user.getIsActive().equals(isActive)).collect(Collectors.toList());
         }
-        page = page == null ? 1 : page;
 
-        pages = new ArrayList<>();
         Integer totalPage = (int) Math.ceil(users.size() * 1.0 / 10);
         for (int i = 0; i < totalPage; i++) {
             pages.add(i + 1);
         }
 
+        Integer begin = (page - 1) * 10;
+        Integer end = (page - 1) * 10 + 10 > users.size() ? users.size() : (page - 1) * 10 + 10;
+        setUsers(users.subList(begin, end));
         setGroupRoles(userService.getGroupRole());
 
-        Integer begin = (page - 1) * 10;
-        Integer end = (page - 1) * 10 + 10 > users.size()  ? users.size() : (page - 1) * 10 + 10;
-        setUsers(users.subList(begin, end));
+        Integer start;
+        Integer finish;
+
+        start = (page - 1) * 10 + 1;
+        finish = (page - 1) * 10 + users.subList(begin, end).size();
+
+        Map context = ActionContext.getContext().getContextMap();
+        context.put("totalRecord", users.size());
+        context.put("start", start);
+        context.put("finish", finish);
+
         return SUCCESS;
     }
 

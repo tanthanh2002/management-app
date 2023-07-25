@@ -31,6 +31,10 @@
         select count(*) from mst_product;
     </select>
 
+    <select id="getTotalRecord" resultType="int">
+        select count(product_id) from mst_product;
+    </select>
+
     <select id="findByNameAndIsSales" resultMap="MstProduct" parameterType="MstProduct">
         SELECT *
         FROM mst_product

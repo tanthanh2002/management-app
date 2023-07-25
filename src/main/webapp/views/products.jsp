@@ -72,16 +72,19 @@
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">
             <ul class="pagination">
                 <li class="page-item">
-                    <s:a class="page-link" href="/product_execute?page=%{page - 1 >= 0 ? page - 1 : 0}" aria-label="Previous">
+                    <s:a class="page-link" href="/product_execute?page=%{page - 1 >= 0 ? page - 1 : 0}"
+                         aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </s:a>
                 </li>
                 <s:iterator value="pages">
                     <s:if test="%{top == page}">
-                        <li class="page-item active"><a class="page-link" onclick="pagination(<s:property/>)"><s:property/></a></li>
+                        <li class="page-item active"><a class="page-link"
+                                                        onclick="pagination(<s:property/>)"><s:property/></a></li>
                     </s:if>
                     <s:else>
-                        <li class="page-item"><a class="page-link" onclick="pagination(<s:property/>)"><s:property/></a></li>
+                        <li class="page-item"><a class="page-link" onclick="pagination(<s:property/>)"><s:property/></a>
+                        </li>
                     </s:else>
                 </s:iterator>
                 <li class="page-item">
@@ -93,7 +96,7 @@
         </nav>
     </div>
     <div class="row text-end px-5" readonly>
-        <div class="col-12">1~10 trong tổng số <p class="d-inline-block fw-bold">100</p></div>
+        <div class="col-12"><s:property value="start"/> ~ <s:property value="finish"/> trong tổng số <p class="d-inline-block fw-bold"><s:property value="totalRecord"/></p></div>
     </div>
     <div class="row my-5 px-5">
         <table class="table table-hover">
@@ -111,7 +114,7 @@
             <s:iterator value="products" status="rowStatus">
                 <tr>
                     <th scope="row">
-                        <s:property value="%{#rowStatus.count + (page-1)*10}" />
+                        <s:property value="%{#rowStatus.count + (page-1)*10}"/>
                     </th>
                     <td><s:property value="productName"/></td>
                     <td><s:property value="description"/></td>
@@ -123,7 +126,8 @@
                         <td class="text-danger">Ngừng bán</td>
                     </s:else>
                     <td>
-                        <a href="/product_detail?productId=<s:property value="productId"/>" type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                        <a href="/product_detail?productId=<s:property value="productId"/>" type="button"
+                           class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
                         <a onclick="deleteProduct(<s:property value="productId"/>)" type="button"
                            class="btn btn-danger"><i class="bi bi-trash3"></i></a>
                     </td>
@@ -138,20 +142,23 @@
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">
             <ul class="pagination">
                 <li class="page-item">
-                    <s:a class="page-link" href="/product_execute?page=%{page - 1 >= 0 ? page - 1 : 0}" aria-label="Previous">
+                    <s:a class="page-link" href="/product_execute?page=%{page - 1 >= 0 ? page - 1 : 0}"
+                         aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </s:a>
                 </li>
                 <s:iterator value="pages">
                     <s:if test="%{top == page}">
-                        <li class="page-item active"><a class="page-link" onclick="pagination(<s:property/>)"><s:property/></a></li>
+                        <li class="page-item active"><a class="page-link"
+                                                        onclick="pagination(<s:property/>)"><s:property/></a></li>
                     </s:if>
                     <s:else>
-                        <li class="page-item"><a class="page-link" onclick="pagination(<s:property/>)"><s:property/></a></li>
+                        <li class="page-item"><a class="page-link" onclick="pagination(<s:property/>)"><s:property/></a>
+                        </li>
                     </s:else>
                 </s:iterator>
                 <li class="page-item">
-                    <s:a class="page-link" href="/product_execute?page=%{page + 1}"  aria-label="Next">
+                    <s:a class="page-link" href="/product_execute?page=%{page + 1}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </s:a>
                 </li>
@@ -212,7 +219,7 @@
         }
     }
 
-    function showImg(button){
+    function showImg(button) {
         alert("image");
     }
 
@@ -223,9 +230,9 @@
             currentPath = currentPath.substring(0, currentPath.indexOf("page=") - 1);
         }
         newPath = currentPath;
-        if(newPath.includes('?')){
+        if (newPath.includes('?')) {
             newPath = newPath + ("&page=" + page);
-        }else {
+        } else {
             newPath = newPath + ("?page=" + page);
         }
 

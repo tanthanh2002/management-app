@@ -1,6 +1,7 @@
 package org.rivercrane.actions;
 
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import lombok.Data;
 import org.rivercrane.models.MstCustomer;
@@ -10,15 +11,26 @@ import org.rivercrane.services.MstProductService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Data
 public class ProductAction extends ActionSupport {
     public String execute(){
         page = page == null ? 1 : page;
+
+
         pages = productService.getTotalPage();
         setPages(productService.getTotalPage());
         setProducts(productService.getByPage(page));
+
+        Integer start = (page - 1) * 10 + 1;
+        Integer finish = (page - 1) * 10 + productService.getByPage(page).size();
+
+        Map context = ActionContext.getContext().getContextMap();
+        context.put("totalRecord", productService.getTotalRecord());
+        context.put("start", start);
+        context.put("finish", finish);
         return SUCCESS;
     }
 
@@ -56,6 +68,14 @@ public class ProductAction extends ActionSupport {
         Integer begin = (page - 1) * 10;
         Integer end = (page - 1) * 10 + 10 > products.size()  ? products.size() : (page - 1) * 10 + 10;
         setProducts(products.subList(begin, end));
+
+        Integer start = (page - 1) * 10 + 1;
+        Integer finish = (page - 1) * 10 + products.subList(begin, end).size();
+
+        Map context = ActionContext.getContext().getContextMap();
+        context.put("totalRecord", products.size());
+        context.put("start", start);
+        context.put("finish", finish);
 
         return SUCCESS;
     }

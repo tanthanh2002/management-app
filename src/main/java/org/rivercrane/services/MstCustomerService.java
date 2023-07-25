@@ -49,6 +49,10 @@ public class MstCustomerService {
         return pages;
     }
 
+    public Integer getTotalRecord(){
+        return repo.getTotalRecord();
+    }
+
     public List<MstCustomer> getByPage(Integer page) {
         return repo.getByPage(page-1);
     }

@@ -50,7 +50,7 @@ public class MstCustomerRepo {
 
     public int getTotalPage() {
         SqlSession session = sessionFactory.openSession();
-        Integer size = session.selectOne("MstCustomer.getTotalPage");
+        Integer size = session.selectOne("MstCustomer.getTotalRecord");
         Integer totalPage = (int) Math.ceil(size * 1.0 / 10);
         session.close();
         return totalPage;
@@ -61,6 +61,12 @@ public class MstCustomerRepo {
         List<MstCustomer> customers = session.selectList("MstCustomer.findByNumPage", page * 10);
         session.close();
         return customers;
+    }
+
+    public Integer getTotalRecord() {
+        SqlSession session = sessionFactory.openSession();
+        Integer size = session.selectOne("MstCustomer.getTotalRecord");
+        return size;
     }
 }
 

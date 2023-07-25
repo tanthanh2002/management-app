@@ -50,7 +50,7 @@ public class MstProductRepo {
 
     public int getTotalPage() {
         SqlSession session = sessionFactory.openSession();
-        Integer size = session.selectOne("MstProduct.getTotalPage");
+        Integer size = session.selectOne("MstProduct.getTotalRecord");
         Integer totalPage = (int) Math.ceil(size * 1.0 / 10);
         session.close();
         return totalPage;
@@ -75,5 +75,11 @@ public class MstProductRepo {
         session.update("MstProduct.insert", product);
         session.commit();
         session.close();
+    }
+
+    public Integer getTotalRecord() {
+        SqlSession session = sessionFactory.openSession();
+        Integer size = session.selectOne("MstProduct.getTotalRecord");
+        return size;
     }
 }

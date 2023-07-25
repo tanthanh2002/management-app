@@ -43,6 +43,10 @@ public class MstProductService {
         return pages;
     }
 
+    public Integer getTotalRecord(){
+        return repo.getTotalRecord();
+    }
+
     public List<MstProduct> getByPage(Integer page) {
         return repo.getByPage(page-1);
     }
