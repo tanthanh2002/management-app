@@ -29,7 +29,7 @@ public class ProductDetailAction extends ActionSupport {
                 .productPrice(productPrice)
                 .description(description)
                 .isSales(isSales)
-                .productImage(path + fileName)
+                .productImage("../images/"+ fileName)
                 .build();
         System.out.println(product.toString());
         if (productId == null) {

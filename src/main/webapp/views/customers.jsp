@@ -62,7 +62,7 @@
                     class="px-2">Thêm mới</span></a>
         </div>
         <div class="col-sm-2 ">
-            <a href="/customer_importCustomer" id="btn-import" type="button" class="btn btn-primary"><i
+            <a id="btn-import" type="button" class="btn btn-primary"><i
                     class="bi bi-upload"></i><span class="px-2">Import</span></a>
         </div>
         <div class="col-sm-2 ">
@@ -249,7 +249,7 @@
 
         var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-        if (customerName.value == '' || customerAddress == '' || customerTel == '') {
+        if (customerName.value.trim() === '' || customerAddress.value.trim() === '' || customerTel.value.trim() === '') {
             event.preventDefault();
             alert("Dữ liệu không hợp lệ. Không được để trống!");
             return;
@@ -384,6 +384,7 @@
     }
 
     document.getElementById('btn-import').onclick = function () {
+
         axios.get('/customer_importCustomer')
             .then(function (response) {
                 customAlert("Import dữ liệu khách hàng thành công!", 'alert-success');

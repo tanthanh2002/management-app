@@ -28,7 +28,7 @@
 
     <select id="findByNumPage" parameterType="int" resultMap="MstCustomer">
         select *
-        from mst_customer Limit #{offset}, 10;
+        from mst_customer order by (customer_id) desc Limit #{offset}, 10;
     </select>
 
     <select id="getTotalRecord" resultType="int">

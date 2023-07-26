@@ -134,10 +134,12 @@ public class CustomerAction extends ActionSupport {
     public String importCustomer() throws IOException, CsvException {
         String path = "./src/main/resources/csv/" + "import_customer.csv";
         List<MstCustomer> customers = csvHandler.importCustomersFromCSV(path);
+        System.out.println(customers.size());
         for (MstCustomer i : customers) {
             try {
                 i.setIsActive(1);
                 customerService.insert(i);
+                System.out.println(i.toString());
             } catch (Exception e) {
 //                e.printStackTrace();
                 System.out.println("Thêm không thành công: " + i.getCustomerName());

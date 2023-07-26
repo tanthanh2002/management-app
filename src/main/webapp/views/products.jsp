@@ -116,7 +116,9 @@
                     <th scope="row">
                         <s:property value="%{#rowStatus.count + (page-1)*10}"/>
                     </th>
-                    <td><s:property value="productName"/></td>
+                    <td onmouseleave="hideImg(this)" onmouseover="showImg(this)"><s:property value="productName"/>
+                        <img style="display: none; width: 240px; height: 180px; object-fit: cover" src="<s:property value="productImage"/>">
+                    </td>
                     <td><s:property value="description"/></td>
                     <td>$<s:property value="productPrice"/></td>
                     <s:if test="isSales == 1">
@@ -220,7 +222,13 @@
     }
 
     function showImg(button) {
-        alert("image");
+        let img  = button.querySelector('img');
+        img.style.display = 'block';
+    }
+
+    function hideImg(button){
+        let img = button.querySelector('img');
+        img.style.display = 'none';
     }
 
     function pagination(page) {
@@ -239,6 +247,8 @@
         window.location.href = newPath;
         console.log(newPath);
     }
+
+
 </script>
 </body>
 </html>
