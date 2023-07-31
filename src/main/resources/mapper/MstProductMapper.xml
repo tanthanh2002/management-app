@@ -10,8 +10,11 @@
         <result property="productPrice" column="product_price"/>
         <result property="isSales" column="is_sales"/>
         <result property="description" column="description"/>
+        <result property="customerId" column="customer_id"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
+        <result property="customerName" column="customer_name"/>
+        <result property="productDetails" column="product_details"/>
     </resultMap>
 
     <select id="findAll" resultMap="MstProduct">
@@ -26,8 +29,19 @@
     </select>
 
     <select id="findByNumPage" parameterType="int" resultMap="MstProduct">
-        select *
-        from mst_product order by (product_id) desc Limit #{offset}, 10;
+        select
+            p.product_id,
+            p.product_name,
+            p.product_image,
+            p.product_price,
+            p.is_sales,
+            p.description,
+            p.customer_id,
+            p.created_at,
+            p.updated_at,
+            c.customer_name,
+            p.product_details
+        from mst_product p left join mst_customer c on p.customer_id = c.customer_id order by (product_id) desc Limit #{offset}, 10;
     </select>
 
     <select id="getTotalPage" resultType="int">

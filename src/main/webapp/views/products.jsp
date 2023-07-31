@@ -104,7 +104,7 @@
             <tr>
                 <th scope="col" class="col">#</th>
                 <th scope="col" class="col">Tên sản phẩm</th>
-                <th scope="col" class="col">Mô tả</th>
+                <th scope="col" class="col">Chi tiết</th>
                 <th scope="col" class="col">Giá</th>
                 <th scope="col" class="col">Tình trạng</th>
                 <th scope="col" class="col"></th>
@@ -119,13 +119,23 @@
                     <td onmouseleave="hideImg(this)" onmouseover="showImg(this)"><s:property value="productName"/>
                         <img style="display: none; width: 240px; height: 180px; object-fit: cover" src="<s:property value="productImage"/>">
                     </td>
-                    <td><s:property value="description"/></td>
-                    <td>$<s:property value="productPrice"/></td>
-                    <s:if test="isSales == 1">
-                        <td class="text-success">Đang bán</td>
+                    <s:if test="productDetails != null">
+                        <td>
+                            <div>
+                               Mô tả: <s:property value="description"/>
+                            </div>
+                            Linh kiện gồm: <s:property value="productDetails"/>
+                        </td>
                     </s:if>
                     <s:else>
-                        <td class="text-danger">Ngừng bán</td>
+                        <td><s:property value="description"/></td>
+                    </s:else>
+                    <td>$<s:property value="productPrice"/></td>
+                    <s:if test="isSales == 1 && customerId == null">
+                        <td class="text-success">Tồn kho</td>
+                    </s:if>
+                    <s:else>
+                        <td class="text-danger"><i class="bi bi-person"></i>: <s:property value="customerName"/></td>
                     </s:else>
                     <td>
                         <a href="/product_detail?productId=<s:property value="productId"/>" type="button"

@@ -14,6 +14,10 @@ public class MstProduct {
     private Double productPrice;
     private Integer isSales;
     private String description;
+    private Integer customerId;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    private String customerName;
+    private String productDetails;
+
 }
