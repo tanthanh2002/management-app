@@ -53,8 +53,8 @@ CREATE TABLE IF NOT EXISTS mst_product_detail
     product_component               INT                             NOT NULL,
     qty                             INT                             CHECK ( qty > 0 ),
     PRIMARY KEY (product_id,product_component),
-    CONSTRAINT mst_product_detail_product_id FOREIGN KEY (product_id) REFERENCES mst_product(product_id),
-    CONSTRAINT mst_product_detail_product_component FOREIGN KEY (product_component) REFERENCES mst_product(product_id)
+    CONSTRAINT mst_product_detail_product_id FOREIGN KEY (product_id) REFERENCES mst_product(product_id) ON DELETE CASCADE,
+    CONSTRAINT mst_product_detail_product_component FOREIGN KEY (product_component) REFERENCES mst_product(product_id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS mst_shop
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS mst_order_detail
     CONSTRAINT mst_order_detail_order_id  FOREIGN KEY (order_id) REFERENCES mst_order(order_id),
     CONSTRAINT mst_order_detail_shop_id   FOREIGN KEY (shop_id) REFERENCES mst_shop(shop_id),
     CONSTRAINT mst_order_detail_receiver_id FOREIGN KEY (receiver_id) REFERENCES mst_customer(customer_id)
-    );
+);
 
 
 -- trigger update
@@ -146,7 +146,22 @@ BEGIN
     UPDATE mst_product
     SET product_details = product_detail
     WHERE product_id = NEW.product_id;
+END;
 
+CREATE TRIGGER delete_mst_product_detail
+    AFTER DELETE ON mst_product_detail
+    FOR EACH ROW
+BEGIN
+    DECLARE product_detail VARCHAR(255);
+
+    SELECT GROUP_CONCAT(p.product_name SEPARATOR ', ')
+    INTO product_detail
+    FROM mst_product_detail d join mst_product p on d.product_component = p.product_id
+    WHERE d.product_id = OLD.product_id;
+
+    UPDATE mst_product
+    SET product_details = product_detail
+    WHERE product_id = OLD.product_id;
 END;
 
 
@@ -285,6 +300,7 @@ INSERT INTO mst_product_detail(product_id,product_component,qty)
 VALUES (18,9,1);
 INSERT INTO mst_product_detail(product_id,product_component,qty)
 VALUES (18,11,1);
+
 
 UPDATE mst_product
 SET
