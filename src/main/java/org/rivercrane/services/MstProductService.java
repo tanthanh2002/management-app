@@ -2,6 +2,7 @@ package org.rivercrane.services;
 
 import org.rivercrane.models.MstProduct;
 import org.rivercrane.models.MstUsers;
+import org.rivercrane.models.ProductDetail;
 import org.rivercrane.repository.MstProductRepo;
 
 import java.util.ArrayList;
@@ -57,5 +58,21 @@ public class MstProductService {
 
     public void insert(MstProduct product) {
         repo.insert(product);
+    }
+
+    public void insertProductDetail(ProductDetail productDetail){
+        repo.insertProductDetail(productDetail);
+    }
+
+    public void updateProductDetails(Integer id){
+        repo.updateProductDetails(id);
+    }
+
+    public void deleteProductDetailsById(int productId){
+        repo.deteleProductDetailsById(productId);
+    }
+
+    public int getNewestId() {
+        return repo.getNewestId();
     }
 }

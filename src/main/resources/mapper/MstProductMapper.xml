@@ -20,7 +20,7 @@
     <resultMap id="MstProduct" type="MstProduct">
         <result property="productId" column="product_id"/>
         <result property="productName" column="product_name"/>
-        <result property="productImage" column="product_image"/>
+        <result property="productImage" column="product_image "/>
         <result property="productPrice" column="product_price"/>
         <result property="isSales" column="is_sales"/>
         <result property="description" column="description"/>
@@ -30,9 +30,19 @@
         <result property="productDetails" column="product_details"/>
     </resultMap>
 
+    <resultMap id="ProductDetail" type="ProductDetail">
+        <result property="productId" column="product_id"/>
+        <result property="productComponent" column="product_component"/>
+        <result property="qty" column="qty"/>
+    </resultMap>
+
     <select id="findAll" resultMap="MstProduct">
         select *
         from mst_product;
+    </select>
+
+    <select id="selectNewestId" resultType="int">
+        select product_id from mst_product order by product_id desc limit 1;
     </select>
 
     <select id="findById" resultMap="MstProduct">
@@ -74,24 +84,40 @@
           AND is_sales != #{isSales};
     </select>
 
-    <delete id="delete" parameterType="int">
-        DELETE
-        FROM mst_product
-        WHERE product_id = #{productId};
-    </delete>
-
     <update id="update" parameterType="MstProduct">
         UPDATE mst_product
         SET product_name  = #{productName},
             product_price = #{productPrice},
             product_image = #{productImage},
             description   = #{description},
-            is_sales      = #{isSales}
+            is_sales      = #{isSales},
+            customer_id   = #{customerId}
         WHERE product_id = #{productId};
+    </update>
+
+    <update id="update_product_detail" statementType="CALLABLE" parameterType="INT" >
+        {call update_productdetails(#{id, jdbcType = INTEGER, mode = IN})}
     </update>
 
     <insert id="insert" parameterType="MstProduct">
         INSERT INTO mst_product(product_name, product_price, product_image, description, is_sales)
         VALUES (#{productName}, #{productPrice}, #{productImage}, #{description}, #{isSales});
     </insert>
+
+    <insert id="insertProductDetail" parameterType="ProductDetail">
+        INSERT INTO mst_product_detail(product_id, product_component, qty)
+        VALUES (#{productId}, #{productComponent}, #{qty});
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        DELETE
+        FROM mst_product
+        WHERE product_id = #{productId};
+    </delete>
+
+    <delete id="deleteProductDetailById" parameterType="int">
+        delete from mst_product_detail where product_id = #{productId};
+    </delete>
+
+
 </mapper>

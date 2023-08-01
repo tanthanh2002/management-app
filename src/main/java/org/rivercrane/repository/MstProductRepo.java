@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.rivercrane.models.MstCustomer;
 import org.rivercrane.models.MstProduct;
 import org.rivercrane.models.MstUsers;
+import org.rivercrane.models.ProductDetail;
 import org.rivercrane.utils.CustomSqlSessionFactory;
 
 import java.util.List;
@@ -81,5 +82,33 @@ public class MstProductRepo {
         SqlSession session = sessionFactory.openSession();
         Integer size = session.selectOne("MstProduct.getTotalRecord");
         return size;
+    }
+
+    public void updateProductDetails(Integer id){
+        SqlSession session = sessionFactory.openSession();
+        session.update("MstProduct.update_product_detail", id);
+        session.commit();
+        session.close();
+    }
+
+    public void deteleProductDetailsById(int productId){
+        SqlSession session = sessionFactory.openSession();
+        session.delete("MstProduct.deleteProductDetailById", productId);
+        session.commit();
+        session.close();
+    }
+
+    public void insertProductDetail(ProductDetail productDetail) {
+        SqlSession session = sessionFactory.openSession();
+        session.insert("MstProduct.insertProductDetail", productDetail);
+        session.commit();
+        session.close();
+    }
+
+    public int getNewestId() {
+        SqlSession session = sessionFactory.openSession();
+        int newestId = session.selectOne("MstProduct.selectNewestId");
+        session.close();
+        return newestId;
     }
 }

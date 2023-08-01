@@ -96,5 +96,8 @@ public class ProductAction extends ActionSupport {
     private Integer priceTo;
     private Integer page;
     private List<Integer> pages;
+    private List<MstCustomer> customers = MstCustomerService.getInstance().getAll();
+    private List<MstProduct> components = productService.getAll();
+
 
 }
