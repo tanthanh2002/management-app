@@ -47,7 +47,9 @@ public class MstProductService {
     public Integer getTotalRecord(){
         return repo.getTotalRecord();
     }
-
+    public List<ProductDetail> getProductDetailByProductId(int id){
+        return  repo.getProductDetailByProductId(id);
+    }
     public List<MstProduct> getByPage(Integer page) {
         return repo.getByPage(page-1);
     }

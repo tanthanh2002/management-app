@@ -111,4 +111,11 @@ public class MstProductRepo {
         session.close();
         return newestId;
     }
+
+    public List<ProductDetail> getProductDetailByProductId(int id) {
+        SqlSession session = sessionFactory.openSession();
+        List<ProductDetail> productDetails = session.selectList("MstProduct.getProductDetailByProductId", id);
+        session.close();
+        return productDetails;
+    }
 }

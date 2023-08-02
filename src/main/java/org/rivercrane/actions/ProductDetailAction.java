@@ -93,5 +93,4 @@ public class ProductDetailAction extends ActionSupport {
     private Integer customerId;
     private String components;
     private Integer isContainer;
-
 }

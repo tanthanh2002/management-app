@@ -74,6 +74,10 @@
         where p.product_id = #{productId};
     </select>
 
+    <select id="getProductDetailByProductId" resultType="ProductDetail">
+        select * from mst_product_detail where product_id = #{productId};
+    </select>
+
     <select id="findByNumPage" parameterType="int" resultMap="MstProductDto">
         select
             p.product_id,

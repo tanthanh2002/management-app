@@ -104,10 +104,8 @@
                         <select class="form-control" id="customer_id">
                             <option value="-1" disabled selected hidden>Chọn khách hàng</option>
                             <s:iterator value="customers">
-                                <s:if test="isContainer == 0">
                                     <option value="<s:property value="customerId"/>"><s:property
                                             value="customerName"/></option>
-                                </s:if>
                             </s:iterator>
                         </select>
                     </div>
@@ -129,19 +127,42 @@
                     </div>
                     <div class="col-6">
                         <ul class="list-group" id="component-list">
-                            <li class="my-2">
-                                <select class="form-control" id="component">
-                                    <option value="" disabled selected hidden>Chọn linh kiện</option>
-                                    <s:iterator value="components">
-                                        <s:if test="isContainer == 0">
-                                            <option value="<s:property value="productId"/>"><s:property
-                                                    value="productName"/></option>
-                                        </s:if>
-                                    </s:iterator>
-                                </select>
-                            </li>
+                            <s:iterator var="p" value="productDetails">
+                                <li class="my-2" style="display:flex; align-items:center;">
+                                    <select class="form-control">
+                                        <s:iterator value="components">
+                                            <s:if test="isContainer == 0">
+                                                <s:if test=" #p.productComponent == productId">
+                                                    <option value="<s:property value="productId"/>" disabled selected hidden><s:property
+                                                            value="productName"/></option>
+                                                </s:if>
+                                                <s:else>
+                                                    <option value="<s:property value="productId"/>"><s:property
+                                                            value="productName"/></option>
+                                                </s:else>
+                                            </s:if>
+                                        </s:iterator>
+                                    </select>
+                                    <input class="form-control mx-3" type="number" placeholder="số lượng">
+                                    <a type="button" onclick="deleteParent(this)" class="btn btn-danger">X</a>
+                                </li>
+                            </s:iterator>
+<%--                            <li class="my-2" style="display:flex; align-items:center;">--%>
+<%--                                <select class="form-control">--%>
+<%--                                    <s:iterator value="components">--%>
+<%--                                        <s:if test="isContainer == 0">--%>
+<%--                                            <option value="<s:property value="productId"/>"><s:property--%>
+<%--                                                    value="productName"/></option>--%>
+<%--                                        </s:if>--%>
+<%--                                    </s:iterator>--%>
+<%--                                    <option value="3" disabled selected hidden>Chọn linh kiện</option>--%>
+<%--                                </select>--%>
+<%--                                <input class="form-control mx-3" type="number" placeholder="số lượng">--%>
+<%--                                <a type="button" onclick="deleteParent(this)" class="btn btn-danger">X</a>--%>
+<%--                            </li>--%>
                         </ul>
-                        <button type="button" onclick="extendComponent()" class="btn btn-info my-5">Thêm thành phần</button>
+                        <a type="button" onclick="extendComponent()" class="btn btn-info my-5">Thêm thành phần
+                        </a>
                     </div>
                 </div>
 
@@ -201,7 +222,7 @@
         document.getElementById("image").src = "../images/default.jpg";
     }
 
-    function getListComponent(){
+    function getListComponent() {
         let ul = document.getElementById('component-list');
         let components = [];
 
@@ -277,19 +298,29 @@
         }
     }
 
+    function deleteParent(button){
+        let parent = button.parentNode;
+        parent.parentNode.removeChild(parent);
+    }
+
     function extendComponent() {
         let list = document.getElementById('component-list');
 
         let li = document.createElement('li');
         li.classList.add('my-2')
+        li.style = "display:flex; align-items:center;";
         li.innerHTML = `
-                        <select class="form-control" id = "component">
-                        <option value="" disabled selected hidden>Chọn linh kiện</option>
-                        <s:iterator value="components">
-                            <option value="<s:property value="productId"/>"><s:property
-                                    value="productName"/></option>
-                        </s:iterator>
-                        </select>`
+                        <select class="form-control" id="component">
+                            <option value="" disabled selected hidden>Chọn linh kiện</option>
+                            <s:iterator value="components">
+                                <s:if test="isContainer == 0">
+                                    <option value="<s:property value="productId"/>"><s:property
+                                            value="productName"/></option>
+                                </s:if>
+                            </s:iterator>
+                        </select>
+                        <input class="form-control mx-3" type="number" placeholder="số lượng">
+                        <a type="button" onclick="deleteParent(this)" class="btn btn-danger">X</a>`
         list.appendChild(li);
     }
 </script>

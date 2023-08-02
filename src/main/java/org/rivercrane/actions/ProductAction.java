@@ -6,6 +6,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import lombok.Data;
 import org.rivercrane.models.MstCustomer;
 import org.rivercrane.models.MstProduct;
+import org.rivercrane.models.ProductDetail;
 import org.rivercrane.services.MstCustomerService;
 import org.rivercrane.services.MstProductService;
 
@@ -36,6 +37,8 @@ public class ProductAction extends ActionSupport {
 
     public String showDetail(){
         setProduct(productService.getById(productId));
+        setProductDetails(productService.getProductDetailByProductId(productId));
+
         return SUCCESS;
     }
 
@@ -98,6 +101,7 @@ public class ProductAction extends ActionSupport {
     private List<Integer> pages;
     private List<MstCustomer> customers = MstCustomerService.getInstance().getAll();
     private List<MstProduct> components = productService.getAll();
+    private List<ProductDetail> productDetails;
 
 
 }
