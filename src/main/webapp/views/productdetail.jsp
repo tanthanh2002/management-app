@@ -143,7 +143,7 @@
                                             </s:if>
                                         </s:iterator>
                                     </select>
-                                    <input class="form-control mx-3" type="number" placeholder="số lượng">
+                                    <input class="form-control mx-3" value="<s:property value="#p.qty"/>" type="number" placeholder="số lượng">
                                     <a type="button" onclick="deleteParent(this)" class="btn btn-danger">X</a>
                                 </li>
                             </s:iterator>
@@ -225,10 +225,23 @@
     function getListComponent() {
         let ul = document.getElementById('component-list');
         let components = [];
+        let flag = 0;
+        ul.querySelectorAll('li').forEach(li => {
+            let select = li.querySelector('select').value;
+            let input = li.querySelector('input').value;
 
-        ul.querySelectorAll('li > select').forEach(li => {
-            components.push(li.value);
+            if(input < 0){
+                flag = 1;
+            }
+
+            components.push(select+":"+input);
         });
+
+
+        if(flag == 1){
+            alert("Số lượng không được nhỏ hơn 1");
+            return [];
+        }
 
         return components
     }
@@ -278,6 +291,11 @@
         formData.append('customerId', customerId);
         formData.append('components', getListComponent().join(';'));
         formData.append('isContainer', isContainer);
+
+        if(formData.get('components').length === 0){
+            console.log("huỷ");
+            return;
+        }
 
         let confirmSave = confirm("Xác nhận thay đổi?");
 

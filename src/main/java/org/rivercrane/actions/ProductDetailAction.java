@@ -27,7 +27,7 @@ public class ProductDetailAction extends ActionSupport {
         if (image != null) {
             FileUtils.copyFile(image, fileToCreate);
         }
-
+        System.out.println(components);
         List<String> productDetails = Arrays.asList(components.split(";"));
 
         MstProduct product = MstProduct.builder()
@@ -61,15 +61,18 @@ public class ProductDetailAction extends ActionSupport {
 
         //add productdetail
 
-        for (String id : productDetails) {
-            if(id.equals("")){
+        for (String item : productDetails) {
+            if(item.equals("")){
                 continue;
             }
 
+            String[] info = item.split(":");
+            String id = info[0];
+            String qty = info[1];
             ProductDetail detail = ProductDetail.builder()
                     .productId(productId == null ? newProductId : productId)
                     .productComponent(Integer.parseInt(id))
-                    .qty(1)
+                    .qty(Integer.parseInt(qty))
                     .build();
             productService.insertProductDetail(detail);
         }
