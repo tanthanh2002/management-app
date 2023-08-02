@@ -18,5 +18,6 @@ public class MstProduct {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private String productDetails;
+    private Integer isContainer;
 
 }

@@ -20,4 +20,5 @@ public class ProductDto {
     private Timestamp updatedAt;
     private String customerName;
     private String productDetails;
+    private Integer isContainer;
 }

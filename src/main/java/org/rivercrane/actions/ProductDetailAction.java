@@ -36,8 +36,9 @@ public class ProductDetailAction extends ActionSupport {
                 .productPrice(productPrice)
                 .description(description)
                 .isSales(isSales)
+                .isContainer(isContainer)
                 .productImage("../images/"+ fileName)
-                .customerId(customerId == -1? null : customerId )
+                .customerId(customerId == -1 ? null : customerId)
                 .build();
         System.out.println(product.toString());
         if (productId == null) {
@@ -59,7 +60,12 @@ public class ProductDetailAction extends ActionSupport {
         }
 
         //add productdetail
+
         for (String id : productDetails) {
+            if(id.equals("")){
+                continue;
+            }
+
             ProductDetail detail = ProductDetail.builder()
                     .productId(productId == null ? newProductId : productId)
                     .productComponent(Integer.parseInt(id))
@@ -67,6 +73,7 @@ public class ProductDetailAction extends ActionSupport {
                     .build();
             productService.insertProductDetail(detail);
         }
+
 
         if(productId != null){
             productService.updateProductDetails(productId);
@@ -85,5 +92,6 @@ public class ProductDetailAction extends ActionSupport {
     private Integer isSales;
     private Integer customerId;
     private String components;
+    private Integer isContainer;
 
 }

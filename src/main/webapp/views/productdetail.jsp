@@ -81,14 +81,33 @@
                 </div>
                 <div class="row my-4">
                     <div class="col-6 text-center">
+                        Loại
+                    </div>
+                    <div class="col-6">
+                        <select class="form-control" id="isContainer">
+                            <s:if test="product.isContainer == 1">
+                                <option value="<s:property value="1"/>" disabled selected hidden>Bộ</option>
+                            </s:if>
+                            <s:else>
+                                <option value="<s:property value="0"/>" disabled selected hidden>Linh kiện</option>
+                            </s:else>
+                            <option value="<s:property value="1"/>">Bộ</option>
+                            <option value="<s:property value="0"/>">Linh kiện</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row my-4">
+                    <div class="col-6 text-center">
                         Khách hàng
                     </div>
                     <div class="col-6">
                         <select class="form-control" id="customer_id">
                             <option value="-1" disabled selected hidden>Chọn khách hàng</option>
                             <s:iterator value="customers">
-                                <option value="<s:property value="customerId"/>"><s:property
-                                        value="customerName"/></option>
+                                <s:if test="isContainer == 0">
+                                    <option value="<s:property value="customerId"/>"><s:property
+                                            value="customerName"/></option>
+                                </s:if>
                             </s:iterator>
                         </select>
                     </div>
@@ -114,8 +133,10 @@
                                 <select class="form-control" id="component">
                                     <option value="" disabled selected hidden>Chọn linh kiện</option>
                                     <s:iterator value="components">
-                                        <option value="<s:property value="productId"/>"><s:property
-                                                value="productName"/></option>
+                                        <s:if test="isContainer == 0">
+                                            <option value="<s:property value="productId"/>"><s:property
+                                                    value="productName"/></option>
+                                        </s:if>
                                     </s:iterator>
                                 </select>
                             </li>
@@ -209,10 +230,7 @@
         let image = document.getElementById('customFile');
         let isSales = document.getElementById('isSales').value;
         let customerId = document.getElementById('customer_id').value;
-
-        if (customerId === -1) {
-            customerId = null;
-        }
+        let isContainer = document.getElementById('isContainer').value;
 
         if (!isSales) {
             isSales = 1;
@@ -238,6 +256,7 @@
         formData.append('isSales', isSales);
         formData.append('customerId', customerId);
         formData.append('components', getListComponent().join(';'));
+        formData.append('isContainer', isContainer);
 
         let confirmSave = confirm("Xác nhận thay đổi?");
 

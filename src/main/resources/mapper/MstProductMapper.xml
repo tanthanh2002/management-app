@@ -15,6 +15,7 @@
         <result property="updatedAt" column="updated_at"/>
         <result property="customerName" column="customer_name"/>
         <result property="productDetails" column="product_details"/>
+        <result property="isContainer" column="is_container"/>
     </resultMap>
 
     <resultMap id="MstProduct" type="MstProduct">
@@ -28,6 +29,7 @@
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
         <result property="productDetails" column="product_details"/>
+        <result property="isContainer" column="is_container"/>
     </resultMap>
 
     <resultMap id="ProductDetail" type="ProductDetail">
@@ -37,8 +39,19 @@
     </resultMap>
 
     <select id="findAll" resultMap="MstProduct">
-        select *
-        from mst_product;
+        select
+            p.product_id,
+            p.product_name,
+            p.product_image,
+            p.product_price,
+            p.is_sales,
+            p.description,
+            p.customer_id,
+            p.created_at,
+            p.updated_at,
+            p.product_details,
+            p.is_container
+        from mst_product p;
     </select>
 
     <select id="selectNewestId" resultType="int">
@@ -46,9 +59,19 @@
     </select>
 
     <select id="findById" resultMap="MstProduct">
-        select *
-        from mst_product
-        where product_id = #{productId};
+        select p.product_id,
+               p.product_name,
+               p.product_image,
+               p.product_price,
+               p.is_sales,
+               p.description,
+               p.customer_id,
+               p.created_at,
+               p.updated_at,
+               p.product_details,
+               p.is_container
+        from mst_product p
+        where p.product_id = #{productId};
     </select>
 
     <select id="findByNumPage" parameterType="int" resultMap="MstProductDto">
@@ -63,7 +86,8 @@
             p.created_at,
             p.updated_at,
             c.customer_name,
-            p.product_details
+            p.product_details,
+            p.is_container
         from mst_product p left join mst_customer c on p.customer_id = c.customer_id order by (product_id) desc Limit #{offset}, 10;
     </select>
 
@@ -91,7 +115,8 @@
             product_image = #{productImage},
             description   = #{description},
             is_sales      = #{isSales},
-            customer_id   = #{customerId}
+            customer_id   = #{customerId},
+            is_container = #{isContainer}
         WHERE product_id = #{productId};
     </update>
 
