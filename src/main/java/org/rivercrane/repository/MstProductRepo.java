@@ -32,9 +32,9 @@ public class MstProductRepo {
         return product;
     }
 
-    public List<ProductDto> findByNameAndIsSales(MstProduct product) {
+    public List<ProductDto> findByName(MstProduct product) {
         SqlSession session = sessionFactory.openSession();
-        List<ProductDto> products = session.selectList("MstProduct.findByNameAndIsSales", product);
+        List<ProductDto> products = session.selectList("MstProduct.findByName", product);
         session.close();
         return products;
     }

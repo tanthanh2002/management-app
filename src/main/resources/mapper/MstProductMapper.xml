@@ -105,7 +105,7 @@
         from mst_product;
     </select>
 
-    <select id="findByNameAndIsSales" resultMap="MstProductDto" parameterType="MstProduct">
+    <select id="findByName" resultMap="MstProductDto" parameterType="MstProduct">
         SELECT
             p.product_id,
             p.product_name,
@@ -120,8 +120,7 @@
             p.product_details,
             p.is_container
         FROM mst_product p left join mst_customer c on p.customer_id = c.customer_id
-        WHERE p.product_name  LIKE #{productName}
-          AND p.is_sales != #{isSales};
+        WHERE p.product_name  LIKE #{productName};
     </select>
 
     <update id="update" parameterType="MstProduct">

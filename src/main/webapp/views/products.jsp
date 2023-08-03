@@ -36,11 +36,12 @@
             <input type="text" class="form-control" id="search-productname" placeholder="Nhập họ tên">
         </div>
         <div class="col-sm ml-1 mr-1">
-            <label class="form-label">Trạng thái</label>
-            <select class="form-control" id="search-status">
-                <option value="-1" disabled selected hidden>Chọn trạng thái</option>
-                <option value="1">Còn bán</option>
-                <option value="0">Ngừng bán</option>
+            <label class="form-label">Khách hàng</label>
+            <select class="form-control" id="search-customerId">
+                <option value="-1" disabled selected hidden>Chọn khách hàng</option>
+                <s:iterator value="customers" var="i">
+                    <option value="<s:property value="#i.customerId"/>"><s:property value="#i.customerName"/></option>
+                </s:iterator>
             </select>
         </div>
         <div class="col-sm ml-1 mr-1">
@@ -204,8 +205,8 @@
         let productName = document.getElementById('search-productname').value;
         let priceFrom = document.getElementById('pricefrom').value;
         let priceTo = document.getElementById('priceto').value;
-        let isSales = document.getElementById('search-status').value;
-        var url = '/product_search.action?productName=' + productName + '&isSales=' + isSales + '&priceFrom=' + priceFrom + '&priceTo=' + priceTo;
+        let customerId = document.getElementById('search-customerId').value;
+        var url = '/product_search.action?productName=' + productName + '&customerId=' + customerId + '&priceFrom=' + priceFrom + '&priceTo=' + priceTo;
         btnSearch.href = url;
         btnSearch.click();
     };

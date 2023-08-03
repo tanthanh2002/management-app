@@ -14,6 +14,7 @@ import org.rivercrane.services.MstProductService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Data
@@ -45,14 +46,12 @@ public class ProductAction extends ActionSupport {
 
     public String search(){
         productName = productName.isEmpty() ? "%" : "%" + productName + "%";
-        isSales = isSales == -1 ? 3 : (isSales == 1 ? 0 : 1);
         MstProduct product = MstProduct.builder()
                 .productName(productName)
                 .customerId(customerId)
-                .isSales(isSales)
                 .build();
 
-        List<ProductDto> products = productService.findByNameAndIsSales(product);
+        List<ProductDto> products = productService.findByName(product);
 
         if (priceFrom != null){
             products=products.stream().filter(p -> p.getProductPrice() >= priceFrom).collect(Collectors.toList());
@@ -60,6 +59,10 @@ public class ProductAction extends ActionSupport {
 
         if (priceTo != null){
             products=products.stream().filter(p -> p.getProductPrice() <= priceTo).collect(Collectors.toList());
+        }
+
+        if(!customerId.equals(-1)){
+            products=products.stream().filter(p -> Objects.equals(p.getCustomerId(), customerId)).collect(Collectors.toList());
         }
 
         page = page == null ? 1 : page;

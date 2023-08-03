@@ -27,8 +27,8 @@ public class MstProductService {
         return repo.findById(id);
     }
 
-    public List<ProductDto> findByNameAndIsSales(MstProduct product){
-        return repo.findByNameAndIsSales(product);
+    public List<ProductDto> findByName(MstProduct product){
+        return repo.findByName(product);
     }
 
     public void delete(int productId){

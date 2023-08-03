@@ -292,10 +292,10 @@
         formData.append('components', getListComponent().join(';'));
         formData.append('isContainer', isContainer);
 
-        if(formData.get('components').length === 0){
-            console.log("huỷ");
-            return;
-        }
+        // if(formData.get('components').length === 0){
+        //     console.log("huỷ");
+        //     return;
+        // }
 
         let confirmSave = confirm("Xác nhận thay đổi?");
 
