@@ -129,13 +129,6 @@ BEGIN
 END;
 
 
-CREATE TRIGGER audit_update_product_customer
-AFTER UPDATE ON mst_product
-FOR EACH ROW
-BEGIN
-
-END;
-
 DELIMITER //
 CREATE PROCEDURE update_productdetails(p_id INT)
 BEGIN
