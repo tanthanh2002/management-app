@@ -105,11 +105,23 @@
         from mst_product;
     </select>
 
-    <select id="findByNameAndIsSales" resultMap="MstProduct" parameterType="MstProduct">
-        SELECT *
-        FROM mst_product
-        WHERE product_name LIKE #{productName}
-          AND is_sales != #{isSales};
+    <select id="findByNameAndIsSales" resultMap="MstProductDto" parameterType="MstProduct">
+        SELECT
+            p.product_id,
+            p.product_name,
+            p.product_image,
+            p.product_price,
+            p.is_sales,
+            p.description,
+            p.customer_id,
+            p.created_at,
+            p.updated_at,
+            c.customer_name,
+            p.product_details,
+            p.is_container
+        FROM mst_product p left join mst_customer c on p.customer_id = c.customer_id
+        WHERE p.product_name  LIKE #{productName}
+          AND p.is_sales != #{isSales};
     </select>
 
     <update id="update" parameterType="MstProduct">

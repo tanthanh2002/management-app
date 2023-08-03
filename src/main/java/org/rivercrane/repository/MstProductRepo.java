@@ -2,10 +2,7 @@ package org.rivercrane.repository;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.rivercrane.models.MstCustomer;
-import org.rivercrane.models.MstProduct;
-import org.rivercrane.models.MstUsers;
-import org.rivercrane.models.ProductDetail;
+import org.rivercrane.models.*;
 import org.rivercrane.utils.CustomSqlSessionFactory;
 
 import java.util.List;
@@ -35,9 +32,9 @@ public class MstProductRepo {
         return product;
     }
 
-    public List<MstProduct> findByNameAndIsSales(MstProduct product) {
+    public List<ProductDto> findByNameAndIsSales(MstProduct product) {
         SqlSession session = sessionFactory.openSession();
-        List<MstProduct> products = session.selectList("MstProduct.findByNameAndIsSales", product);
+        List<ProductDto> products = session.selectList("MstProduct.findByNameAndIsSales", product);
         session.close();
         return products;
     }
@@ -57,9 +54,9 @@ public class MstProductRepo {
         return totalPage;
     }
 
-    public List<MstProduct> getByPage(Integer page) {
+    public List<ProductDto> getByPage(Integer page) {
         SqlSession session = sessionFactory.openSession();
-        List<MstProduct> products = session.selectList("MstProduct.findByNumPage", page * 10);
+        List<ProductDto> products = session.selectList("MstProduct.findByNumPage", page * 10);
         session.close();
         return products;
     }

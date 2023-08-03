@@ -7,6 +7,7 @@ import lombok.Data;
 import org.rivercrane.models.MstCustomer;
 import org.rivercrane.models.MstProduct;
 import org.rivercrane.models.ProductDetail;
+import org.rivercrane.models.ProductDto;
 import org.rivercrane.services.MstCustomerService;
 import org.rivercrane.services.MstProductService;
 
@@ -47,10 +48,11 @@ public class ProductAction extends ActionSupport {
         isSales = isSales == -1 ? 3 : (isSales == 1 ? 0 : 1);
         MstProduct product = MstProduct.builder()
                 .productName(productName)
+                .customerId(customerId)
                 .isSales(isSales)
                 .build();
 
-        List<MstProduct> products = productService.findByNameAndIsSales(product);
+        List<ProductDto> products = productService.findByNameAndIsSales(product);
 
         if (priceFrom != null){
             products=products.stream().filter(p -> p.getProductPrice() >= priceFrom).collect(Collectors.toList());
@@ -90,13 +92,14 @@ public class ProductAction extends ActionSupport {
     }
 
     private MstProductService productService = MstProductService.getInstance();
-    private List<MstProduct> products;
+    private List<ProductDto> products;
     private MstProduct product;
     private Integer productId;
     private String productName;
     private Integer isSales;
     private Integer priceFrom;
     private Integer priceTo;
+    private Integer customerId;
     private Integer page;
     private List<Integer> pages;
     private List<MstCustomer> customers = MstCustomerService.getInstance().getAll();

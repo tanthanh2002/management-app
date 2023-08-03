@@ -3,6 +3,7 @@ package org.rivercrane.services;
 import org.rivercrane.models.MstProduct;
 import org.rivercrane.models.MstUsers;
 import org.rivercrane.models.ProductDetail;
+import org.rivercrane.models.ProductDto;
 import org.rivercrane.repository.MstProductRepo;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class MstProductService {
         return repo.findById(id);
     }
 
-    public List<MstProduct> findByNameAndIsSales(MstProduct product){
+    public List<ProductDto> findByNameAndIsSales(MstProduct product){
         return repo.findByNameAndIsSales(product);
     }
 
@@ -50,7 +51,7 @@ public class MstProductService {
     public List<ProductDetail> getProductDetailByProductId(int id){
         return  repo.getProductDetailByProductId(id);
     }
-    public List<MstProduct> getByPage(Integer page) {
+    public List<ProductDto> getByPage(Integer page) {
         return repo.getByPage(page-1);
     }
 
