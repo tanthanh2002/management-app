@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 @Builder
 public class ProductDto {
     private Integer productId;
+    private String productCode;
     private String productName;
     private String productImage;
     private Double productPrice;

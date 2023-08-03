@@ -104,6 +104,7 @@
             <thead>
             <tr>
                 <th scope="col" class="col">#</th>
+                <th scope="col" class="col">Mã sản phẩm</th>
                 <th scope="col" class="col">Tên sản phẩm</th>
                 <th scope="col" class="col">Chi tiết</th>
                 <th scope="col" class="col">Giá</th>
@@ -116,6 +117,9 @@
                 <tr>
                     <th scope="row">
                         <s:property value="%{#rowStatus.count + (page-1)*10}"/>
+                    </th>
+                    <th>
+                        <s:property value="productCode"/>
                     </th>
                     <td onmouseleave="hideImg(this)" onmouseover="showImg(this)"><s:property value="productName"/>
                         <img style="display: none; width: 240px; height: 180px; object-fit: cover" src="<s:property value="productImage"/>">

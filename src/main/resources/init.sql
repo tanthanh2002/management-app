@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS mst_customer
 CREATE TABLE IF NOT EXISTS mst_product
 (
     product_id      INT AUTO_INCREMENT PRIMARY KEY,
+    product_code    VARCHAR(255),
     product_name    VARCHAR(255) NOT NULL,
     product_image   VARCHAR(255),
     product_price   DECIMAL      NOT NULL DEFAULT 0,
@@ -53,7 +54,6 @@ CREATE TABLE IF NOT EXISTS mst_product_detail
     product_id        INT NOT NULL,
     product_component INT NOT NULL,
     qty               INT CHECK ( qty > 0 ),
-    PRIMARY KEY (product_id, product_component),
     CONSTRAINT mst_product_detail_product_id FOREIGN KEY (product_id) REFERENCES mst_product (product_id) ON DELETE CASCADE,
     CONSTRAINT mst_product_detail_product_component FOREIGN KEY (product_component) REFERENCES mst_product (product_id) ON DELETE CASCADE
 );
@@ -105,6 +105,20 @@ CREATE TABLE IF NOT EXISTS mst_order_detail
 );
 
 
+CREATE TABLE IF NOT EXISTS audit_history_product
+(
+    id              int auto_increment primary key,
+    user_id         int,
+    customer_id     int,
+    product_id      int,
+    action_name     varchar(255)    check ( action_name in ('insert','update','detele')),
+    happened_at     TIMESTAMP,
+    constraint foreign key (user_id) references mst_users(id),
+    constraint foreign key (customer_id) references mst_customer(customer_id),
+    constraint foreign key (product_id) references mst_product(product_id)
+);
+
+
 -- trigger update
 CREATE TRIGGER update_mst_product
     BEFORE UPDATE
@@ -114,7 +128,13 @@ BEGIN
     SET NEW.updated_at = CONVERT_TZ(NOW(), '+00:00', '+07:00');
 END;
 
-#CALL update_productdetails(1);
+
+CREATE TRIGGER audit_update_product_customer
+AFTER UPDATE ON mst_product
+FOR EACH ROW
+BEGIN
+
+END;
 
 DELIMITER //
 CREATE PROCEDURE update_productdetails(p_id INT)
@@ -154,8 +174,20 @@ CREATE TRIGGER create_mst_product
     BEFORE INSERT
     ON mst_product
     FOR EACH ROW
-    SET NEW.created_at = CONVERT_TZ(NOW(), '+00:00', '+07:00');
-
+BEGIN
+    DECLARE id int;
+    select product_id into id from mst_product order by product_id desc limit 1;
+    SET NEW.product_code = CONCAT('PRODUCT_',
+            CONCAT(
+                CHAR(FLOOR(65 + RAND() * 26)),
+                CHAR(FLOOR(65 + RAND() * 26)),
+                CHAR(FLOOR(65 + RAND() * 26)),
+                CHAR(FLOOR(65 + RAND() * 26)),
+                CHAR(FLOOR(65 + RAND() * 26))
+            ), DATE_FORMAT(NOW(), '%H%i%s'),id
+        ),
+        NEW.created_at = CONVERT_TZ(NOW(), '+00:00', '+07:00');
+END;
 CREATE TRIGGER update_mst_product_detail
     AFTER UPDATE
     ON mst_product_detail
@@ -236,6 +268,34 @@ CREATE TRIGGER create_mst_customer
     FOR EACH ROW
     SET NEW.created_at = CONVERT_TZ(NOW(), '+00:00', '+07:00');
 
+
+-- audit
+CREATE TRIGGER audit_update_product
+AFTER UPDATE ON mst_product
+FOR EACH ROW
+BEGIN
+    IF !(NEW.customer_id <=> OLD.customer_id) THEN
+        INSERT audit_history_product(CUSTOMER_ID, PRODUCT_ID, ACTION_NAME, HAPPENED_AT)
+            VALUES (NEW.customer_id, NEW.product_id, 'update', CONVERT_TZ(NOW(), '+00:00', '+07:00'));
+    END IF;
+
+END;
+
+# CREATE TRIGGER audit_insert_product
+# AFTER INSERT ON mst_product
+# FOR EACH ROW
+# BEGIN
+#     INSERT audit_history_product(CUSTOMER_ID, PRODUCT_ID, ACTION_NAME, HAPPENED_AT)
+#             VALUES (NEW.customer_id, NEW.product_id, 'insert', CONVERT_TZ(NOW(), '+00:00', '+07:00'));
+# END;
+
+CREATE TRIGGER audit_delete_product
+AFTER DELETE ON mst_product
+FOR EACH ROW
+BEGIN
+    INSERT audit_history_product(CUSTOMER_ID, PRODUCT_ID, ACTION_NAME, HAPPENED_AT)
+            VALUES (OLD.customer_id, OLD.product_id, 'delete', CONVERT_TZ(NOW(), '+00:00', '+07:00'));
+END;
 
 -- INSERT DEFAULT DATA
 INSERT INTO mst_shop(shop_id, shop_name)

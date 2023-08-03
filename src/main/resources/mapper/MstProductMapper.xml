@@ -5,6 +5,7 @@
 <mapper namespace="MstProduct">
     <resultMap id="MstProductDto" type="ProductDto">
         <result property="productId" column="product_id"/>
+        <result property="productCode" column="product_code"/>
         <result property="productName" column="product_name"/>
         <result property="productImage" column="product_image"/>
         <result property="productPrice" column="product_price"/>
@@ -81,6 +82,7 @@
     <select id="findByNumPage" parameterType="int" resultMap="MstProductDto">
         select
             p.product_id,
+            p.product_code,
             p.product_name,
             p.product_image,
             p.product_price,
@@ -108,6 +110,7 @@
     <select id="findByName" resultMap="MstProductDto" parameterType="MstProduct">
         SELECT
             p.product_id,
+            p.product_code,
             p.product_name,
             p.product_image,
             p.product_price,
