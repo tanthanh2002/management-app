@@ -31,7 +31,7 @@ public class MstCustomerService {
         return repo.findByNameAndEmailAndAddress(customer);
     }
 
-    public void update(MstCustomer customer){
+    public void update(MstCustomer customer) throws Exception {
         repo.update(customer);
     }
 

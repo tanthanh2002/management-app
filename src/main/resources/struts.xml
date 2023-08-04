@@ -77,7 +77,7 @@
             <result name="success">views/customers.jsp</result>
         </action>
         <action name="customer_edit" method="edit" class="org.rivercrane.actions.CustomerAction">
-            <result name="success">views/customers.jsp</result>
+            <result name="success" type="">views/customers.jsp</result>
         </action>
         <action name="customer_export" method="export" class="org.rivercrane.actions.CustomerAction">
             <result name="success">views/customers.jsp</result>

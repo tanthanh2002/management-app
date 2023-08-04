@@ -18,6 +18,10 @@
         select * from mst_customer;
     </select>
 
+    <select id="findByEmail" resultMap="MstCustomer" parameterType="MstCustomer">
+        select * from mst_customer where email = #{email};
+    </select>
+
     <select id="findByNameAndEmailAndAddress" resultMap="MstCustomer" parameterType="MstCustomer">
         SELECT *
         FROM mst_customer
@@ -38,7 +42,7 @@
     <update id="update" parameterType="MstCustomer">
         update mst_customer
         set customer_name = #{customerName}, email= #{email}, address = #{address}, tel_num = #{telNum}
-        where customer_id = #{customerId};
+        where (email = #{email});
     </update>
 
     <insert id="insert" parameterType="MstCustomer">

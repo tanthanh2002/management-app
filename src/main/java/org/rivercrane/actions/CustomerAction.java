@@ -48,6 +48,7 @@ public class CustomerAction extends ActionSupport {
             response.setStatus(200);
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
             HttpServletResponse response = ServletActionContext.getResponse();
             response.setStatus(400);
         }

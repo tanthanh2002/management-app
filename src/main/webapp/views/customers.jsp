@@ -343,11 +343,12 @@
                         .then(function (response) {
                             // console.log(response.data);
                             console.log(response.status);
-                            customAlert('Sửa thông tin khách hàng thành công!', 'alert-success');
+                            alert('Sửa thông tin khách hàng thành công');
                         })
                         .catch(function (error) {
-                            console.log(error);
-                            customAlert('Sửa thông tin khách hàng thất bại!', 'alert-danger');
+                            console.log(error.status);
+                            alert('Sửa thông tin khách hàng thất bại! Email đã tồn tại.');
+                            setTimeout(location.reload(), 100);
                         });
                 }else {
                     alert('Sửa thông tin khách hàng thất bại! Email không hợp lệ.');

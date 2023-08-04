@@ -33,8 +33,14 @@ public class MstCustomerRepo {
         return customers;
     }
 
-    public void update(MstCustomer customer) {
+    public void update(MstCustomer customer) throws Exception {
         SqlSession session = sessionFactory.openSession();
+        List<MstCustomer> customers = session.selectList("MstCustomer.findByEmail",customer);
+
+        if(customers.size() > 0){
+            System.out.println("Email is exist");
+            throw new Exception("Email is exist");
+        }
         session.update("MstCustomer.update", customer);
         session.commit();
         session.close();

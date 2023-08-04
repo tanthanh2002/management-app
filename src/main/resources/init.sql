@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS mst_customer
 (
     customer_id   INT PRIMARY KEY AUTO_INCREMENT,
     customer_name VARCHAR(255) NOT NULL,
-    email         VARCHAR(255) NOT NULL,
+    email         VARCHAR(255) NOT NULL UNIQUE ,
     tel_num       VARCHAR(14)  NOT NULL,
     address       VARCHAR(255) NOT NULL,
     is_active     TINYINT      NOT NULL CHECK ( is_active IN (1, 0)) DEFAULT 1,
