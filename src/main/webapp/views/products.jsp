@@ -126,10 +126,11 @@
                     </td>
                     <s:if test="productDetails != null">
                         <td>
-                            <div>
-                               Mô tả: <s:property value="description"/>
+                            <div>Mô tả: <s:property value="description"/></div>
+
+                            <div class="product-detail" content="<s:property value="productDetails"/>">
+                                Linh kiện gồm:
                             </div>
-                            Linh kiện gồm: <s:property value="productDetails"/>
                         </td>
                     </s:if>
                     <s:else>
@@ -263,7 +264,26 @@
         console.log(newPath);
     }
 
+    function loadDescription(div){
+        let details = [];
+        let value = div.getAttribute('content');
+        console.log((value))
+        details = value.split(", ");
+        details.forEach((item, index) => {
+            const li = document.createElement("li");
+            li.textContent = `${index + 1}. ${item}`;
+            div.appendChild(li);
+        });
+    }
 
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const rows = document.querySelectorAll('.product-detail');
+
+        rows.forEach(e => {
+            loadDescription(e);
+        })
+    });
 </script>
 </body>
 </html>
