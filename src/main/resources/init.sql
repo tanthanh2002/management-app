@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS mst_customer
 CREATE TABLE IF NOT EXISTS mst_product
 (
     product_id      INT AUTO_INCREMENT PRIMARY KEY,
-    product_code    VARCHAR(255),
+    product_code    VARCHAR(255) UNIQUE,
     product_name    VARCHAR(255) NOT NULL,
     product_image   VARCHAR(255),
     product_price   DECIMAL      NOT NULL DEFAULT 0,
