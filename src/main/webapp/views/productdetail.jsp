@@ -103,6 +103,7 @@
                     <div class="col-6">
                         <select class="form-control" id="customer_id">
                             <option value="-1" disabled selected hidden>Chọn khách hàng</option>
+                            <option value="-2" >Không có</option>
                             <s:iterator value="customers">
                                     <option value="<s:property value="customerId"/>"><s:property
                                             value="customerName"/></option>
@@ -147,19 +148,6 @@
                                     <a type="button" onclick="deleteParent(this)" class="btn btn-danger">X</a>
                                 </li>
                             </s:iterator>
-<%--                            <li class="my-2" style="display:flex; align-items:center;">--%>
-<%--                                <select class="form-control">--%>
-<%--                                    <s:iterator value="components">--%>
-<%--                                        <s:if test="isContainer == 0">--%>
-<%--                                            <option value="<s:property value="productId"/>"><s:property--%>
-<%--                                                    value="productName"/></option>--%>
-<%--                                        </s:if>--%>
-<%--                                    </s:iterator>--%>
-<%--                                    <option value="3" disabled selected hidden>Chọn linh kiện</option>--%>
-<%--                                </select>--%>
-<%--                                <input class="form-control mx-3" type="number" placeholder="số lượng">--%>
-<%--                                <a type="button" onclick="deleteParent(this)" class="btn btn-danger">X</a>--%>
-<%--                            </li>--%>
                         </ul>
                         <a type="button" onclick="extendComponent()" class="btn btn-info my-5">Thêm thành phần
                         </a>

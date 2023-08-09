@@ -40,9 +40,9 @@ public class ProductDetailAction extends ActionSupport {
                 .isSales(isSales)
                 .isContainer(isContainer)
                 .productImage("../images/"+ fileName)
-                .customerId(customerId == -1 ? null : customerId)
+                .customerId(customerId)
                 .build();
-        System.out.println(product.toString());
+
         if (productId == null) {
             if (isSales.equals(-1)) {
                 product.setIsSales(1);

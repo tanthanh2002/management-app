@@ -149,7 +149,7 @@
             product_image = case when #{productImage} = '../images/null' then product_image else #{productImage} end,
             description   = #{description},
             is_sales      = #{isSales},
-            customer_id   = case when #{customerId} is null then customer_id else #{customerId} end,
+            customer_id   = case when #{customerId} = -1 then customer_id when #{customerId} = -2 then null else #{customerId} end,
             is_container = #{isContainer}
         WHERE product_id = #{productId};
     </update>
