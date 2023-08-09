@@ -148,6 +148,8 @@
                            class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
                         <a onclick="deleteProduct(<s:property value="productId"/>)" type="button"
                            class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                        <a type="button"
+                           class="btn btn-secondary"><i class="bi bi-clock-history"></i></a>
                     </td>
                 </tr>
             </s:iterator>

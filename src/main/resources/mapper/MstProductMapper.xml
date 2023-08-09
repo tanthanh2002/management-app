@@ -130,7 +130,7 @@
         UPDATE mst_product
         SET product_name  = #{productName},
             product_price = #{productPrice},
-            product_image = #{productImage},
+            product_image = case when #{productImage} = '../images/null' then product_image else #{productImage} end,
             description   = #{description},
             is_sales      = #{isSales},
             customer_id   = case when #{customerId} is null then customer_id else #{customerId} end,

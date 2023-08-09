@@ -11,6 +11,7 @@
         <typeAlias alias = "ProductDto" type = "org.rivercrane.models.ProductDto"/>
         <typeAlias alias = "ProductDetail" type = "org.rivercrane.models.ProductDetail"/>
     </typeAliases>
+
     <!-- Configuring the database environment -->
     <environments default="development">
         <environment id="development">

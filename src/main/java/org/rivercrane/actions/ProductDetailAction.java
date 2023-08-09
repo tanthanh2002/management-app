@@ -26,8 +26,9 @@ public class ProductDetailAction extends ActionSupport {
 
         if (image != null) {
             FileUtils.copyFile(image, fileToCreate);
+        }else{
+            fileName = "null";
         }
-        System.out.println(components);
         List<String> productDetails = Arrays.asList(components.split(";"));
 
         MstProduct product = MstProduct.builder()

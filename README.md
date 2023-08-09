@@ -14,7 +14,7 @@ To install this web application make the following steps:
 
 1. Create database mysql with docker
     + run below command to run mysql container
-    + then run **resources/database.sql** to init database
+    + then run **resources/init.sql** to init database
   
 `docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root --name mysql mysql:8.0`
 
