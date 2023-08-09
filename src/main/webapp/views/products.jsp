@@ -251,7 +251,10 @@
     };
 
     function showHistory(productId) {
-        let endpoint = 'http://localhost:8080/product_history?productId=' + productId;
+
+        var rootURL = window.location.protocol + "//" + window.location.host;
+
+        let endpoint = rootURL+'/product_history?productId=' + productId;
         var content = document.getElementById('modal_history').querySelector('.modal-body');
         var myModal = new bootstrap.Modal(document.getElementById('modal_history'), {
             keyboard: false
