@@ -97,7 +97,8 @@
         </nav>
     </div>
     <div class="row text-end px-5" readonly>
-        <div class="col-12"><s:property value="start"/> ~ <s:property value="finish"/> trong tổng số <p class="d-inline-block fw-bold"><s:property value="totalRecord"/></p></div>
+        <div class="col-12"><s:property value="start"/> ~ <s:property value="finish"/> trong tổng số <p
+                class="d-inline-block fw-bold"><s:property value="totalRecord"/></p></div>
     </div>
     <div class="row my-5 px-5">
         <table class="table table-hover">
@@ -122,7 +123,8 @@
                         <s:property value="productCode"/>
                     </th>
                     <td onmouseleave="hideImg(this)" onmouseover="showImg(this)"><s:property value="productName"/>
-                        <img style="display: none; width: 240px; height: 180px; object-fit: cover" src="<s:property value="productImage"/>">
+                        <img style="display: none; width: 240px; height: 180px; object-fit: cover"
+                             src="<s:property value="productImage"/>">
                     </td>
                     <s:if test="productDetails != null">
                         <td>
@@ -148,7 +150,7 @@
                            class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
                         <a onclick="deleteProduct(<s:property value="productId"/>)" type="button"
                            class="btn btn-danger"><i class="bi bi-trash3"></i></a>
-                        <a type="button"
+                        <a type="button" onclick="showHistory(<s:property value="productId"/>)"
                            class="btn btn-secondary"><i class="bi bi-clock-history"></i></a>
                     </td>
                 </tr>
@@ -206,6 +208,36 @@
 </div>
 
 
+<div class="modal" id="modal_history" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Lịch sử sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table" id="table-history">
+                    <thead>
+                    <tr>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Hành động</th>
+                        <th scope="col">khách hàng cũ</th>
+                        <th scope="col">khách hàng mới</th>
+                        <th scope="col">thời gian</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     let btnSearch = document.getElementById('btn-search');
     btnSearch.onclick = function () {
@@ -217,6 +249,37 @@
         btnSearch.href = url;
         btnSearch.click();
     };
+
+    function showHistory(productId) {
+        let endpoint = 'http://localhost:8080/product_history?productId=' + productId;
+        var content = document.getElementById('modal_history').querySelector('.modal-body');
+        var myModal = new bootstrap.Modal(document.getElementById('modal_history'), {
+            keyboard: false
+        })
+        axios.get(endpoint)
+            .then(function (response) {
+                let histories = response.data.historyProducts;
+
+                const rows = histories.map(item => {
+                    return `<tr>
+                                <td>${item.productName}</td>
+                                <td>${item.actionName}</td>
+                                <td>${item.oldCustomerName == null ? 'không có' : item.oldCustomerName}</td>
+                                <td>${item.newCustomerName == null ? 'không có' : item.newCustomerName}</td>
+                                <td>${item.happenedAt}</td>
+                            </tr>`;
+                });
+
+                const tableBody = document.querySelector('#table-history tbody');
+                tableBody.innerHTML = rows.join('');
+            })
+            .catch(function (error) {
+
+            });
+        myModal.show();
+
+
+    }
 
     function deleteProduct(productId) {
         var myModal = new bootstrap.Modal(document.getElementById('modal_delete'), {
@@ -240,11 +303,11 @@
     }
 
     function showImg(button) {
-        let img  = button.querySelector('img');
+        let img = button.querySelector('img');
         img.style.display = 'block';
     }
 
-    function hideImg(button){
+    function hideImg(button) {
         let img = button.querySelector('img');
         img.style.display = 'none';
     }
@@ -266,7 +329,7 @@
         console.log(newPath);
     }
 
-    function loadDescription(div){
+    function loadDescription(div) {
         let details = [];
         let value = div.getAttribute('content');
         console.log((value))
@@ -279,7 +342,7 @@
     }
 
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const rows = document.querySelectorAll('.product-detail');
 
         rows.forEach(e => {

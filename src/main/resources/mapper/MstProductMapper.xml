@@ -39,6 +39,22 @@
         <result property="qty" column="qty"/>
     </resultMap>
 
+    <resultMap id="HistoryProduct" type="HistoryProduct">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="oldCustomerName" column="old_customer_name"/>
+        <result property="newCustomerName" column="new_customer_name"/>
+        <result property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="actionName" column="action_name"/>
+        <result property="happenedAt" column="happened_at"/>
+    </resultMap>
+
+    <select id="findHistoryProductById" resultType="HistoryProduct">
+        select  * from audit_history_product where product_id = #{productId};
+    </select>
+
     <select id="findAll" resultMap="MstProduct">
         select
             p.product_id,

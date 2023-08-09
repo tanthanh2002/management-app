@@ -110,12 +110,12 @@ CREATE TABLE IF NOT EXISTS audit_history_product
     id              int auto_increment primary key,
     user_id         int,
     customer_id     int,
+    old_customer_name varchar(255),
+    new_customer_name varchar(255),
     product_id      int,
-    action_name     varchar(255)    check ( action_name in ('insert','update','detele')),
-    happened_at     TIMESTAMP,
-    constraint foreign key (user_id) references mst_users(id),
-    constraint foreign key (customer_id) references mst_customer(customer_id),
-    constraint foreign key (product_id) references mst_product(product_id)
+    product_name    varchar(255),
+    action_name     varchar(255)    check ( action_name in ('insert','update','delete')),
+    happened_at     TIMESTAMP
 );
 
 
@@ -267,9 +267,15 @@ CREATE TRIGGER audit_update_product
 AFTER UPDATE ON mst_product
 FOR EACH ROW
 BEGIN
+    DECLARE  old_customer varchar(255);
+    DECLARE  new_customer varchar(255);
+
+    select customer_name into old_customer from mst_customer where  customer_id = OLD.customer_id;
+    select customer_name into new_customer from mst_customer where  customer_id = NEW.customer_id;
+
     IF !(NEW.customer_id <=> OLD.customer_id) THEN
-        INSERT audit_history_product(CUSTOMER_ID, PRODUCT_ID, ACTION_NAME, HAPPENED_AT)
-            VALUES (NEW.customer_id, NEW.product_id, 'update', CONVERT_TZ(NOW(), '+00:00', '+07:00'));
+        INSERT audit_history_product(CUSTOMER_ID, PRODUCT_ID, PRODUCT_NAME, old_customer_name, new_customer_name, ACTION_NAME, HAPPENED_AT)
+            VALUES (NEW.customer_id, NEW.product_id, NEW.product_name, old_customer, new_customer, 'update', CONVERT_TZ(NOW(), '+00:00', '+07:00'));
     END IF;
 
 END;
@@ -286,8 +292,8 @@ CREATE TRIGGER audit_delete_product
 AFTER DELETE ON mst_product
 FOR EACH ROW
 BEGIN
-    INSERT audit_history_product(CUSTOMER_ID, PRODUCT_ID, ACTION_NAME, HAPPENED_AT)
-            VALUES (OLD.customer_id, OLD.product_id, 'delete', CONVERT_TZ(NOW(), '+00:00', '+07:00'));
+    INSERT audit_history_product(PRODUCT_ID, PRODUCT_NAME, ACTION_NAME, HAPPENED_AT)
+        VALUES (OLD.product_id, OLD.product_name, 'delete', CONVERT_TZ(NOW(), '+00:00', '+07:00'));
 END;
 
 -- INSERT DEFAULT DATA

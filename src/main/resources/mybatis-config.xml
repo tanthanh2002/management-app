@@ -10,6 +10,7 @@
         <typeAlias alias = "MstProduct" type = "org.rivercrane.models.MstProduct"/>
         <typeAlias alias = "ProductDto" type = "org.rivercrane.models.ProductDto"/>
         <typeAlias alias = "ProductDetail" type = "org.rivercrane.models.ProductDetail"/>
+        <typeAlias alias="HistoryProduct" type="org.rivercrane.models.HistoryProduct" />
     </typeAliases>
 
     <!-- Configuring the database environment -->

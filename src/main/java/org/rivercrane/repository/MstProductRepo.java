@@ -115,4 +115,11 @@ public class MstProductRepo {
         session.close();
         return productDetails;
     }
+
+    public List<HistoryProduct> findHistoryProductById(int productId){
+        SqlSession session = sessionFactory.openSession();
+        List<HistoryProduct> historyProducts = session.selectList("MstProduct.findHistoryProductById", productId);
+        session.close();
+        return historyProducts;
+    }
 }

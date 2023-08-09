@@ -98,6 +98,9 @@
     </package>
 
     <package name="mst_product" namespace="/" extends="default">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>
         <action name="product_execute" method="execute" class="org.rivercrane.actions.ProductAction">
             <interceptor-ref name="loginInterceptorStack"></interceptor-ref>
             <result name="success">views/products.jsp</result>
@@ -115,6 +118,9 @@
             <result name="success" type="redirectAction">
                 <param name="actionName">product_execute</param>
             </result>
+        </action>
+        <action name="product_history" method="execute" class="org.rivercrane.actions.ProductHistoryAction">
+            <result name="success" type="json"></result>
         </action>
     </package>
 

@@ -22,9 +22,10 @@ public class ProductDetailAction extends ActionSupport {
     public String execute() throws IOException {
         String path = "./src/main/webapp/images/";
         String fileName = RandomStringUtils.randomAlphabetic(10) + ".png";
-        File fileToCreate = new File(path, fileName);
+        File fileToCreate;
 
         if (image != null) {
+            fileToCreate=  new File(path, fileName);
             FileUtils.copyFile(image, fileToCreate);
         }else{
             fileName = "null";

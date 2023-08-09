@@ -1,9 +1,7 @@
 package org.rivercrane.services;
 
-import org.rivercrane.models.MstProduct;
-import org.rivercrane.models.MstUsers;
-import org.rivercrane.models.ProductDetail;
-import org.rivercrane.models.ProductDto;
+import org.apache.ibatis.session.SqlSession;
+import org.rivercrane.models.*;
 import org.rivercrane.repository.MstProductRepo;
 
 import java.util.ArrayList;
@@ -77,5 +75,9 @@ public class MstProductService {
 
     public int getNewestId() {
         return repo.getNewestId();
+    }
+
+    public List<HistoryProduct> findHistoryProductById(int productId){
+        return repo.findHistoryProductById(productId);
     }
 }
