@@ -47,6 +47,10 @@ public class MstUserService {
         }
     }
 
+    public MstUsers findByEmail(String email){
+        return repo.findUserByEmail(email);
+    }
+
     public List<MstUsers> getAll(){
         return repo.findAll();
     }

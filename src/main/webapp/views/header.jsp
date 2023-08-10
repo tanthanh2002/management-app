@@ -42,6 +42,7 @@
                 </ul>
                 <div class="navbar-text d-flex justify-content-around">
                     <div class="col me-4 fs-5 text-while" id="header-username"><s:property value="#session.loggedUser"/></div>
+                    <div class="col fs-5 text-while" id="header-role">(<s:property value="#session.role"/>)</div>
                     <a href="/logout" class="col ps-3 d-flex justify-content-center align-items-center"><i class="fs-5 bi bi-box-arrow-right"></i></a>
                     <a href="" class="col ps-3 d-flex justify-content-center align-items-center"><i class="fs-5 bi bi-person m-auto"></i></a>
                 </div>

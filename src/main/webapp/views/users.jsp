@@ -62,10 +62,12 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-3">
-            <a href="#" type="button" onclick="showcreateUser()" class="btn btn-primary"><i
-                    class="bi bi-person-add"></i><span class="px-4">Thêm mới</span></a>
-        </div>
+        <s:if test="#session.role == 'Admin'">
+            <div class="col-sm-3">
+                <a href="#" type="button" onclick="showcreateUser()" class="btn btn-primary"><i
+                        class="bi bi-person-add"></i><span class="px-4">Thêm mới</span></a>
+            </div>
+        </s:if>
         <div class="col-sm-3 offset-3">
             <a href="" type="button" id="btn-search" class="btn btn-primary"><i class="bi bi-search"></i><span
                     class="px-4">Tìm kiếm</span></a>
@@ -132,14 +134,17 @@
                         <td class="text-danger">Tạm khoá</td>
                     </s:else>
                     <td>
-                        <a href="#"
-                           onclick="showModelEdit(<s:property value="id"/>,'<s:property value="name"/>','<s:property
-                                   value="email"/>','<s:property value="groupRole"/>')" type="button"
-                           class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
-                        <a href="/user_delete.action?id=<s:property value = "id"/>" type="button"
-                           class="btn btn-danger btn-delete"><i class="bi bi-trash3"></i></a>
-                        <a href="/user_changelock.action?id=<s:property value = "id"/>" type="button"
-                           class="btn btn-secondary btn-lock"><i class="bi bi-person-fill-lock "></i></a>
+                        <s:if test="#session.role == 'Admin'">
+                            <a href="#"
+                               onclick="showModelEdit(<s:property value="id"/>,'<s:property value="name"/>','<s:property
+                                       value="email"/>','<s:property value="groupRole"/>')" type="button"
+                               class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                            <a href="/user_delete.action?id=<s:property value = "id"/>" type="button"
+                               class="btn btn-danger btn-delete"><i class="bi bi-trash3"></i></a>
+                            <a href="/user_changelock.action?id=<s:property value = "id"/>" type="button"
+                               class="btn btn-secondary btn-lock"><i class="bi bi-person-fill-lock "></i></a>
+                        </s:if>
+
                     </td>
                 </tr>
             </s:iterator>

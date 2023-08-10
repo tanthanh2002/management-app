@@ -57,18 +57,20 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-2">
-            <a onclick="showModel()" type="button" class="btn btn-primary"><i class="bi bi-person-add"></i><span
-                    class="px-2">Thêm mới</span></a>
-        </div>
-        <div class="col-sm-2 ">
-            <a id="btn-import" type="button" class="btn btn-primary"><i
-                    class="bi bi-upload"></i><span class="px-2">Import</span></a>
-        </div>
-        <div class="col-sm-2 ">
-            <a id="btn-export" type="button" class="btn btn-primary"><i class="bi bi-download"></i><span
-                    class="px-2">Export</span></a>
-        </div>
+        <s:if test="#session.role == 'Admin'">
+            <div class="col-sm-2">
+                <a onclick="showModel()" type="button" class="btn btn-primary"><i class="bi bi-person-add"></i><span
+                        class="px-2">Thêm mới</span></a>
+            </div>
+            <div class="col-sm-2 ">
+                <a id="btn-import" type="button" class="btn btn-primary"><i
+                        class="bi bi-upload"></i><span class="px-2">Import</span></a>
+            </div>
+            <div class="col-sm-2 ">
+                <a id="btn-export" type="button" class="btn btn-primary"><i class="bi bi-download"></i><span
+                        class="px-2">Export</span></a>
+            </div>
+        </s:if>
         <div class="col-sm-2 ">
             <a href="" type="button" id="btn-seach-customer" class="btn btn-primary"><i class="bi bi-search"></i><span
                     class="px-2">Tìm kiếm</span></a>
@@ -138,10 +140,12 @@
                         <td class="text-danger" readonly>Bị khoá</td>
                     </s:else>
                     <td>
-                        <a type="button" onclick=editRow(this) class="btn btn-success btn-edit"><i
-                                class="bi bi-pencil-square"></i></a>
-                        <a type="button" onclick=saveRow(this) style="display: none;"
-                           class="btn btn-primary btn-save"><i class="bi bi-save"></i></a>
+                        <s:if test="#session.role == 'Admin' || #session.role == 'Editor'">
+                            <a type="button" onclick=editRow(this) class="btn btn-success btn-edit"><i
+                                    class="bi bi-pencil-square"></i></a>
+                            <a type="button" onclick=saveRow(this) style="display: none;"
+                               class="btn btn-primary btn-save"><i class="bi bi-save"></i></a>
+                        </s:if>
                     </td>
                 </tr>
             </s:iterator>

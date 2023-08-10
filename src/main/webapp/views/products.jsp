@@ -55,10 +55,12 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-3">
-            <a href="/product_detail" type="button" class="btn btn-primary"><i class="bi bi-person-add"></i><span
-                    class="px-4">Thêm mới</span></a>
-        </div>
+        <s:if test="#session.role == 'Admin'">
+            <div class="col-sm-3">
+                <a href="/product_detail" type="button" class="btn btn-primary"><i class="bi bi-person-add"></i><span
+                        class="px-4">Thêm mới</span></a>
+            </div>
+        </s:if>
         <div class="col-sm-3 offset-3">
             <a href="" type="button" id="btn-search" class="btn btn-primary"><i class="bi bi-search"></i><span
                     class="px-4">Tìm kiếm</span></a>
@@ -146,10 +148,14 @@
                         <td class="text-danger"><i class="bi bi-person"></i>: <s:property value="customerName"/></td>
                     </s:else>
                     <td>
-                        <a href="/product_detail?productId=<s:property value="productId"/>" type="button"
-                           class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
-                        <a onclick="deleteProduct(<s:property value="productId"/>)" type="button"
-                           class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                        <s:if test="#session.role == 'Admin' || #session.role == 'Editor'">
+                            <a href="/product_detail?productId=<s:property value="productId"/>" type="button"
+                               class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                        </s:if>
+                        <s:if test="#session.role == 'Admin'">
+                            <a onclick="deleteProduct(<s:property value="productId"/>)" type="button"
+                               class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                        </s:if>
                         <a type="button" onclick="showHistory(<s:property value="productId"/>)"
                            class="btn btn-secondary"><i class="bi bi-clock-history"></i></a>
                     </td>
@@ -209,7 +215,7 @@
 
 
 <div class="modal" id="modal_history" tabindex="-1">
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Lịch sử sản phẩm</h5>

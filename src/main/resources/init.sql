@@ -5,6 +5,7 @@ USE mst;
 CREATE TABLE IF NOT EXISTS mst_users
 (
     id             INT AUTO_INCREMENT PRIMARY KEY,
+    user_code    VARCHAR(255) UNIQUE,
     name           VARCHAR(255)        NOT NULL,
     email          VARCHAR(255) UNIQUE NOT NULL,
     password       VARCHAR(255)        NOT NULL,
@@ -22,6 +23,7 @@ CREATE TABLE IF NOT EXISTS mst_users
 CREATE TABLE IF NOT EXISTS mst_customer
 (
     customer_id   INT PRIMARY KEY AUTO_INCREMENT,
+    customer_code    VARCHAR(255) UNIQUE,
     customer_name VARCHAR(255) NOT NULL,
     email         VARCHAR(255) NOT NULL UNIQUE ,
     tel_num       VARCHAR(14)  NOT NULL,
@@ -244,11 +246,23 @@ CREATE TRIGGER update_mst_users
     SET NEW.updated_at = CONVERT_TZ(NOW(), '+00:00', '+07:00');
 
 CREATE TRIGGER create_mst_users
-    BEFORE INSERT
+    AFTER INSERT
     ON mst_users
     FOR EACH ROW
-    SET NEW.created_at = CONVERT_TZ(NOW(), '+00:00', '+07:00');
-
+BEGIN
+    DECLARE id int;
+    select product_id into id from mst_product order by product_id desc limit 1;
+    SET NEW.product_code = CONCAT('PRODUCT_',
+            CONCAT(
+                CHAR(FLOOR(65 + RAND() * 26)),
+                CHAR(FLOOR(65 + RAND() * 26)),
+                CHAR(FLOOR(65 + RAND() * 26)),
+                CHAR(FLOOR(65 + RAND() * 26)),
+                CHAR(FLOOR(65 + RAND() * 26))
+            ), DATE_FORMAT(NOW(), '%H%i%s'),id
+        ),
+        NEW.created_at = CONVERT_TZ(NOW(), '+00:00', '+07:00');
+END;
 CREATE TRIGGER update_mst_customer
     BEFORE UPDATE
     ON mst_customer
@@ -345,6 +359,18 @@ INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, i
                       last_login_at, last_login_ip, created_at, updated_at)
 VALUES (10, 'Nguyen Van J', 'j.nguyen@gmail.com', '$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG', null,
         null, 1, 0, 'Editor', null, null, null, null);
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role,
+                      last_login_at, last_login_ip, created_at, updated_at)
+VALUES (11, 'Duong Tan Thanh', 'admin@gmail.com', '$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG', null,
+        null, 1, 0, 'Admin', null, null, null, null);
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role,
+                      last_login_at, last_login_ip, created_at, updated_at)
+VALUES (12, 'Duong Tan Thanh', 'editor@gmail.com', '$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG', null,
+        null, 1, 0, 'Editor', null, null, null, null);
+INSERT INTO mst_users(id, name, email, password, remember_token, verify_email, is_active, is_delete, group_role,
+                      last_login_at, last_login_ip, created_at, updated_at)
+VALUES (13, 'Duong Tan Thanh', 'reviewer@gmail.com', '$2a$12$OGp.7Sv8zMHa5TNJ6aXAg.rTQgYaMsiCbnBYOmwOkY2hqkltmnDEG', null,
+        null, 1, 0, 'Reviewer', null, null, null, null);
 
 INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at)
 VALUES ('Nguyen Van A', 'a.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm, Phường 25, Quận Bình Thạnh, TP.HCM', 1,

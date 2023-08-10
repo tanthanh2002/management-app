@@ -22,3 +22,8 @@
     max-height: 500px;
     object-fit: cover;
 }
+
+.modal-custom {
+    max-width: 1200px; /* Điều chỉnh chiều rộng tối đa của modal */
+    width: 90%; /* Điều chỉnh chiều rộng tương đối của modal */
+}

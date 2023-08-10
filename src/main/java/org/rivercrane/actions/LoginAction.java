@@ -37,7 +37,7 @@ public class LoginAction extends ActionSupport {
                 System.out.println("login successfully");
                 Map session = ActionContext.getContext().getSession();
                 session.put("loggedUser",email);
-
+                session.put("role", userService.findByEmail(email).getGroupRole());
                 return SUCCESS;
             }else{
                 addActionError(userService.getMessage());
