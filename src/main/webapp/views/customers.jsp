@@ -71,8 +71,9 @@
                         class="px-2">Export</span></a>
             </div>
         </s:if>
+
         <div class="col-sm-2 ">
-            <a href="" type="button" id="btn-seach-customer" class="btn btn-primary"><i class="bi bi-search"></i><span
+            <a type="button" id="btn-search-customer" class="btn btn-primary"><i class="bi bi-search"></i><span
                     class="px-2">Tìm kiếm</span></a>
         </div>
         <div class="col-sm-2">
@@ -117,6 +118,7 @@
             <thead>
             <tr>
                 <th scope="col" class="col">#</th>
+                <th scope="col" class="col">Mã</th>
                 <th scope="col" class="col">Họ tên</th>
                 <th scope="col" class="col">Email</th>
                 <th scope="col" class="col">Địa chỉ</th>
@@ -129,6 +131,7 @@
             <s:iterator value="customers" status="rowStatus">
                 <tr>
                     <th scope="row"><s:property value="%{#rowStatus.count + (page-1)*10}" /></th>
+                    <td><s:property value="customerCode"/></td>
                     <td><s:property value="customerName"/></td>
                     <td><s:property value="email"/></td>
                     <td><s:property value="address"/></td>
@@ -377,40 +380,49 @@
         row.querySelector(".btn-edit").style.display = 'inline-block';
     }
 
-    document.getElementById('btn-export').onclick = function () {
-        axios.get('/customer_export')
-            .then(function (response) {
-                customAlert("Export dữ liệu khách hàng thành công!", 'alert-success');
-                console.log(response.status);
-            })
-            .catch(function (error) {
-                customAlert("Export dữ liệu khách hàng thất bại!", 'alert-danger');
-            });
+    let btnExport = document.getElementById('btn-export');
+    if(btnExport != null){
+        btnExport.onclick = function () {
+            axios.get('/customer_export')
+                .then(function (response) {
+                    customAlert("Export dữ liệu khách hàng thành công!", 'alert-success');
+                    console.log(response.status);
+                })
+                .catch(function (error) {
+                    customAlert("Export dữ liệu khách hàng thất bại!", 'alert-danger');
+                });
+        }
     }
 
-    document.getElementById('btn-import').onclick = function () {
+    let btnImport = document.getElementById('btn-import');
+    if(btnImport != null){
+        btnImport.onclick = function () {
 
-        axios.get('/customer_importCustomer')
-            .then(function (response) {
-                customAlert("Import dữ liệu khách hàng thành công!", 'alert-success');
-                window.location.href = '/customer_execute';
-                console.log(response.status);
-            })
-            .catch(function (error) {
-                customAlert("Import dữ liệu khách hàng thất bại!", 'alert-danger');
-            });
+            axios.get('/customer_importCustomer')
+                .then(function (response) {
+                    customAlert("Import dữ liệu khách hàng thành công!", 'alert-success');
+                    window.location.href = '/customer_execute';
+                    console.log(response.status);
+                })
+                .catch(function (error) {
+                    customAlert("Import dữ liệu khách hàng thất bại!", 'alert-danger');
+                });
+        }
     }
 
-    let btnSearch = document.getElementById('btn-seach-customer');
-    btnSearch.onclick = function () {
-        let name = document.getElementById('customer-name').value;
-        let email = document.getElementById('customer-email').value;
-        let status = document.getElementById('customer-status').value;
-        let address = document.getElementById('customer-address').value;
-        var url = '/customer_search.action?customerName=' + name + '&customerEmail=' + email + '&isActive=' + status + '&customerAddress=' + address;
-        btnSearch.href = url;
-        btnSearch.click();
+    let btnSearch = document.getElementById('btn-search-customer');
+    if(btnSearch != null){
+        btnSearch.onclick = function () {
+            let name = document.getElementById('customer-name').value;
+            let email = document.getElementById('customer-email').value;
+            let status = document.getElementById('customer-status').value;
+            let address = document.getElementById('customer-address').value;
+            var url = '/customer_search.action?customerName=' + name + '&customerEmail=' + email + '&isActive=' + status + '&customerAddress=' + address;
+            btnSearch.href = url;
+            btnSearch.click();
+        }
     }
+
 
     function pagination(page) {
         var currentPath = window.location.href;

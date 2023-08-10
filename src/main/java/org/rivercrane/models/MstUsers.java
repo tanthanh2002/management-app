@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @Data
 public class MstUsers {
     private Integer id;
+    private String userCode;
     private String name;
     private String email;
     private String password;

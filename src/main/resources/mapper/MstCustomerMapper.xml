@@ -5,6 +5,7 @@
 <mapper namespace="MstCustomer">
     <resultMap id = "MstCustomer" type = "MstCustomer">
         <result property = "customerId" column = "customer_id"/>
+        <result property = "customerCode" column = "customer_code"/>
         <result property = "customerName" column = "customer_name"/>
         <result property = "email" column = "email"/>
         <result property = "telNum" column = "tel_num"/>

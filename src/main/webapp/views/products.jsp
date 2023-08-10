@@ -121,9 +121,9 @@
                     <th scope="row">
                         <s:property value="%{#rowStatus.count + (page-1)*10}"/>
                     </th>
-                    <th>
+                    <td>
                         <s:property value="productCode"/>
-                    </th>
+                    </td>
                     <td onmouseleave="hideImg(this)" onmouseover="showImg(this)"><s:property value="productName"/>
                         <img style="display: none; width: 240px; height: 180px; object-fit: cover"
                              src="<s:property value="productImage"/>">

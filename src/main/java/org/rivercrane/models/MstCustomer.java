@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 @Data
 public class MstCustomer {
     private Integer customerId;
+    private String customerCode;
     private String customerName;
     private String email;
     private String telNum;

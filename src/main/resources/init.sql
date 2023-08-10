@@ -172,6 +172,7 @@ CREATE TRIGGER create_mst_product
 BEGIN
     DECLARE id int;
     select product_id into id from mst_product order by product_id desc limit 1;
+    SET id = CASE WHEN id is null THEN 0 ELSE id END;
     SET NEW.product_code = CONCAT('PRODUCT_',
             CONCAT(
                 CHAR(FLOOR(65 + RAND() * 26)),
@@ -246,13 +247,14 @@ CREATE TRIGGER update_mst_users
     SET NEW.updated_at = CONVERT_TZ(NOW(), '+00:00', '+07:00');
 
 CREATE TRIGGER create_mst_users
-    AFTER INSERT
+    BEFORE INSERT
     ON mst_users
     FOR EACH ROW
 BEGIN
     DECLARE id int;
-    select product_id into id from mst_product order by product_id desc limit 1;
-    SET NEW.product_code = CONCAT('PRODUCT_',
+    select id into id from mst_users order by id desc limit 1;
+    SET id = CASE WHEN id is null THEN 0 ELSE id END;
+    SET NEW.user_code = CONCAT('USR_',
             CONCAT(
                 CHAR(FLOOR(65 + RAND() * 26)),
                 CHAR(FLOOR(65 + RAND() * 26)),
@@ -273,7 +275,21 @@ CREATE TRIGGER create_mst_customer
     BEFORE INSERT
     ON mst_customer
     FOR EACH ROW
-    SET NEW.created_at = CONVERT_TZ(NOW(), '+00:00', '+07:00');
+BEGIN
+    DECLARE id int;
+    select customer_id into id from mst_customer order by customer_id desc limit 1;
+    SET id = CASE WHEN id is null THEN 0 ELSE id END;
+    SET NEW.customer_code = CONCAT('CUS_',
+            CONCAT(
+                CHAR(FLOOR(65 + RAND() * 26)),
+                CHAR(FLOOR(65 + RAND() * 26)),
+                CHAR(FLOOR(65 + RAND() * 26)),
+                CHAR(FLOOR(65 + RAND() * 26)),
+                CHAR(FLOOR(65 + RAND() * 26))
+            ), DATE_FORMAT(NOW(), '%H%i%s'),id
+        ),
+        NEW.created_at = CONVERT_TZ(NOW(), '+00:00', '+07:00');
+END;
 
 
 -- audit

@@ -1,7 +1,5 @@
 function Validator(options){
     var formElement = document.querySelector(options.form);
-
-    console.log(123);
     function validate(inputElement, rule){
         var messageElement = inputElement.parentElement.querySelector('.form-message');
 

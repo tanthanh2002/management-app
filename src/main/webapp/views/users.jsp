@@ -113,6 +113,7 @@
             <thead>
             <tr>
                 <th scope="col" class="col">#</th>
+                <th scope="col" class="col">Mã</th>
                 <th scope="col" class="col">Họ tên</th>
                 <th scope="col" class="col">Email</th>
                 <th scope="col" class="col">Nhóm</th>
@@ -124,6 +125,7 @@
             <s:iterator value="users" status="rowStatus">
                 <tr>
                     <th scope="row"><s:property value="%{#rowStatus.count + (page-1)*10}"/></th>
+                    <td><s:property value="userCode"/></td>
                     <td><s:property value="name"/></td>
                     <td><s:property value="email"/></td>
                     <td><s:property value="groupRole"/></td>
