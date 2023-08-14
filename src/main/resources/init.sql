@@ -47,14 +47,9 @@ CREATE TABLE IF NOT EXISTS mst_product
     created_at      TIMESTAMP,
     updated_at      TIMESTAMP,
     product_details VARCHAR(255),
+    type            varchar(255) CHECK ( type IN ('RAM','CPU','GPU','MOUSE','HEADPHONE','MAINBOARD','SCREEN','OTHER','CAMERA','KEYBOARD','PC') ),
     CONSTRAINT mst_product_customer_id FOREIGN KEY (customer_id) REFERENCES mst_customer (customer_id)
-    );
-
-CREATE TABLE IF NOT EXISTS product_type
-(
-    type_id              INT AUTO_INCREMENT PRIMARY KEY ,
-    description     VARCHAR(255)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS mst_product_detail
 (
@@ -420,60 +415,43 @@ VALUES ('Nguyen Van H', 'h.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm,
 INSERT INTO mst_customer(customer_name, email, tel_num, address)
 VALUES ('Nguyen Van I', 'i.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm, Phường 25, Quận Bình Thạnh, TP.HCM');
 
-INSERT INTO product_type(description)
-VALUES ('PC');
-INSERT INTO product_type(description)
-VALUES ('LAPTOP');
-INSERT INTO product_type(description)
-VALUES ('SCREEN');
-INSERT INTO product_type(description)
-VALUES ('MOUSE');
-INSERT INTO product_type(description)
-VALUES ('CAMERA');
-INSERT INTO product_type(description)
-VALUES ('KEYBOARD');
-INSERT INTO product_type(description)
-VALUES ('CAMERA');
-INSERT INTO product_type(description)
-VALUES ('OTHER');
 
-
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Ram Gygabyte', null, '8GB DDR4', null, null, 10000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Ram Asus', null, '8GB DDR5', null, null, 20000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Màn hình Edra', null, '24Inch - IPS 98% SRGB', null, null, 30000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Chuột logitech g102', null, 'Có dây, RGB', null, null, 40000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Chuột Dareu', null, 'Không dây', null, null, 50000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Arm màn hình monitor motion t7', null, '17 inch đến 24 inch', null, null, 60000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Bàn phím EK87', null, 'Blue switch', null, null, 70000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Canon M10', null, 'Màu trắng', null, null, 80000,1);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Len kit canon', null, '15-45mm', null, null, 90000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Case PC 01', null, 'Màu trắng', null, null, 100000,1);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Case PC 02', null, 'Màu đen', null, null, 100000,1);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('VGA Asus RTX 3060', null, '12GB GDDR6', null, null, 100000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('VGA Asus RTX 4080', null, '12GB GDDR6', null, null, 100000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Mainboard Asus Z11PA-D8C', null, 'Z11PA-D8', null, null, 100000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('CPU Intel Core I7 12700KF', null, 'LGA1700, Turbo 5.00 GHz, 12C/20T, 25MB', null, null, 100000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('Headphone sony', null, 'true wireless', null, null, 100000,0);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('PC 01', null, 'PC gaming', null, null, 100000,1);
-INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)
-VALUES ('PC 02', null, 'PC văn phòng', null, null, 100000,1);
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Ram Gygabyte', null, '8GB DDR4', null, null, 10000,0,'RAM');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Ram Asus', null, '8GB DDR5', null, null, 20000,0,'RAM');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Màn hình Edra', null, '24Inch - IPS 98% SRGB', null, null, 30000,0,'SCREEN');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Chuột logitech g102', null, 'Có dây, RGB', null, null, 40000,0,'MOUSE');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Chuột Dareu', null, 'Không dây', null, null, 50000,0,'MOUSE');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Arm màn hình monitor motion t7', null, '17 inch đến 24 inch', null, null, 60000,0,'OTHER');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Bàn phím EK87', null, 'Blue switch', null, null, 70000,0,'KEYBOARD');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Canon M10', null, 'Màu trắng', null, null, 80000,1,'CAMERA');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Len kit canon', null, '15-45mm', null, null, 90000,0,'OTHER');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Case PC 01', null, 'Màu trắng', null, null, 100000,1,'OTHER');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Case PC 02', null, 'Màu đen', null, null, 100000,1,'OTHER');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('VGA Asus RTX 3060', null, '12GB GDDR6', null, null, 100000,0,'GPU');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('VGA Asus RTX 4080', null, '12GB GDDR6', null, null, 100000,0,'GPU');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Mainboard Asus Z11PA-D8C', null, 'Z11PA-D8', null, null, 100000,0,'MAINBOARD');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('CPU Intel Core I7 12700KF', null, 'LGA1700, Turbo 5.00 GHz, 12C/20T, 25MB', null, null, 100000,0,'CPU');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('Headphone sony', null, 'true wireless', null, null, 100000,0,'HEADPHONE');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('PC 01', null, 'PC gaming', null, null, 100000,1,'PC');
+INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container,type)
+VALUES ('PC 02', null, 'PC văn phòng', null, null, 100000,1,'PC');
 
 
 INSERT INTO mst_product_detail(product_id, product_component, qty)
