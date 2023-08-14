@@ -6,6 +6,7 @@ import org.rivercrane.models.MstCustomer;
 import org.rivercrane.models.MstUsers;
 import org.rivercrane.utils.CustomSqlSessionFactory;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class MstCustomerRepo {
@@ -47,9 +48,9 @@ public class MstCustomerRepo {
     }
 
 
-    public void insert(MstCustomer customer) {
+    public void insert(MstCustomer customer) throws SQLIntegrityConstraintViolationException {
         SqlSession session = sessionFactory.openSession();
-        session.update("MstCustomer.insert", customer);
+        session.insert("MstCustomer.insert", customer);
         session.commit();
         session.close();
     }

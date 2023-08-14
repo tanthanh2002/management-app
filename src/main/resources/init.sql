@@ -50,6 +50,11 @@ CREATE TABLE IF NOT EXISTS mst_product
     CONSTRAINT mst_product_customer_id FOREIGN KEY (customer_id) REFERENCES mst_customer (customer_id)
 );
 
+CREATE TABLE IF NOT EXISTS product_type
+(
+    type_id              INT AUTO_INCREMENT PRIMARY KEY ,
+    description     VARCHAR(255)
+);
 
 CREATE TABLE IF NOT EXISTS mst_product_detail
 (
@@ -415,6 +420,22 @@ VALUES ('Nguyen Van H', 'h.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm,
 INSERT INTO mst_customer(customer_name, email, tel_num, address)
 VALUES ('Nguyen Van I', 'i.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm, Phường 25, Quận Bình Thạnh, TP.HCM');
 
+INSERT INTO product_type(description)
+VALUES ('PC');
+INSERT INTO product_type(description)
+VALUES ('LAPTOP');
+INSERT INTO product_type(description)
+VALUES ('SCREEN');
+INSERT INTO product_type(description)
+VALUES ('MOUSE');
+INSERT INTO product_type(description)
+VALUES ('CAMERA');
+INSERT INTO product_type(description)
+VALUES ('KEYBOARD');
+INSERT INTO product_type(description)
+VALUES ('CAMERA');
+INSERT INTO product_type(description)
+VALUES ('OTHER');
 
 
 INSERT INTO mst_product(product_name, product_image, description, created_at, updated_at, product_price,is_container)

@@ -4,13 +4,17 @@ import com.opencsv.exceptions.CsvException;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import lombok.Data;
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.rivercrane.models.MstCustomer;
 import org.rivercrane.services.MstCustomerService;
 import org.rivercrane.utils.CSVHandler;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -133,19 +137,27 @@ public class CustomerAction extends ActionSupport {
     }
 
     public String importCustomer() throws IOException, CsvException {
-        String path = "./src/main/resources/csv/" + "import_customer.csv";
-        List<MstCustomer> customers = csvHandler.importCustomersFromCSV(path);
-        System.out.println(customers.size());
+
+        String newFileName = "import.csv"; // Đổi tên tệp
+        String path = "./src/main/resources/csv/";
+        File newFile = new File(path, newFileName);
+        FileUtils.copyFile(fileCsv, newFile);
+
+        List<MstCustomer> customers = csvHandler.importCustomersFromCSV(path+newFileName);
+        System.out.println("kich thuoc: "+customers.size());
+
         for (MstCustomer i : customers) {
             try {
                 i.setIsActive(1);
                 customerService.insert(i);
-                System.out.println(i.toString());
-            } catch (Exception e) {
-//                e.printStackTrace();
-                System.out.println("Thêm không thành công: " + i.getCustomerName());
+            }catch(SQLIntegrityConstraintViolationException e){
+                HttpServletResponse response = ServletActionContext.getResponse();
+                response.setStatus(404);
+                System.out.println(e.getMessage());
+                System.out.println("failed");
             }
         }
+
         return SUCCESS;
     }
 
@@ -160,6 +172,5 @@ public class CustomerAction extends ActionSupport {
     private Integer isActive;
     private Integer page;
     private List<Integer> pages;
-
-
+    private File fileCsv;
 }

@@ -63,8 +63,11 @@
                         class="px-2">Thêm mới</span></a>
             </div>
             <div class="col-sm-2 ">
-                <a id="btn-import" type="button" class="btn btn-primary"><i
+                <a id="btn-import" type="button" class="btn btn-primary mb-3"><i
                         class="bi bi-upload"></i><span class="px-2">Import</span></a>
+                <input type="file" name="file-csv"
+                       accept=".csv" class="form-control"
+                       id="fileCsv"/>
             </div>
             <div class="col-sm-2 ">
                 <a id="btn-export" type="button" class="btn btn-primary"><i class="bi bi-download"></i><span
@@ -397,15 +400,22 @@
     let btnImport = document.getElementById('btn-import');
     if(btnImport != null){
         btnImport.onclick = function () {
+            let fileCsv = document.getElementById('fileCsv');
+            const data = new FormData();
 
-            axios.get('/customer_importCustomer')
+            if(fileCsv.files[0] == undefined){
+                alert("vui lòng chọn file");
+                return;
+            }
+            data.append('fileCsv',fileCsv.files[0])
+            axios.post('/customer_importCustomer',data)
                 .then(function (response) {
-                    customAlert("Import dữ liệu khách hàng thành công!", 'alert-success');
+                    alert("thêm dữ liệu thành công");
                     window.location.href = '/customer_execute';
                     console.log(response.status);
                 })
                 .catch(function (error) {
-                    customAlert("Import dữ liệu khách hàng thất bại!", 'alert-danger');
+                    alert("Import dữ liệu khách hàng không hoàn thành!");
                 });
         }
     }

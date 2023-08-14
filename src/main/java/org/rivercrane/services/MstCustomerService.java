@@ -4,6 +4,7 @@ import org.rivercrane.models.MstCustomer;
 import org.rivercrane.models.MstUsers;
 import org.rivercrane.repository.MstCustomerRepo;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +36,13 @@ public class MstCustomerService {
         repo.update(customer);
     }
 
-    public void insert(MstCustomer customer) {
-        repo.insert(customer);
+    public void insert(MstCustomer customer) throws SQLIntegrityConstraintViolationException {
+        try{
+            repo.insert(customer);
+        }catch (SQLIntegrityConstraintViolationException e){
+            throw new SQLIntegrityConstraintViolationException("insert fail");
+        }
+
     }
 
     public List<Integer> getTotalPage() {
