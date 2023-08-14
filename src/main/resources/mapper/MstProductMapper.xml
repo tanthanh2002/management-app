@@ -17,6 +17,7 @@
         <result property="customerName" column="customer_name"/>
         <result property="productDetails" column="product_details"/>
         <result property="isContainer" column="is_container"/>
+        <result property="type" column="type"/>
     </resultMap>
 
     <resultMap id="MstProduct" type="MstProduct">
@@ -109,7 +110,8 @@
             p.updated_at,
             c.customer_name,
             p.product_details,
-            p.is_container
+            p.is_container,
+            p.type
         from mst_product p left join mst_customer c on p.customer_id = c.customer_id order by (product_id) desc Limit #{offset}, 10;
     </select>
 
@@ -137,7 +139,8 @@
             p.updated_at,
             c.customer_name,
             p.product_details,
-            p.is_container
+            p.is_container,
+            p.type
         FROM mst_product p left join mst_customer c on p.customer_id = c.customer_id
         WHERE p.product_name  LIKE #{productName};
     </select>

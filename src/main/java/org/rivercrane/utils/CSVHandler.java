@@ -41,10 +41,11 @@ public class CSVHandler {
             String[] lineInArray;
             while ((lineInArray = reader.readNext()) != null) {
                 MstCustomer customer = MstCustomer.builder()
-                        .customerName(lineInArray[0])
-                        .email(lineInArray[1])
-                        .telNum(lineInArray[2])
-                        .address(lineInArray[3])
+                        .customerCode(lineInArray[0])
+                        .customerName(lineInArray[1])
+                        .email(lineInArray[2])
+                        .telNum(lineInArray[3])
+                        .address(lineInArray[4])
                         .build();
                 customers.add(customer);
             }

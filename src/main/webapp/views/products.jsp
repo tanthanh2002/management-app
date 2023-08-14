@@ -112,6 +112,7 @@
                 <th scope="col" class="col">Chi tiết</th>
                 <th scope="col" class="col">Giá</th>
                 <th scope="col" class="col">Tình trạng</th>
+                <th scope="col" class="col">Loại</th>
                 <th scope="col" class="col"></th>
             </tr>
             </thead>
@@ -147,6 +148,7 @@
                     <s:else>
                         <td class="text-danger"><i class="bi bi-person"></i>: <s:property value="customerName"/></td>
                     </s:else>
+                    <td><s:property value="type"/></td>
                     <td>
                         <s:if test="#session.role == 'Admin' || #session.role == 'Editor'">
                             <a href="/product_detail?productId=<s:property value="productId"/>" type="button"

@@ -171,6 +171,7 @@ public class CustomerAction extends ActionSupport {
     private String customerEmail;
     private Integer isActive;
     private Integer page;
+    private String customerCode;
     private List<Integer> pages;
     private File fileCsv;
 }

@@ -22,4 +22,6 @@ public class ProductDto {
     private String customerName;
     private String productDetails;
     private Integer isContainer;
+    private String type;
+
 }

@@ -19,5 +19,4 @@ public class MstProduct {
     private Timestamp updatedAt;
     private String productDetails;
     private Integer isContainer;
-
 }
