@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS mst_users
     last_login_ip  VARCHAR(40),
     created_at     TIMESTAMP,
     updated_at     TIMESTAMP
-);
+    );
 
 CREATE TABLE IF NOT EXISTS mst_customer
 (
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS mst_customer
     is_active     TINYINT      NOT NULL CHECK ( is_active IN (1, 0)) DEFAULT 1,
     created_at    TIMESTAMP,
     updated_at    TIMESTAMP
-);
+    );
 
 CREATE TABLE IF NOT EXISTS mst_product
 (
@@ -48,13 +48,13 @@ CREATE TABLE IF NOT EXISTS mst_product
     updated_at      TIMESTAMP,
     product_details VARCHAR(255),
     CONSTRAINT mst_product_customer_id FOREIGN KEY (customer_id) REFERENCES mst_customer (customer_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS product_type
 (
     type_id              INT AUTO_INCREMENT PRIMARY KEY ,
     description     VARCHAR(255)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS mst_product_detail
 (
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS mst_product_detail
     qty               INT CHECK ( qty > 0 ),
     CONSTRAINT mst_product_detail_product_id FOREIGN KEY (product_id) REFERENCES mst_product (product_id) ON DELETE CASCADE,
     CONSTRAINT mst_product_detail_product_component FOREIGN KEY (product_component) REFERENCES mst_product (product_id) ON DELETE CASCADE
-);
+    );
 
 CREATE TABLE IF NOT EXISTS mst_shop
 (
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS mst_shop
     shop_name  VARCHAR(255) NOT NULL,
     created_at TIMESTAMP,
     updated_at TIMESTAMP
-);
+    );
 
 CREATE TABLE IF NOT EXISTS mst_order
 (
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS mst_order
     updated_at     TIMESTAMP,
     CONSTRAINT mst_order_customer_id FOREIGN KEY (customer_id) REFERENCES mst_customer (customer_id),
     CONSTRAINT mst_order_order_shop FOREIGN KEY (order_shop) REFERENCES mst_shop (shop_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS mst_order_detail
 (
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS mst_order_detail
     CONSTRAINT mst_order_detail_order_id FOREIGN KEY (order_id) REFERENCES mst_order (order_id),
     CONSTRAINT mst_order_detail_shop_id FOREIGN KEY (shop_id) REFERENCES mst_shop (shop_id),
     CONSTRAINT mst_order_detail_receiver_id FOREIGN KEY (receiver_id) REFERENCES mst_customer (customer_id)
-);
+    );
 
 
 CREATE TABLE IF NOT EXISTS audit_history_product
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS audit_history_product
     product_name    varchar(255),
     action_name     varchar(255)    check ( action_name in ('insert','update','delete')),
     happened_at     TIMESTAMP
-);
+    );
 
 
 -- trigger update
@@ -146,27 +146,27 @@ BEGIN
     DECLARE cur CURSOR FOR SELECT DISTINCT mpd.product_id
                            FROM mst_product_detail mpd
                            WHERE mpd.product_component = p_id;
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
-    OPEN cur;
-    label:
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+OPEN cur;
+label:
     LOOP
         FETCH cur INTO revisedProductId;
 
-        SELECT GROUP_CONCAT(p.product_name SEPARATOR ', ')
-        INTO product_detail
-        FROM mst_product_detail d
-                 join mst_product p on d.product_component = p.product_id
-        WHERE d.product_id = revisedProductId;
+SELECT GROUP_CONCAT(p.product_name SEPARATOR ', ')
+INTO product_detail
+FROM mst_product_detail d
+         join mst_product p on d.product_component = p.product_id
+WHERE d.product_id = revisedProductId;
 
-        UPDATE mst_product
-        SET product_details = product_detail
-        WHERE product_id = revisedProductId;
+UPDATE mst_product
+SET product_details = product_detail
+WHERE product_id = revisedProductId;
 
-        IF done = 1 THEN
+IF done = 1 THEN
             LEAVE label;
-        END IF;
-    END LOOP;
-    CLOSE cur;
+END IF;
+END LOOP;
+CLOSE cur;
 END;
 DELIMITER ;
 
@@ -178,7 +178,7 @@ BEGIN
     DECLARE id int;
     select product_id into id from mst_product order by product_id desc limit 1;
     SET id = CASE WHEN id is null THEN 0 ELSE id END;
-    SET NEW.product_code = CONCAT('PRODUCT_',
+SET NEW.product_code = CONCAT('PRODUCT_',
             CONCAT(
                 CHAR(FLOOR(65 + RAND() * 26)),
                 CHAR(FLOOR(65 + RAND() * 26)),
@@ -196,16 +196,16 @@ CREATE TRIGGER update_mst_product_detail
 BEGIN
     DECLARE product_detail VARCHAR(255);
     IF !(NEW.product_component <=> OLD.product_component) THEN
-        SELECT GROUP_CONCAT(p.product_name SEPARATOR ', ')
-        INTO product_detail
-        FROM mst_product_detail d
-                 join mst_product p on d.product_component = p.product_id
-        WHERE d.product_id = NEW.product_id;
+    SELECT GROUP_CONCAT(p.product_name SEPARATOR ', ')
+    INTO product_detail
+    FROM mst_product_detail d
+             join mst_product p on d.product_component = p.product_id
+    WHERE d.product_id = NEW.product_id;
 
-        UPDATE mst_product
-        SET product_details = product_detail
-        WHERE product_id = NEW.product_id;
-    END IF;
+    UPDATE mst_product
+    SET product_details = product_detail
+    WHERE product_id = NEW.product_id;
+END IF;
 END;
 
 CREATE TRIGGER insert_mst_product_detail
@@ -259,7 +259,7 @@ BEGIN
     DECLARE id int;
     select id into id from mst_users order by id desc limit 1;
     SET id = CASE WHEN id is null THEN 0 ELSE id END;
-    SET NEW.user_code = CONCAT('USR_',
+SET NEW.user_code = CONCAT('USR_',
             CONCAT(
                 CHAR(FLOOR(65 + RAND() * 26)),
                 CHAR(FLOOR(65 + RAND() * 26)),
@@ -284,7 +284,7 @@ BEGIN
     DECLARE id int;
     select customer_id into id from mst_customer order by customer_id desc limit 1;
     SET id = CASE WHEN id is null THEN 0 ELSE id END;
-    SET NEW.customer_code = CONCAT('CUS_',
+SET NEW.customer_code = CASE WHEN NEW.customer_code IS NULL THEN CONCAT('CUS_',
             CONCAT(
                 CHAR(FLOOR(65 + RAND() * 26)),
                 CHAR(FLOOR(65 + RAND() * 26)),
@@ -292,15 +292,15 @@ BEGIN
                 CHAR(FLOOR(65 + RAND() * 26)),
                 CHAR(FLOOR(65 + RAND() * 26))
             ), DATE_FORMAT(NOW(), '%H%i%s'),id
-        ),
+        ) ELSE NEW.customer_code END ,
         NEW.created_at = CONVERT_TZ(NOW(), '+00:00', '+07:00');
 END;
 
 
 -- audit
 CREATE TRIGGER audit_update_product
-AFTER UPDATE ON mst_product
-FOR EACH ROW
+    AFTER UPDATE ON mst_product
+    FOR EACH ROW
 BEGIN
     DECLARE  old_customer varchar(255);
     DECLARE  new_customer varchar(255);
@@ -311,12 +311,12 @@ BEGIN
     IF !(NEW.customer_id <=> OLD.customer_id) THEN
         INSERT audit_history_product(CUSTOMER_ID, PRODUCT_ID, PRODUCT_NAME, old_customer_name, new_customer_name, ACTION_NAME, HAPPENED_AT)
             VALUES (NEW.customer_id, NEW.product_id, NEW.product_name, old_customer, new_customer, 'update', CONVERT_TZ(NOW(), '+00:00', '+07:00'));
-    END IF;
+END IF;
 
 END;
 
 # CREATE TRIGGER audit_insert_product
-# AFTER INSERT ON mst_product
+    # AFTER INSERT ON mst_product
 # FOR EACH ROW
 # BEGIN
 #     INSERT audit_history_product(CUSTOMER_ID, PRODUCT_ID, ACTION_NAME, HAPPENED_AT)
@@ -324,8 +324,8 @@ END;
 # END;
 
 CREATE TRIGGER audit_delete_product
-AFTER DELETE ON mst_product
-FOR EACH ROW
+    AFTER DELETE ON mst_product
+    FOR EACH ROW
 BEGIN
     INSERT audit_history_product(PRODUCT_ID, PRODUCT_NAME, ACTION_NAME, HAPPENED_AT)
         VALUES (OLD.product_id, OLD.product_name, 'delete', CONVERT_TZ(NOW(), '+00:00', '+07:00'));
