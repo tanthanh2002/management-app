@@ -17,4 +17,5 @@ public class MstCustomer {
     private Integer isActive;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    private String groupName;
 }

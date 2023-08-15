@@ -13,6 +13,7 @@
         <result property = "isActive" column = "is_active"/>
         <result property = "createdAt" column = "created_at"/>
         <result property = "updatedAt" column = "updated_at"/>
+        <result property = "groupName" column = "group_name"/>
     </resultMap>
 
     <select id = "findAll" resultMap = "MstCustomer">
@@ -42,8 +43,8 @@
 
     <update id="update" parameterType="MstCustomer">
         update mst_customer
-        set customer_name = #{customerName}, email= #{email}, address = #{address}, tel_num = #{telNum}
-        where (email = #{email});
+        set customer_name = #{customerName}, email= #{email}, address = #{address}, tel_num = #{telNum}, group_name = #{groupName}
+        where (customer_code = #{customerCode});
     </update>
 
     <insert id="insert" parameterType="MstCustomer">

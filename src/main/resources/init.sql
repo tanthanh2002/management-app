@@ -23,15 +23,16 @@ CREATE TABLE IF NOT EXISTS mst_users
 CREATE TABLE IF NOT EXISTS mst_customer
 (
     customer_id   INT PRIMARY KEY AUTO_INCREMENT,
-    customer_code    VARCHAR(255) UNIQUE,
+    customer_code VARCHAR(255) UNIQUE,
     customer_name VARCHAR(255) NOT NULL,
     email         VARCHAR(255) NOT NULL UNIQUE ,
     tel_num       VARCHAR(14)  NOT NULL,
     address       VARCHAR(255) NOT NULL,
     is_active     TINYINT      NOT NULL CHECK ( is_active IN (1, 0)) DEFAULT 1,
     created_at    TIMESTAMP,
-    updated_at    TIMESTAMP
-    );
+    updated_at    TIMESTAMP,
+    group_name    VARCHAR(255) NOT NULL CHECK(group_name IN ('GLOBAL','GLOCAL','DESIGN','DATA','MARKETING')) DEFAULT 'GLOBAL'
+);
 
 CREATE TABLE IF NOT EXISTS mst_product
 (
@@ -66,7 +67,7 @@ CREATE TABLE IF NOT EXISTS mst_shop
     shop_name  VARCHAR(255) NOT NULL,
     created_at TIMESTAMP,
     updated_at TIMESTAMP
-    );
+);
 
 CREATE TABLE IF NOT EXISTS mst_order
 (
@@ -394,24 +395,24 @@ VALUES ('Nguyen Van A', 'a.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm,
 INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at)
 VALUES ('Nguyen Van B', 'b.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm, Phường 25, Quận Bình Thạnh, TP.HCM', 1,
         null, null);
-INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at)
+INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at,group_name)
 VALUES ('Nguyen Van C', 'C.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm, Phường 25, Quận Bình Thạnh, TP.HCM', 1,
-        null, null);
-INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at)
+        null, null,'DESIGN');
+INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at,group_name)
 VALUES ('Nguyen Van D', 'd.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm, Phường 25, Quận Bình Thạnh, TP.HCM', 1,
-        null, null);
-INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at)
+        null, null,'GLOCAL');
+INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at,group_name)
 VALUES ('Nguyen Van E', 'e.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm, Phường 25, Quận Bình Thạnh, TP.HCM', 1,
-        null, null);
+        null, null,'DATA');
 INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at)
 VALUES ('Nguyen Van F', 'f.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm, Phường 25, Quận Bình Thạnh, TP.HCM', 1,
         null, null);
-INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at)
+INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at,group_name)
 VALUES ('Nguyen Van G', 'g.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm, Phường 25, Quận Bình Thạnh, TP.HCM', 1,
-        null, null);
-INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at)
+        null, null,'DATA');
+INSERT INTO mst_customer(customer_name, email, tel_num, address, is_active, created_at, updated_at,group_name)
 VALUES ('Nguyen Van H', 'h.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm, Phường 25, Quận Bình Thạnh, TP.HCM', 1,
-        null, null);
+        null, null,'MARKETING');
 INSERT INTO mst_customer(customer_name, email, tel_num, address)
 VALUES ('Nguyen Van I', 'i.nguyen@gmail.com', '012342424', '394 Ung Văn Khiêm, Phường 25, Quận Bình Thạnh, TP.HCM');
 

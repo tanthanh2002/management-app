@@ -44,8 +44,19 @@
         </div>
         <div class="col-sm ml-1 mr-1">
             <label class="form-label">Trạng thái</label>
+            <select class="form-control" id="customer-group">
+                <option value="ALL" disabled selected hidden>Chọn nhóm</option>
+                <option value="GLOBAL">GLOBAL</option>
+                <option value="GLOCAL">GLOCAL</option>
+                <option value="MARKETING">MARKETING</option>
+                <option value="DESIGN">DESIGN</option>
+                <option value="DATA">DATA</option>
+            </select>
+        </div>
+        <div class="col-sm ml-1 mr-1">
+            <label class="form-label">Trạng thái</label>
             <select class="form-control" id="customer-status">
-                <option value="-1" disabled selected hidden>Chọn nhóm</option>
+                <option value="-1" disabled selected hidden>Chọn trạng thái</option>
                 <option value="1">Đang hoạt động</option>
                 <option value="0">Bị khoá</option>
             </select>
@@ -127,6 +138,7 @@
                 <th scope="col" class="col">Địa chỉ</th>
                 <th scope="col" class="col">Điện thoại</th>
                 <th scope="col" class="col">Tình trạng</th>
+                <th scope="col" class="col">Nhóm</th>
                 <th scope="col" class="col"></th>
             </tr>
             </thead>
@@ -134,6 +146,7 @@
             <s:iterator value="customers" status="rowStatus">
                 <tr>
                     <th scope="row"><s:property value="%{#rowStatus.count + (page-1)*10}" /></th>
+                    <td style="display: none"><s:property value="customerId"/></td>
                     <td><s:property value="customerCode"/></td>
                     <td><s:property value="customerName"/></td>
                     <td><s:property value="email"/></td>
@@ -145,6 +158,7 @@
                     <s:else>
                         <td class="text-danger" readonly>Bị khoá</td>
                     </s:else>
+                    <td><s:property value="groupName"/></td>
                     <td>
                         <s:if test="#session.role == 'Admin' || #session.role == 'Editor'">
                             <a type="button" onclick=editRow(this) class="btn btn-success btn-edit"><i
@@ -328,11 +342,13 @@
         // button.classList.add("btn-success");
 
         var row = button.closest("tr");
-        var idCell = row.cells[0];
-        var nameCell = row.cells[1];
-        var emailCell = row.cells[2];
-        var addressCell = row.cells[3];
-        var telCell = row.cells[4];
+        var idCell = row.cells[1];
+        var codeCell = row.cells[2];
+        var nameCell = row.cells[3];
+        var emailCell = row.cells[4];
+        var addressCell = row.cells[5];
+        var telCell = row.cells[6];
+        var groupCell = row.cells[8];
 
 
         let confirmSave = confirm("Bạn có chắc chắn chỉnh sửa thông tin khách hàng không?");
@@ -345,13 +361,14 @@
                 formData.append('customerEmail', emailCell.textContent);
                 formData.append('customerAddress', addressCell.textContent);
                 formData.append('customerTel', telCell.textContent);
+                formData.append('groupName',groupCell.textContent);
+                formData.append('customerCode', codeCell.textContent);
 
                 var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
+                console.log(emailCell.textContent);
                 if(regex.test(emailCell.textContent)){
                     axios.post('/customer_edit', formData)
                         .then(function (response) {
-                            // console.log(response.data);
                             console.log(response.status);
                             alert('Sửa thông tin khách hàng thành công');
                         })
@@ -427,7 +444,8 @@
             let email = document.getElementById('customer-email').value;
             let status = document.getElementById('customer-status').value;
             let address = document.getElementById('customer-address').value;
-            var url = '/customer_search.action?customerName=' + name + '&customerEmail=' + email + '&isActive=' + status + '&customerAddress=' + address;
+            let groupName = document.getElementById('customer-group').value;
+            var url = '/customer_search.action?customerName=' + name + '&customerEmail=' + email + '&isActive=' + status + '&customerAddress=' + address +'&groupName=' + groupName;
             btnSearch.href = url;
             btnSearch.click();
         }

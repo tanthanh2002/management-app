@@ -45,7 +45,10 @@ public class CustomerAction extends ActionSupport {
                 .email(customerEmail)
                 .address(customerAddress)
                 .telNum(customerTel)
+                .groupName(groupName)
+                .customerCode(customerCode)
                 .build();
+        System.out.println(customer.toString());
         try {
             customerService.update(customer);
             HttpServletResponse response = ServletActionContext.getResponse();
@@ -114,6 +117,10 @@ public class CustomerAction extends ActionSupport {
             customers = customers.stream().filter(i -> i.getIsActive().equals(isActive)).collect(Collectors.toList());
         }
 
+        if (!groupName.equals("ALL")){
+            customers = customers.stream().filter(i -> i.getGroupName().equals(groupName)).collect(Collectors.toList());
+        }
+
         page = page == null ? 1 : page;
 
         pages = new ArrayList<>();
@@ -171,6 +178,7 @@ public class CustomerAction extends ActionSupport {
     private String customerEmail;
     private Integer isActive;
     private Integer page;
+    private String groupName;
     private String customerCode;
     private List<Integer> pages;
     private File fileCsv;
