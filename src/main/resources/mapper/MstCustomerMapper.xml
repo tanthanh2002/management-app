@@ -48,8 +48,8 @@
     </update>
 
     <insert id="insert" parameterType="MstCustomer">
-        INSERT INTO mst_customer(customer_code, customer_name, email, tel_num, address,is_active)
-        VALUES(#{customerCode}, #{customerName},#{email},#{telNum},#{address},#{isActive});
+        INSERT INTO mst_customer(customer_code, customer_name, email, tel_num, address,is_active,group_name)
+        VALUES(#{customerCode}, #{customerName},#{email},#{telNum},#{address},#{isActive},#{groupName});
     </insert>
 
 

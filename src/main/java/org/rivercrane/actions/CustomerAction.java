@@ -71,6 +71,7 @@ public class CustomerAction extends ActionSupport {
                     .address(customerAddress)
                     .telNum(customerTel)
                     .isActive(isActive)
+                    .groupName(groupName)
                     .build();
             customerService.insert(customer);
             HttpServletResponse response = ServletActionContext.getResponse();
@@ -156,6 +157,9 @@ public class CustomerAction extends ActionSupport {
         for (MstCustomer i : customers) {
             try {
                 i.setIsActive(1);
+                if(i.getGroupName() == null){
+                    i.setGroupName("GLOBAL");
+                }
                 customerService.insert(i);
             }catch(SQLIntegrityConstraintViolationException e){
                 HttpServletResponse response = ServletActionContext.getResponse();

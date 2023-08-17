@@ -43,7 +43,7 @@
             <input type="text" class="form-control" id="customer-email" placeholder="Nhập email">
         </div>
         <div class="col-sm ml-1 mr-1">
-            <label class="form-label">Trạng thái</label>
+            <label class="form-label">Nhóm</label>
             <select class="form-control" id="customer-group">
                 <option value="ALL" disabled selected hidden>Chọn nhóm</option>
                 <option value="GLOBAL">GLOBAL</option>
@@ -239,6 +239,17 @@
                             <option value="0">Bị khoá</option>
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nhóm</label>
+                        <select class="form-control" id="modalcustomer-group">
+                            <option value="GLOBAL" disabled selected hidden>Chọn nhóm</option>
+                            <option value="GLOBAL">GLOBAL</option>
+                            <option value="GLOCAL">GLOCAL</option>
+                            <option value="MARKETING">MARKETING</option>
+                            <option value="DESIGN">DESIGN</option>
+                            <option value="DATA">DATA</option>
+                        </select>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -269,7 +280,7 @@
         let customerTel = document.getElementById('modalcustomer-tel');
         let customerAddress = document.getElementById('modalcustomer-address');
         let customerStatus = document.getElementById('modalcustomer-isActive');
-
+        let customerGroup = document.getElementById('modalcustomer-group');
 
         var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -291,6 +302,8 @@
         formData.append('customerAddress', customerTel.value);
         formData.append('customerTel', customerAddress.value);
         formData.append('isActive', customerStatus.value == -1 ? 1 : customerStatus.value);
+        formData.append('groupName',customerGroup.value);
+
 
         let confirmInsert = confirm("Bạn có muốn thêm khách hàng không?");
 
@@ -322,10 +335,10 @@
         var row = button.closest("tr");
         row.classList.add('border-info');
         row.classList.add('border-4');
-        var nameCell = row.cells[1];
-        var emailCell = row.cells[2];
-        var addressCell = row.cells[3];
-        var telCell = row.cells[4];
+        var nameCell = row.cells[3];
+        var emailCell = row.cells[4];
+        var addressCell = row.cells[5];
+        var telCell = row.cells[6];
 
         nameCell.contentEditable = true;
         emailCell.contentEditable = true;
