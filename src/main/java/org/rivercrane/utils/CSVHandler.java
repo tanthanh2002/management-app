@@ -5,6 +5,7 @@ import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
 import com.opencsv.exceptions.CsvValidationException;
 import org.rivercrane.models.MstCustomer;
+import org.rivercrane.models.MstProduct;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -51,6 +52,25 @@ public class CSVHandler {
             }
         }
         return customers;
+    }
+
+    public List<MstProduct>  importProductFromCSV(String path) throws IOException, CsvException {
+        List<MstProduct> products = new ArrayList<>();
+        try (CSVReader reader = new CSVReader(new FileReader(path))) {
+            String[] lineInArray;
+            while ((lineInArray = reader.readNext()) != null) {
+                MstProduct product = MstProduct.builder()
+                        .productName(lineInArray[0])
+                        .description(lineInArray[1])
+                        .productDetails("")
+                        .isSales(1)
+                        .productPrice(1.0)
+                        .isContainer(Integer.valueOf(lineInArray[2]))
+                        .build();
+                products.add(product);
+            }
+        }
+        return products;
     }
 
     public void exportCustomersToCSV(List<MstCustomer> customers) throws IOException {

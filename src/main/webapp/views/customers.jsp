@@ -155,6 +155,9 @@
                     <s:if test="isActive == 1">
                         <td class="text-success" readonly>Đang hoạt động</td>
                     </s:if>
+                    <s:elseif test="isActive == 2">
+                        <td class="text-warning" readonly>Được cấp thiết bị</td>
+                    </s:elseif>
                     <s:else>
                         <td class="text-danger" readonly>Bị khoá</td>
                     </s:else>

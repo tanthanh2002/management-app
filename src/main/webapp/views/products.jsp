@@ -52,16 +52,38 @@
             <label class="form-label">Đến</label>
             <input type="number" class="form-control" min="0" id="priceto" placeholder="đến giá">
         </div>
+        <div class="col-sm ml-1 mr-1">
+            <label class="form-label">Loại</label>
+            <select class="form-control" id="search-type">
+                <option value="ALL" disabled selected hidden>Chọn loại</option>
+                <option value="CPU">CPU</option>
+                <option value="GPU">GPU</option>
+                <option value="MOUSE">MOUSE</option>
+                <option value="HEADPHONE">HEADPHONE</option>
+                <option value="MAINBOARD">MAINBOARD</option>
+                <option value="SCREEN">SCREEN</option>
+                <option value="OTHER">OTHER</option>
+                <option value="CAMERA">CAMERA</option>
+                <option value="KEYBOARD">KEYBOARD</option>
+            </select>
+        </div>
     </div>
 
     <div class="row">
         <s:if test="#session.role == 'Admin'">
+            <div class="col-sm-2 ">
+                <a id="btn-import" type="button" class="btn btn-primary mb-3"><i
+                        class="bi bi-upload"></i><span class="px-2">Import</span></a>
+                <input type="file" name="file-csv"
+                       accept=".csv" class="form-control"
+                       id="fileCsv"/>
+            </div>
             <div class="col-sm-3">
                 <a href="/product_detail" type="button" class="btn btn-primary"><i class="bi bi-person-add"></i><span
                         class="px-4">Thêm mới</span></a>
             </div>
         </s:if>
-        <div class="col-sm-3 offset-3">
+        <div class="col-sm-3">
             <a href="" type="button" id="btn-search" class="btn btn-primary"><i class="bi bi-search"></i><span
                     class="px-4">Tìm kiếm</span></a>
         </div>
@@ -110,7 +132,7 @@
                 <th scope="col" class="col">Mã sản phẩm</th>
                 <th scope="col" class="col">Tên sản phẩm</th>
                 <th scope="col" class="col">Chi tiết</th>
-                <th scope="col" class="col">Giá</th>
+                <th scope="col" style="display: none" class="col">Giá</th>
                 <th scope="col" class="col">Tình trạng</th>
                 <th scope="col" class="col">Loại</th>
                 <th scope="col" class="col"></th>
@@ -141,7 +163,7 @@
                     <s:else>
                         <td><s:property value="description"/></td>
                     </s:else>
-                    <td>$<s:property value="productPrice"/></td>
+                    <td style="display: none">$<s:property value="productPrice"/></td>
                     <s:if test="isSales == 1 && customerId == null">
                         <td class="text-success">Tồn kho</td>
                     </s:if>
@@ -253,7 +275,8 @@
         let priceFrom = document.getElementById('pricefrom').value;
         let priceTo = document.getElementById('priceto').value;
         let customerId = document.getElementById('search-customerId').value;
-        var url = '/product_search.action?productName=' + productName + '&customerId=' + customerId + '&priceFrom=' + priceFrom + '&priceTo=' + priceTo;
+        let type = document.getElementById('search-type').value;
+        var url = '/product_search.action?productName=' + productName + '&customerId=' + customerId + '&priceFrom=' + priceFrom + '&priceTo=' + priceTo + '&type='+type;
         btnSearch.href = url;
         btnSearch.click();
     };
@@ -290,6 +313,29 @@
         myModal.show();
 
 
+    }
+
+    let btnImport = document.getElementById('btn-import');
+    if(btnImport != null){
+        btnImport.onclick = function () {
+            let fileCsv = document.getElementById('fileCsv');
+            const data = new FormData();
+
+            if(fileCsv.files[0] == undefined){
+                alert("vui lòng chọn file");
+                return;
+            }
+            data.append('fileCsv',fileCsv.files[0])
+            axios.post('/product_importProduct',data)
+                .then(function (response) {
+                    alert("thêm dữ liệu thành công");
+                    window.location.href = '/product_execute';
+                    console.log(response.status);
+                })
+                .catch(function (error) {
+                    alert("Import dữ liệu product không hoàn thành!");
+                });
+        }
     }
 
     function deleteProduct(productId) {

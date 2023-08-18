@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.rivercrane.models.*;
 import org.rivercrane.repository.MstProductRepo;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,8 @@ public class MstProductService {
         repo.update(product);
     }
 
-    public void insert(MstProduct product) {
+    public void insert(MstProduct product){
+
         repo.insert(product);
     }
 

@@ -162,8 +162,8 @@
     </update>
 
     <insert id="insert" parameterType="MstProduct">
-        INSERT INTO mst_product(product_name, product_price, product_image, description, is_sales)
-        VALUES (#{productName}, #{productPrice}, #{productImage}, #{description}, #{isSales});
+        INSERT INTO mst_product(product_name, product_price, product_image, description, is_sales, type)
+        VALUES (#{productName}, #{productPrice}, #{productImage}, #{description}, #{isSales}, 'OTHER');
     </insert>
 
     <insert id="insertProductDetail" parameterType="ProductDetail">

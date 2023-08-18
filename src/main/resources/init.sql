@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS mst_customer
     email         VARCHAR(255) NOT NULL,
     tel_num       VARCHAR(14)  NOT NULL,
     address       VARCHAR(255) NOT NULL,
-    is_active     TINYINT      NOT NULL CHECK ( is_active IN (1, 0)) DEFAULT 1,
+    is_active     TINYINT      NOT NULL CHECK ( is_active IN (1, 0, 2)) DEFAULT 1,
     created_at    TIMESTAMP,
     updated_at    TIMESTAMP,
     group_name    VARCHAR(255) NOT NULL CHECK(group_name IN ('GLOBAL','GLOCAL','DESIGN','DATA','MARKETING')) DEFAULT 'GLOBAL'
@@ -202,6 +202,20 @@ BEGIN
     SET product_details = product_detail
     WHERE product_id = NEW.product_id;
 END IF;
+END;
+
+CREATE TRIGGER on_update_product_set_customer
+AFTER UPDATE ON mst_product
+    FOR EACH ROW
+BEGIN
+    DECLARE count int;
+    select count(product_id) into count from mst_product where customer_id = OLD.customer_id;
+
+    if (count > 0) then
+        update mst_customer set is_active = 2 where customer_id = OLD.customer_id;
+    else
+        update mst_customer set is_active = 1 where customer_id = OLD.customer_id;
+    end if;
 END;
 
 CREATE TRIGGER insert_mst_product_detail

@@ -122,6 +122,11 @@
         <action name="product_history" method="execute" class="org.rivercrane.actions.ProductHistoryAction">
             <result name="success" type="json"></result>
         </action>
+        <action name="product_importProduct" method="importProduct" class="org.rivercrane.actions.ProductAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">product_execute</param>
+            </result>
+        </action>
     </package>
 
 </struts>
