@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 @Data
 public class ProductAction extends ActionSupport {
-    public String execute(){
+    public String execute() {
         page = page == null ? 1 : page;
 
 
@@ -45,8 +45,8 @@ public class ProductAction extends ActionSupport {
         return SUCCESS;
     }
 
-    public String showDetail(){
-        if(productId == null)
+    public String showDetail() {
+        if (productId == null)
             return SUCCESS;
         setProduct(productService.getById(productId));
         setProductDetails(productService.getProductDetailByProductId(productId));
@@ -61,8 +61,8 @@ public class ProductAction extends ActionSupport {
         File newFile = new File(path, newFileName);
         FileUtils.copyFile(fileCsv, newFile);
 
-        List<MstProduct> products = csvHandler.importProductFromCSV(path+newFileName);
-        System.out.println("kich thuoc: "+products.size());
+        List<MstProduct> products = csvHandler.importProductFromCSV(path + newFileName);
+        System.out.println("kich thuoc: " + products.size());
 
         for (MstProduct i : products) {
             productService.insert(i);
@@ -71,7 +71,7 @@ public class ProductAction extends ActionSupport {
         return SUCCESS;
     }
 
-    public String search(){
+    public String search() {
         productName = productName.isEmpty() ? "%" : "%" + productName + "%";
         MstProduct product = MstProduct.builder()
                 .productName(productName)
@@ -80,20 +80,20 @@ public class ProductAction extends ActionSupport {
 
         List<ProductDto> products = productService.findByName(product);
 
-        if (priceFrom != null){
-            products=products.stream().filter(p -> p.getProductPrice() >= priceFrom).collect(Collectors.toList());
+        if (priceFrom != null) {
+            products = products.stream().filter(p -> p.getProductPrice() >= priceFrom).collect(Collectors.toList());
         }
 
-        if (priceTo != null){
-            products=products.stream().filter(p -> p.getProductPrice() <= priceTo).collect(Collectors.toList());
+        if (priceTo != null) {
+            products = products.stream().filter(p -> p.getProductPrice() <= priceTo).collect(Collectors.toList());
         }
 
-        if(!customerId.equals(-1)){
-            products=products.stream().filter(p -> Objects.equals(p.getCustomerId(), customerId)).collect(Collectors.toList());
+        if (!customerId.equals(-1)) {
+            products = products.stream().filter(p -> Objects.equals(p.getCustomerId(), customerId)).collect(Collectors.toList());
         }
 
-        if(!type.equals("ALL")){
-            products=products.stream().filter(p -> Objects.equals(p.getType(), type)).collect(Collectors.toList());
+        if (!type.equals("ALL")) {
+            products = products.stream().filter(p -> Objects.equals(p.getType(), type)).collect(Collectors.toList());
         }
 
         page = page == null ? 1 : page;
@@ -105,7 +105,7 @@ public class ProductAction extends ActionSupport {
         }
 
         Integer begin = (page - 1) * 10;
-        Integer end = (page - 1) * 10 + 10 > products.size()  ? products.size() : (page - 1) * 10 + 10;
+        Integer end = (page - 1) * 10 + 10 > products.size() ? products.size() : (page - 1) * 10 + 10;
         setProducts(products.subList(begin, end));
 
         Integer start = (page - 1) * 10 + 1;
@@ -119,7 +119,7 @@ public class ProductAction extends ActionSupport {
         return SUCCESS;
     }
 
-    public String delete(){
+    public String delete() {
         System.out.println(productId);
         productService.delete(productId);
         return SUCCESS;
